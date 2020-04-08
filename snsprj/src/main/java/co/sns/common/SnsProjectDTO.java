@@ -26,7 +26,7 @@ public class SnsProjectDTO {
 	/**SER_KEY_LIST  TABLE */
 	int key_no;
 	String keyword;
-	String ser_count;
+	int ser_count;
 
 	/**SUB_LIST TABLE*/
 	int sub_no;
@@ -98,7 +98,7 @@ public class SnsProjectDTO {
 	public String getKeyword() {
 		return keyword;
 	}
-	public String getSer_count() {
+	public int getSer_count() {
 		return ser_count;
 	}
 	public int getSub_no() {
@@ -202,7 +202,7 @@ public class SnsProjectDTO {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
-	public void setSer_count(String ser_count) {
+	public void setSer_count(int ser_count) {
 		this.ser_count = ser_count;
 	}
 	public void setSub_no(int sub_no) {
