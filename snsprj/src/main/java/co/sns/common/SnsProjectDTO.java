@@ -7,7 +7,7 @@ public class SnsProjectDTO {
 	int board_no; 
 	String board_user_id;
 	String board_content;
-	String board_like;
+	int board_like;
 	Date board_wdate;
 	String board_img;
 
@@ -59,7 +59,7 @@ public class SnsProjectDTO {
 	public String getBoard_content() {
 		return board_content;
 	}
-	public String getBoard_like() {
+	public int getBoard_like() {
 		return board_like;
 	}
 	public Date getBoard_wdate() {
@@ -163,7 +163,7 @@ public class SnsProjectDTO {
 	public void setBoard_content(String board_content) {
 		this.board_content = board_content;
 	}
-	public void setBoard_like(String board_like) {
+	public void setBoard_like(int board_like) {
 		this.board_like = board_like;
 	}
 	public void setBoard_wdate(Date board_wdate) {
