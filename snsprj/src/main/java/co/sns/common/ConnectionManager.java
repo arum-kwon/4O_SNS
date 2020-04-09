@@ -14,15 +14,11 @@ public class ConnectionManager {
 	public static Connection getConnnection() {
 		Connection conn = null;
 		try {
-			//driverManager 이용하여 연결
-//			String jdbc_url = "jdbc:oracle:thin:@localhost:1521:xe";
-//			conn = DriverManager.getConnection(jdbc_url, "hr", "hr");
 
-			//datasource를 이용하여 connection 획득
 			Context initContext = new InitialContext();
-			DataSource ds = (DataSource)initContext.lookup("java:/comp/env/jdbc/myoracle");
-			conn = ds.getConnection();   //conn 을 할당받음
-			System.out.println("dbs success");
+			DataSource ds = (DataSource)initContext.lookup("java:/comp/env/jdbc/team4O");
+			conn = ds.getConnection();  
+
 			
 		}catch(Exception e) {
 			e.printStackTrace();
