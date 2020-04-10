@@ -20,7 +20,7 @@ public class ConnectionManager {
 
 			//datasource를 이용하여 connection 획득
 			Context initContext = new InitialContext();
-			DataSource ds = (DataSource)initContext.lookup("java:/comp/env/jdbc/myoracle");
+			DataSource ds = (DataSource)initContext.lookup("java:/comp/env/jdbc/team4O");
 			conn = ds.getConnection();   //conn 을 할당받음
 			System.out.println("dbs success");
 			

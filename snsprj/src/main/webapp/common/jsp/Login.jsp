@@ -11,6 +11,10 @@
 <style>
 body {
 	font-family: Arial, Helvetica, sans-serif;
+	background-image: url(../image/LOGO.png);
+	
+	background-position : center;
+	background-size : auto;
 }
 
 /* Full-width input fields */
@@ -146,9 +150,9 @@ to {
 
 </head>
 <body>
-	<br><br>
-	<h2 align="center"><img src="../image/LOGO.png" width="250px" height="200px" ></h2>
-	<div align="center">
+	
+	<h2 align="center"></h2>
+	<div align="center"><br><br><br><br><br><br><br><br><br><br>
 	<button onclick="document.getElementById('id01').style.display='block'"
 		style="width: 400px;" type="submit" class="btn btn-success">로그인</button>
 	</div>
@@ -164,7 +168,7 @@ to {
 			<div class="imgcontainer">
 				<span onclick="document.getElementById('id01').style.display='none'"
 					class="close" title="Close Modal">&times;</span> <img
-					src="../image/LOGO.png">
+					src="../image/LOGO.png" width="300px" height="300px">
 			</div>
 
 			<div class="container">
@@ -177,7 +181,7 @@ to {
 				
 			</div>
 
-			<div class="container" style="background-color: #f1f1f1">
+			<div class="container" >
 				<button type="button"
 					onclick="document.getElementById('id01').style.display='none'"
 					class="btn btn-warning">회원가입 안했다!!</button>
@@ -226,7 +230,7 @@ to {
 				
 			</div>
 
-			<div class="container" style="background-color: #f1f1f1">
+			<div class="container">
 				<button type="button"
 					onclick="document.getElementById('id02').style.display='none'"
 					class="btn btn-warning">에휴 안할란다</button>
