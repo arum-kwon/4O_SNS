@@ -1,1 +1,0 @@
-package co.sns.member.dao;

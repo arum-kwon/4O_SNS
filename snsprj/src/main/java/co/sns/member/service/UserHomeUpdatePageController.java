@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import co.sns.common.UserBListDTO;
 import co.sns.member.dao.UserDao;
-import co.sns.member.vo.UserVo;
 
 @WebServlet("/userHomeUpdatePage.do")
 public class UserHomeUpdatePageController extends HttpServlet {

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+import co.sns.common.SerKeyListDTO;
 import co.sns.search.dao.SearchDAO;
 import net.sf.json.JSONArray;
 
@@ -41,8 +41,8 @@ public class HotResult extends HttpServlet {
 
 		// DB작업
 		SearchDAO dao = new SearchDAO();
-		SnsProjectDTO dto = new SnsProjectDTO();
-		ArrayList<SnsProjectDTO> hotkeyList = dao.hot();
+		SerKeyListDTO dto = new SerKeyListDTO();
+		ArrayList<SerKeyListDTO> hotkeyList = dao.hot();
 
 		
 		JSONArray jsonArray = JSONArray.fromObject(hotkeyList);

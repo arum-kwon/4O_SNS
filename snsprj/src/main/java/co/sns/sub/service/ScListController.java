@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import co.sns.common.UserBListDTO;
 import co.sns.sub.dao.SubDao;
-import co.sns.sub.vo.SubVo;
 
 @WebServlet("/subList.do")
 public class ScListController extends HttpServlet {

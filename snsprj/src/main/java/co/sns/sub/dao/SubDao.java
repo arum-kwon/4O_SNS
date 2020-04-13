@@ -9,8 +9,6 @@ import java.util.ArrayList;
 
 import co.sns.common.SubListDTO;
 import co.sns.common.UserBListDTO;
-import co.sns.member.vo.UserVo;
-import co.sns.sub.vo.SubVo;
 
 public class SubDao {
 	private final String driver = "oracle.jdbc.driver.OracleDriver";

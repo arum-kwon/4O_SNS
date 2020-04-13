@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import co.sns.common.BoardListDTO;
 import co.sns.common.UserBListDTO;
-import co.sns.member.vo.UserVo;
 
 public class UserDao {
 	private final String driver = "oracle.jdbc.driver.OracleDriver";

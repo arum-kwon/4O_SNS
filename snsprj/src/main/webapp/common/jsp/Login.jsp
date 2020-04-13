@@ -182,7 +182,7 @@ to {
 
 	<div id="id01" class="modal">
 
-		<form class="modal-content animate" action="../../goHome.do"
+		<form class="modal-content animate" action="../../Login.do"
 			method="post">
 			<div class="imgcontainer">
 				<span onclick="document.getElementById('id01').style.display='none'"

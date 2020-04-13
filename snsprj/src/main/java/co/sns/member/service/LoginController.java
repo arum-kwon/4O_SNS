@@ -1,4 +1,4 @@
-package co.sns.member;
+package co.sns.member.service;
 
 import java.io.IOException;
 import java.sql.Date;

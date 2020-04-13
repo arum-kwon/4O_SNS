@@ -16,7 +16,6 @@ import org.apache.jasper.tagplugins.jstl.core.Out;
 
 import co.sns.common.UserBListDTO;
 import co.sns.member.dao.UserDao;
-import co.sns.member.vo.UserVo;
 
 @WebServlet("/UserHomeUpdate.do")
 public class UserHomeUpdateController extends HttpServlet {
