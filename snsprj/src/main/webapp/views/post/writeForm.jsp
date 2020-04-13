@@ -8,24 +8,38 @@
 <style>
 textarea.textarea { min-height: 50px; }
 </style>
-<!-- 텍스트 입력에 따른 textarea 높이 자동조절 스크립트 -->
+<!-- https://forest71.tistory.com/22 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
 <script>
+<!-- 텍스트 입력에 따른 textarea 높이 자동조절 스크립트 -->
 function resize(obj) {
   obj.style.height = "1px";
   obj.style.height = (12+obj.scrollHeight)+"px";
+}
+
+function checkedSubmit() {
+    var content = writeFrom.content.value;
+    
+    if(!content){
+        alert(" 내용을 입력해주세요.")
+    }else{
+    	document.writeFrom.submit();
+}
 }
 </script>
 </head>
 
 <body>
-	<form name="writeFrom" method="post" enctype="multipart/form-data" action="#">
-		<div>
+	<form name="writeFrom" id="writeFrom" method="get" enctype="multipart/form-data" action="../../insertBoard.do">
+		<div align ="center">
 			<button type ="button" onclick="#.history(-1)">취 소</button>
 			<span>글 쓰 기</span>
-			<button type ="button" onclick="#">등 록</button>
+			<button type="button" id="btnSubmit" name="btnSubmit" onClick="checkedSubmit()">등 록</button>
 		</div>
-		<textarea id ="textarea" name="textarea" class="textarea" onkeydown="resize(this)" onkeyup="resize(this)" value="내용" style="width:100%" placeholder="내 용" ></textarea>
-		 <input type="file" name="imageFile" style="width:100%">
+			<textarea id ="content" name="content" class="content" onkeydown="resize(this)" onkeyup="resize(this)" 
+				style="width:100%" placeholder="내 용" ></textarea>
+		 <input type="file" name="imageFile" id="imageFile" style="width:100%">
 	</form>
 </body>
 </html>
