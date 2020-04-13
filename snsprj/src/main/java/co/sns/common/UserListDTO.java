@@ -19,6 +19,14 @@ public class UserListDTO {
 	String Interest_hobby;
 	String Interest_trends;
 	
+	public UserListDTO() {
+		
+	}
+	
+	public UserListDTO(String user_id, String user_pw ) {
+		this.user_id = user_id;
+		this.user_pw = user_pw;
+	}
 	
 	/* Getters */
 	public String getUser_id() {

@@ -11,6 +11,10 @@
 <style>
 body {
 	font-family: Arial, Helvetica, sans-serif;
+	background-image: url(../image/LOGO.png);
+	
+	background-position : center;
+	background-size : auto;
 }
 
 /* Full-width input fields */
@@ -21,6 +25,11 @@ input[type=text], input[type=password] {
 	display: inline-block;
 	border: 1px solid #ccc;
 	box-sizing: border-box;
+}
+
+button#check {
+
+	width : 20%;
 }
 
 /* Set a style for all buttons */
@@ -68,6 +77,20 @@ span.psw {
 
 /* The Modal (background) */
 .modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+	padding-top: 60px;
+}
+
+Nmodal {
 	display: none; /* Hidden by default */
 	position: fixed; /* Stay in place */
 	z-index: 1; /* Sit on top */
@@ -146,25 +169,25 @@ to {
 
 </head>
 <body>
-	<br><br>
-	<h2 align="center"><img src="../image/LOGO.png" width="250px" height="200px" ></h2>
-	<div align="center">
+	
+	<h2 align="center"></h2>
+	<div align="center"><br><br><br><br><br><br><br><br><br><br>
 	<button onclick="document.getElementById('id01').style.display='block'"
 		style="width: 400px;" type="submit" class="btn btn-success">로그인</button>
 	</div>
 	<div align="center">
 	<button onclick="document.getElementById('id02').style.display='block'"
-		style="width: 400px;"  type="button" class="btn btn-warning">회원가입</button></td></tr>
+		style="width: 400px;"  type="button" class="btn btn-warning">회원가입</button>
 	</div>
 
 	<div id="id01" class="modal">
 
-		<form class="modal-content animate" action="../../Login.do"
+		<form class="modal-content animate" action="../../goHome.do"
 			method="post">
 			<div class="imgcontainer">
 				<span onclick="document.getElementById('id01').style.display='none'"
 					class="close" title="Close Modal">&times;</span> <img
-					src="../image/LOGO.png">
+					src="../image/LOGO.png" width="300px" height="300px">
 			</div>
 
 			<div class="container">
@@ -173,11 +196,11 @@ to {
 					for="psw"><b>4O Password</b></label> <input type="password"
 					placeholder="4O 비밀번호를 입력해주세요" name="psw" required>
 
-				<button type="submit" onclick="Login.do" class="btn btn-success">4O 들어가기</button>
+				<button type="submit" onclick="goHome.do" class="btn btn-success">4O 들어가기</button>
 				
 			</div>
 
-			<div class="container" style="background-color: #f1f1f1">
+			<div class="container" >
 				<button type="button"
 					onclick="document.getElementById('id01').style.display='none'"
 					class="btn btn-warning">회원가입 안했다!!</button>
@@ -187,7 +210,7 @@ to {
 	
 	<div id="id02" class="modal">
 
-		<form class="modal-content animate" action="/action_page.php"
+		<form class="modal-content animate" action="../../Login.do"
 			method="post">
 			
 			<div class="container" ><span onclick="document.getElementById('id02').style.display='none'"
@@ -195,41 +218,42 @@ to {
 				<label for="profile"><b>4O 프로필 사진</b></label>
 				<div align="center">
 				 
-				 <img src="../image/1.jpg" width="110px" height="110px">
-				 <input	type="radio" name="profile_img" value="N1" checked> 
+				 <img src="../image/profile_img_9.jpg" width="110px" height="110px">
+				 <input	type="radio" name="User_pro_img_name" value="profile_img_1.jpg" checked> 
 				 
-				 <img src="../image/N1.png" width="120px" height="110px">
-				 <input	type="radio" name="profile_img" value="N2"> 
+				 <img src="../image/profile_img_2.png" width="120px" height="110px">
+				 <input	type="radio" name="User_pro_img_name" value="profile_img_4.jpg"> 
 				 
-				 <img src="../image/N2.gif" width="110px" height="110px">
-				 <input	type="radio" name="profile_img" value="N3"> 
+				 <img src="../image/profile_img_3.gif" width="110px" height="110px">
+				 <input	type="radio" name="User_pro_img_name" value="profile_img_1.jpg"> 
 				 
-				 <img src="../image/N3.jpg" width="120px" height="110px">
-				 <input type="radio" name="profile_img" value="N4"> 
+				 <img src="../image/profile_img_4.jpg" width="120px" height="110px">
+				 <input type="radio" name="User_pro_img_name" value="profile_img_4.jpg"> 
 				 
-				 <img src="../image/N4.png" width="110px" height="110px">
-				 <input	type="radio" name="profile_img" value="N5">
+				 <img src="../image/profile_img_5.png" width="110px" height="110px">
+				 <input	type="radio" name="User_pro_img_name" value="profile_img_1.jpg">
 				 
-				 <img src="../image/N5.jpg" width="110px" height="110px">
-				 <input	type="radio" name="profile_img" value="N6">
+				 <img src="../image/profile_img_6.jpg" width="110px" height="110px">
+				 <input	type="radio" name="User_pro_img_name" value="profile_img_1.jpg">
 				 
 				</div>
 
-				<label for="Nick"><b>4O 닉네임</b></label> <input type="text"
-					placeholder="4O에서 사용하실 닉네임을 입력해주세요" name="Nick" required>					
-				<label for="uname"><b>4O Username</b></label> <input type="text"
-					placeholder="4O 아이디를 입력해주세요" name="uname" required> 
-				<label for="psw"><b>4O Password</b></label> <input type="password"
-					placeholder="4O 비밀번호를 입력해주세요" name="psw" required>								
+				<label for="Nick"><b>4O 닉네임</b></label> 
+				<input type="text" placeholder="4O에서 사용하실 닉네임을 입력해주세요" name="User_id" id="User_id" required>	
+				<button type="button" class="btn btn-info" id="check">중복체크</button>	<br>			
+				<label for="uname"><b>4O Username</b></label> 
+				<input type="text" placeholder="4O 아이디를 입력해주세요" name="User_name" id="User_name" required> 
+				<label for="psw"><b>4O Password</b></label> 
+				<input type="password" placeholder="4O 비밀번호를 입력해주세요" name="User_pw" id="User_pw" required>								
 				
-				<button type="submit" class="btn btn-success">회원가입 완료</button>
+				<button type="submit" class="btn btn-success" onclick="/Login.do">회원가입 완료</button>
 				
 			</div>
 
-			<div class="container" style="background-color: #f1f1f1">
+			<div class="container">
 				<button type="button"
 					onclick="document.getElementById('id02').style.display='none'"
-					class="btn btn-warning">에휴 안할란다</button>
+					class="btn btn-warning" >에휴 안할란다</button>
 			</div>
 		</form>
 	</div>
@@ -237,11 +261,17 @@ to {
 	<script>
 // Get the modal
 var modal = document.getElementById('id01');
-var modal = document.getElementById('id02');
+var Nmodal = document.getElementById('id02');
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+    if (event.target == Nmodal) {
+        Nmodal.style.display = "none";
+    }
+}
+
+window.onclick = function(event) {
+    if (event.target == modal1) {
+        modal1.style.display = "none";
     }
 }
 </script>
