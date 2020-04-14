@@ -58,7 +58,7 @@ public class SerchResult extends HttpServlet {
 
 		// request객체에 실어주는 구문
 		request.setAttribute("searchedPosts", searchList);
-		String path = "/views/search/searchResultView.jsp";
+		String path = "/views/search/searchResultView.tiles";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(path);
 		dispatcher.forward(request, response);
 

@@ -33,15 +33,14 @@ public class UserInfoSelect extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		HttpSession session = request.getSession(true);
-		String id = (String) session.getAttribute("loginid");
-		id = "ccc";
+		String id = (String) session.getAttribute("my_id");
 		
 		UserDao dao = new UserDao();
 		ArrayList<UserBListDTO> list = new ArrayList<UserBListDTO>();
 		list = dao.select(id);
 		
 		request.setAttribute("members", list);
-		String path = "home/userInfoSelect.jsp";
+		String path = "/views/home/userInfoSelect.tiles";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(path);
 		dispatcher.forward(request, response);
 	}

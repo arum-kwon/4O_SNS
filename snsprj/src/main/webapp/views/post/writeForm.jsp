@@ -31,7 +31,7 @@ function checkedSubmit() {
 </head>
 
 <body>
-	<form name="writeFrom" id="writeFrom" method="get" enctype="multipart/form-data" action="../../insertBoard.do">
+	<form name="writeFrom" id="writeFrom" method="get" enctype="multipart/form-data" action="/snsprj/insertBoard.do">
 		<div align ="center">
 			<button type ="button" onclick="#.history(-1)">취 소</button>
 			<span>글 쓰 기</span>

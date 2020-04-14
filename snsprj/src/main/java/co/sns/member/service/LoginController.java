@@ -1,16 +1,22 @@
 package co.sns.member.service;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import co.sns.common.ConnectionManager;
 import co.sns.common.UserListDTO;
 import co.sns.member.dao.LoginDAO;
+import co.sns.post.dao.TimeLineDAO;
 
 /**
  * Servlet implementation class Login
@@ -27,9 +33,20 @@ public class LoginController extends HttpServlet {
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//일단 임시로 로그인
+		HttpSession session = request.getSession(true);
+		session.setAttribute("my_id", request.getParameter("uname"));
+		
+		
+		
+		
+		
+		
 		request.setCharacterEncoding("utf-8");
-		LoginDAO dao = new LoginDAO();
+		//LoginDAO dao = new LoginDAO();
 		UserListDTO spj = new UserListDTO();
+		Connection conn = ConnectionManager.getConnnection();
+		int n = LoginDAO.getInstance().userListInsert(conn, spj);
 		try {
 		System.out.println(request.getParameter("User_pro_img_name"));	
 		System.out.println(request.getParameter("User_id"));
@@ -53,13 +70,13 @@ public class LoginController extends HttpServlet {
 			
 		}			
 		String path = null;
-		int n = dao.userListInsert(spj);
+		//int n = dao.userListInsert(spj);
 		
 		if(n != 0) path="Login.do";
 		
 		//RequestDispatcher  dispatcher = request.getRequestDispatcher("tiles/main.jsp");
 		
-		response.sendRedirect("tiles/main.jsp");
+		response.sendRedirect("/snsprj/timeline.do");
 		
 	}
 

@@ -3,10 +3,10 @@
        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
-  <definition name="myapp.homepage" template="/tiles/main.jsp">
+  <definition name="myapp.homepage" template="/tiles/layout.jsp"> <!-- 타일즈 레이아웃이 되는 부분 -->
     <put-attribute name="title" value="Tiles tutorial homepage" />
-    <put-attribute name="header" value="/tiles/banner.jsp" />
-    <put-attribute name="menu" value="/tiles/common_menu.jsp" />
+    <put-attribute name="navbar" value="/tiles/navbar.jsp" />
+    <put-attribute name="menu" value="/tiles/side_menu.jsp" />
     <put-attribute name="body" value="/tiles/home_body.jsp" />
     <put-attribute name="footer" value="/tiles/credits.jsp" />
   </definition>
@@ -18,6 +18,9 @@
     <put-attribute name="footer" value="/tiles/credits.jsp" />
   </definition>
   
+  <definition name="views/*/*" extends="myapp.homepage">
+  	<put-attribute name="body" value="/views/{1}/{2}.jsp" />
+  </definition>
   <definition name="*/*" extends="myapp.homepage">
   	<put-attribute name="body" value="/{1}/{2}.jsp" />
   </definition>

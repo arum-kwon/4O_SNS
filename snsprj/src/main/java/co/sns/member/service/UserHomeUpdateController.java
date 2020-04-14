@@ -36,8 +36,7 @@ public class UserHomeUpdateController extends HttpServlet {
 		UserDao dao = new UserDao();
 		UserBListDTO vo = new UserBListDTO(); 
 		HttpSession session = request.getSession(true);
-		String id = (String) session.getAttribute("loginid");
-		id="bbb";
+		String id = (String) session.getAttribute("my_id");
 		
 		String img_name = request.getParameter("profile_img");
 		String name = request.getParameter("user_name");
@@ -47,50 +46,9 @@ public class UserHomeUpdateController extends HttpServlet {
 		String[] lifeArray = request.getParameterValues("interest_life");
 		String[] hobbyArray = request.getParameterValues("interest_hobby");
 		String[] trendsArray = request.getParameterValues("interest_trends");
+		System.out.println(img_name);
+		System.out.println(name);
 		
-		String enter = "";
-		if(enterArray != null) {
-			for(int i=0; i<enterArray.length; i++) {
-				enter += enterArray[i];
-				if(i != enterArray.length-1) {
-					enter += ",";
-				}
-			}
-		}
-		vo.setInterest_enter(enter);  
-		
-		String life = "";
-		if(lifeArray != null) {
-			for(int i=0; i<lifeArray.length; i++) {
-				life += lifeArray[i];
-				if(i != lifeArray.length-1) {
-					life += ",";
-				}
-			}
-		}
-		vo.setInterest_life(life); 
-		
-		String hobby = "";
-		if(hobbyArray != null) {
-			for(int i=0; i<hobbyArray.length; i++) {
-				hobby += hobbyArray[i];
-				if(i != hobbyArray.length-1) {
-					hobby += ",";
-				}
-			}
-		}
-		vo.setInterest_hobby(hobby); 
-		
-		String trends = "";
-		if(trendsArray != null) {
-			for(int i=0; i<trendsArray.length; i++) {
-				trends += trendsArray[i];
-				if(i != trendsArray.length-1) {
-					trends += ",";
-				}
-			}
-		}
-		vo.setInterest_trends(trends); 
 		
 		vo.setUser_pro_img_name(img_name);
 		vo.setUser_name(name);
@@ -98,15 +56,15 @@ public class UserHomeUpdateController extends HttpServlet {
 		vo.setUser_info(info);
 		vo.setUser_job(job);
 		
-		
 		n = dao.update(vo);		
 		
 		ArrayList<UserBListDTO> list = new ArrayList<UserBListDTO>();
 		list = dao.select(id);
 		
+		
 		request.setAttribute("result", n);		
 		request.setAttribute("members", list);
-		String path = "home/userHomeUpdatepage.jsp";
+		String path = "/views/home/userHomeUpdatepage.tiles";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(path);
 		dispatcher.forward(request, response); 		
 	}

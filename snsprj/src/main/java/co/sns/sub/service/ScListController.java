@@ -38,7 +38,7 @@ public class ScListController extends HttpServlet {
 		
 				
 		request.setAttribute("members",list); //결과값을 싫어 주는 구문
-		String path = "/views/sub/subList.jsp";  //보여줄 페이지
+		String path = "/views/sub/subList.tiles";  //보여줄 페이지
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(path);
 		dispatcher.forward(request, response);

@@ -8,7 +8,13 @@
   <name>snsprj Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <dependencies>
-  
+  <!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
+	<dependency>
+	    <groupId>javax.servlet</groupId>
+	    <artifactId>jstl</artifactId>
+	    <version>1.2</version>
+	</dependency>
+	  
    <dependency>
      <groupId>net.sf.json-lib</groupId>
      <artifactId>json-lib</artifactId>

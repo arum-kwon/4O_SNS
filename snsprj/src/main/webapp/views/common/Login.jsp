@@ -11,7 +11,7 @@
 <style>
 body {
 	font-family: Arial, Helvetica, sans-serif;
-	background-image: url(../image/LOGO.png);
+	background-image: url(../../image/LOGO.png);
 	
 	background-position : center;
 	background-size : auto;
@@ -182,7 +182,7 @@ to {
 
 	<div id="id01" class="modal">
 
-		<form class="modal-content animate" action="../../Login.do"
+		<form class="modal-content animate" action="/snsprj/Login.do"
 			method="post">
 			<div class="imgcontainer">
 				<span onclick="document.getElementById('id01').style.display='none'"
@@ -210,7 +210,7 @@ to {
 	
 	<div id="id02" class="modal">
 
-		<form class="modal-content animate" action="../../Login.do"
+		<form class="modal-content animate" action="/snsprj/Login.do"
 			method="post">
 			
 			<div class="container" ><span onclick="document.getElementById('id02').style.display='none'"

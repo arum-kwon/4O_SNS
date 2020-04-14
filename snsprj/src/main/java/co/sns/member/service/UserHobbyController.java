@@ -22,7 +22,7 @@ public class UserHobbyController extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	String path = "home/hobbylist.jsp";
+    	String path = "/views/home/hobbylist.tiles";
     	RequestDispatcher dispatcher = request.getRequestDispatcher(path);
 		dispatcher.forward(request, response);
 	}

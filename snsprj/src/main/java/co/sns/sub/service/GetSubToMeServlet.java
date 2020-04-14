@@ -34,7 +34,7 @@ public class GetSubToMeServlet extends HttpServlet {
 		
 		//request객체에 담아 forward로 보냄
 		request.setAttribute("list", list);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("views/sub/subToMeList.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/views/sub/subToMeList.tiles");
 		dispatcher.forward(request, response);
 	}
 

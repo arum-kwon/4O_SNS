@@ -16,7 +16,9 @@
 이름  : ${tl.user_name} <br>
 프로필 이미지 : ${tl.user_pro_img_name} <br>
 아이디 : ${tl.board.board_user_id} <br>
+<a href="/snsprj/BoardDetailServlet.do?board_no=${tl.board.board_no}">
 내용 : ${tl.board.board_content} <br>
+</a>
 첨부사진 : ${tl.board.board_img} <br>
 글쓴날짜 : ${tl.board.board_wdate} <br>
 좋아요 : ${tl.board.board_like} <br>

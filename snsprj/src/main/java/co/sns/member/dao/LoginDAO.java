@@ -9,17 +9,18 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import co.sns.common.UserListDTO;
+import co.sns.post.dao.TimeLineDAO;
 
 
 public class LoginDAO {
-	private final String driver = "oracle.jdbc.driver.OracleDriver";
-	private final String url = "jdbc:oracle:thin:@192.168.0.114:1521:xe";
-	private String user = "team4o";
-	private String password = "team4o";
+
+	//싱글톤
+	static LoginDAO instance = new LoginDAO();
+	static public LoginDAO getInstance() {
+		return instance;
+	}
+
 	
-	private Connection conn;
-	private PreparedStatement psmt;
-	private ResultSet rs;
 	
 	private final String USER_LIST_INSERT = "insert into user_list(USER_ID\r\n" + 
 			",USER_NAME\r\n" + 
@@ -36,19 +37,12 @@ public class LoginDAO {
 			",INTEREST_HOBBY\r\n" + 
 			",INTEREST_TRENDS) values(?,?,?,?,?,sysdate,?,?,?,?,?,?,?,?)";
 
-	public LoginDAO() {
-		try {
-			Class.forName(driver);
-			conn = DriverManager.getConnection(url, user, password);
-		}catch(ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-	}
 	
-	public int userListInsert(UserListDTO spj) {
+	public int userListInsert(Connection conn, UserListDTO spj) {
+		
 		int n = 0;
 		try {
-			psmt = conn.prepareStatement(USER_LIST_INSERT);
+			PreparedStatement psmt = conn.prepareStatement(USER_LIST_INSERT);
 			psmt.setString(1, spj.getUser_id());
 			psmt.setString(2, spj.getUser_name());
 			psmt.setString(3, spj.getUser_pw());

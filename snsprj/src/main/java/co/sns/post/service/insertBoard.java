@@ -39,9 +39,9 @@ public class insertBoard extends HttpServlet {
 		 String path = null; 
 			int n = dao.insertBoard(dto);
 			if (n != 0){
-				path="../webapp/views/post/writeForm.jsp";
+				path="/snsprj/views/post/writeForm.tiles";
 			}else {
-				path="../webapp/views/post/writeForm.jsp";
+				path="/snsprj/views/post/writeForm.tiles";
 			}
 			
 			RequestDispatcher dispatcher = request.getRequestDispatcher(path);

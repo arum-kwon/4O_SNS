@@ -12,7 +12,9 @@
 <c:forEach items="${list}" var="map">
 	NO : ${map.board.board_no} <br>
 	ID : ${map.board.board_user_id} <br>
+<a href="/snsprj/BoardDetailServlet.do?board_no=${map.board.board_no}">
 	CONTENT : ${map.board.board_content} <br>
+</a>
 	LIKE : ${map.board.board_like} <br>
 	DATE : ${map.board.board_wdate} <br>
 	IMG : ${map.board.board_img} <br>

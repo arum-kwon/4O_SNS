@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import co.sns.common.BoardListDTO;
 import co.sns.common.ConnectionManager;
@@ -27,7 +28,8 @@ public class LikeBoardServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//request객체의 parameter값 가져옴, 접속자의 id만 필요하기 때문에 나중에 세션에서 받아오기
-		String myId = request.getParameter("id");
+		HttpSession session = request.getSession(true); 
+		String myId = (String) session.getAttribute("my_id");
 		
 
 		//Dao에서 게시글 정보를 가져옴
@@ -50,7 +52,7 @@ public class LikeBoardServlet extends HttpServlet {
 //			
 //		}
 		request.setAttribute("list", list);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("views/post/likeBoardList.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/views/post/likeBoardList.tiles");
 		dispatcher.forward(request, response);
 	}
 

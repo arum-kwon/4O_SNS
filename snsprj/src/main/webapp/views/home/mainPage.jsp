@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
 <body>
-<h2>Hello World! 여기가 시작</h2>
-  <jsp:forward page="views/common/Login.jsp"></jsp:forward>
+메인 페이지
 </body>
 </html>

@@ -11,18 +11,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import co.sns.common.BoardListDTO;
 import co.sns.common.CommentListDTO;
 import co.sns.common.ConnectionManager;
 import co.sns.post.dao.BoardDetailDAO;
 
-@WebServlet("/BoardDetailServlet")
+@WebServlet("/BoardDetailServlet.do")
 public class BoardDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
      
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		String str_no = request.getParameter("board_no");
 		int board_no = 0;
 		if(str_no != null) {
@@ -67,7 +67,7 @@ public class BoardDetailServlet extends HttpServlet {
 //		}
 		request.setAttribute("board", boardMap);
 		request.setAttribute("commentList", list);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("views/post/boardDetail.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/views/post/boardDetail.tiles");
 		dispatcher.forward(request, response);
 	}
 

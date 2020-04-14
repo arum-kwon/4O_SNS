@@ -29,15 +29,14 @@ public class UserHomeController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");		
 		HttpSession session = request.getSession(true);  //세션가저오기 없다면 생성
-		String id = (String) session.getAttribute("loginid");
-		id ="bbb";//임시 테스트용
+		String id = (String) session.getAttribute("my_id");
 
 		UserDao dao = new UserDao();
 		ArrayList<UserBListDTO> list = new ArrayList<UserBListDTO>();
 		list = dao.select(id);
 		
 		request.setAttribute("members", list);
-		String path = "home/userHome.jsp";
+		String path = "/views/home/userHome.tiles";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(path);
 		dispatcher.forward(request, response);
 	}
