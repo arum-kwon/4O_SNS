@@ -1,6 +1,7 @@
 package co.sns.member.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 
 import co.sns.common.BoardListDTO;
 import co.sns.common.UserBListDTO;
+import co.sns.member.vo.UserVo;
 
 public class UserDao {
 	private final String driver = "oracle.jdbc.driver.OracleDriver";
@@ -28,7 +30,20 @@ public class UserDao {
 
 	private final String USER_INFO_UPDATE = "UPDATE USER_LIST SET USER_NAME = ?, USER_INFO = ?, USER_JOB = ?, INTEREST_ENTER =  ?, INTEREST_LIFE = ?, INTEREST_HOBBY = ?, INTEREST_TRENDS = ?, USER_PRO_IMG_NAME = ? WHERE USER_ID = ?";
 	private final String BOARD_VIEW = "select * from board_list where board_user_id = (select user_id from user_list where user_id = ?)";
+	private final String USER_INSERT = "insert into user_list (user_id, user_name, user_pw, user_pro_img_name, user_jdate) values(?,?,?,?,sysdate) ";
 
+	/*
+	 * private final String SUBRECOMMEND = "WITH WITH_VIEW\r\n" +
+	 * "AS (SELECT user_id, ,user_name, interest_enter, interest_life, interest_hobby, interest_trends \r\n"
+	 * + "FROM  user_list\r\n" + "where user_id = ?)\r\n" + "SELECT * FROM (\r\n" +
+	 * "select ul.user_id,\r\n" +
+	 * "CASE WHEN ul.interest_enter = i.interest_enter THEN 1 ELSE 0 END + " +
+	 * "CASE WHEN ul.interest_life = i.interest_life THEN 1 ELSE 0 END + " +
+	 * "CASE WHEN ul.interest_hobby = i.interest_hobby THEN 1 ELSE 0 END + " +
+	 * "CASE WHEN ul.interest_trends = i.interest_trends THEN 1 ELSE 0 END AS cnt "
+	 * + "from user_list ul, WITH_VIEW i\r\n" + "where ul.user_id <> ?) " +
+	 * "ORDER BY cnt DESC ";
+	 */ // 미구현
 	public UserDao() {
 		try {
 			Class.forName(driver);
@@ -36,6 +51,41 @@ public class UserDao {
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/*
+	 * public ArrayList<UserBListDTO> subrecommend(String id) {
+	 * ArrayList<UserBListDTO> list = new ArrayList<UserBListDTO>(); UserBListDTO
+	 * member = null; try { psmt = conn.prepareStatement(SUBRECOMMEND);
+	 * psmt.setString(1, id); psmt.setString(2, id); rs = psmt.executeQuery();
+	 * while(rs.next()) { member = new UserBListDTO();
+	 * member.setUser_id(rs.getString("user_id"));
+	 * member.setUser_name(rs.getString("user_name"));
+	 * member.setUser_job(rs.getString("user_job"));
+	 * member.setUser_pro_img_name(rs.getString("user_pro_img_name"));
+	 * member.setUser_birthage(rs.getString("user_birthage"));
+	 * member.setUser_info(rs.getString("user_info"));
+	 * member.setInterest_enter(rs.getString("interest_enter"));
+	 * member.setInterest_life(rs.getString("interest_life"));
+	 * member.setInterest_hobby(rs.getString("interest_hobby"));
+	 * member.setInterest_trends(rs.getString("interest_trends")); list.add(member);
+	 * } }catch(SQLException e){ e.printStackTrace(); } return list; }
+	 */
+	
+	public int insert(UserBListDTO vo) {
+		int n = 0;
+		try {
+			psmt = conn.prepareStatement(USER_INSERT);
+			psmt.setString(1, vo.getUser_id());
+			psmt.setString(2, vo.getUser_name());
+			psmt.setString(3, vo.getUser_pw());
+			psmt.setString(4, vo.getUser_pro_img_name());			
+			n = psmt.executeUpdate();
+			System.out.println(n + "건 가입발생.");
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return n;
 	}
 
 	public ArrayList<BoardListDTO> board_allselect(String id) {
