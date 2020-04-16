@@ -13,8 +13,8 @@ import co.sns.common.UserBListDTO;
 public class SubDao {
 	private final String driver = "oracle.jdbc.driver.OracleDriver";
 	private final String url = "jdbc:oracle:thin:@localhost:1521:xe";
-	private String user = "team4o";
-	private String password = "team4o";
+	private String user = "cm";
+	private String password = "cm";
 	
 	private Connection conn;
 	private PreparedStatement psmt;

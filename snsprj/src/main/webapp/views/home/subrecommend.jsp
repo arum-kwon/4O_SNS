@@ -27,7 +27,10 @@ hr{ color: black; border: solid 1px;}
 #title { background: black; color: white;}
 </style>
 <script>
-function userInfoSelect(){
+function userInfoSelect(user_id){
+
+	$("#id").val(user_id);
+	
 	$("#frm").attr("action","/snsprj/UserInfoSelect.do");
 	$("#frm").submit();
 }
@@ -37,6 +40,7 @@ function userInfoSelect(){
 <body class="w3-content" style="max-width:1300px">
 구독추천리스트 목록
 <form id="frm" name="frm" method="post">
+<input type="hidden" id="id" name="id">
 <div id="title" align="center">
       <hr><h1>구독추천리스트</h1><hr>
  <div class="w3-center-align w3-blue-grey w3-container" style="height:auto;"> 
@@ -49,9 +53,45 @@ function userInfoSelect(){
 				<c:otherwise>
 				<c:forEach var="member" items="${ members }">																		
 							<div class="container" id="slist" align="center">
-              				 <img src="/snsprj/common/image/${member.user_pro_img_name }" class="rounded-circle" alt="Cinque Terre" width="150" height="150"><br> 
-              				 <button type="button" class="btn btn-info" onclick="userInfoSelect()">${ member.user_id }</button>
+              				 <img src="${pageContext.request.contextPath}/common/img/pro/${member.user_pro_img_name }" class="rounded-circle" alt="Cinque Terre" width="150" height="150"><br> 
+              				 <button type="button" class="btn btn-info" onclick="userInfoSelect('${ member.user_id }')">${ member.user_name }</button>
               				 <button type="button" class="btn btn-info" >${ member.user_birthage }</button>
+										<c:choose>
+											<c:when test="${ member.interest_enter == sessionScope.my_enter  }">
+												<button type="button" class="btn btn-info"
+													style="border: 5px solid red;">${ member.interest_enter }</button>
+											</c:when>
+											<c:otherwise>
+												<button type="button" class="btn btn-info">${ member.interest_enter }</button>
+											</c:otherwise>
+										</c:choose>
+										<c:choose>
+											<c:when test="${ member.interest_life == sessionScope.my_life  }">
+												<button type="button" class="btn btn-info"
+													style="border: 5px solid red;">${ member.interest_life }</button>
+											</c:when>
+											<c:otherwise>
+												<button type="button" class="btn btn-info">${ member.interest_life }</button>
+											</c:otherwise>
+										</c:choose>
+										<c:choose>
+											<c:when test="${ member.interest_hobby == sessionScope.my_hobby  }">
+												<button type="button" class="btn btn-info"
+													style="border: 5px solid red;">${ member.interest_hobby }</button>
+											</c:when>
+											<c:otherwise>
+												<button type="button" class="btn btn-info">${ member.interest_hobby }</button>
+											</c:otherwise>
+										</c:choose>
+										<c:choose>
+											<c:when test="${ member.interest_trends == sessionScope.my_trends  }">
+												<button type="button" class="btn btn-info"
+													style="border: 5px solid red;">${ member.interest_trends }</button>
+											</c:when>
+											<c:otherwise>
+												<button type="button" class="btn btn-info">${ member.interest_trends }</button>
+											</c:otherwise>
+										</c:choose> 
               				 <hr>              				               				
 							</div>
 					</c:forEach>
@@ -62,7 +102,6 @@ function userInfoSelect(){
   </div>	
   <div class="w3-black w3-center w3-padding-24"><a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">Team 4o</a></div><br>
 </div>
-</tr>
-</TABLE>
+</form>
 </body>
 </html>

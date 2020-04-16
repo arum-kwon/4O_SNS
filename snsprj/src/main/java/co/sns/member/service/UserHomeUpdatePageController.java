@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import co.sns.common.UserBListDTO;
-import co.sns.member.dao.UserDao;
+import co.sns.member.dao.UserDao; 
 
 @WebServlet("/userHomeUpdatePage.do")
 public class UserHomeUpdatePageController extends HttpServlet {
@@ -29,13 +29,14 @@ public class UserHomeUpdatePageController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		HttpSession session = request.getSession(true);
-		String id = (String) session.getAttribute("my_id"); 
+		String id = (String) session.getAttribute("loginid"); 
+		id="bbb";
 		
 		UserDao dao = new UserDao();
-		ArrayList<UserBListDTO> list = new ArrayList<UserBListDTO>();
-		list = dao.select(id);
+		UserBListDTO dto = new UserBListDTO();
+		dto = dao.selectUserInfo(id);
 		
-		request.setAttribute("members", list);
+		request.setAttribute("member", dto);
 		String path = "/views/home/userHomeUpdatepage.tiles";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(path);
 		dispatcher.forward(request, response); 

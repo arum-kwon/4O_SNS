@@ -35,10 +35,10 @@ public class SubRecommendController extends HttpServlet {
 		
 		UserDao dao = new UserDao();		
 		ArrayList<UserBListDTO> list = new ArrayList<UserBListDTO>();
-//		list = dao.subrecommend(id);
+		list = dao.subrecommend(id);
 		
 		request.setAttribute("members", list);
-		String path = "/home/subrecommend.jsp";
+		String path = "/views/home/subrecommend.tiles";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(path);
 		dispatcher.forward(request, response);
 	}
