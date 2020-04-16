@@ -25,10 +25,11 @@ public class TimeLineDAO {
 	//               user_pro_img_name : val
 	// list[0].board.getboard_no     /  list[0].user_id
 	public ArrayList<HashMap<String, Object>> getTimeLineList(Connection conn, String myId, String order) {
-		String sql = "SELECT * FROM board_list join " + 
-				"        ( SELECT  user_id, user_name, user_pro_img_name " + 
-				"        FROM  user_list WHERE user_id in (SELECT to_id FROM sub_list where from_id=?) ) u " + 
-				"on board_user_id in u.user_id ";
+		String sql = "SELECT b.*, u.*, case when board_no in (SELECT board_no FROM board_like_list where user_id=?) then 1 else 0 end as bLike " + 
+				"				FROM board_list b join  " + 
+				"				        ( SELECT  user_id, user_name, user_pro_img_name  " + 
+				"                        FROM  user_list WHERE user_id in (SELECT to_id FROM sub_list where from_id=?) ) u   " + 
+				"				on board_user_id in u.user_id ";
 		String latest = "order by board_wdate desc, board_no desc";
 		String liked = "order by board_like desc, board_wdate desc, board_no desc";
 		HashMap<String, String> orderStr = new HashMap<String, String>();
@@ -40,6 +41,7 @@ public class TimeLineDAO {
 			sql = sql + orderStr.get(order);
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setString(1, myId);
+			psmt.setString(2, myId);
 			ResultSet rs = psmt.executeQuery();
 			BoardListDTO dto;
 
@@ -55,6 +57,7 @@ public class TimeLineDAO {
 				map.put("board", dto);
 				map.put("user_name", rs.getString("user_name"));
 				map.put("user_pro_img_name", rs.getString("user_pro_img_name"));
+				map.put("blike", rs.getString("blike"));
 				list.add(map);
 			}
 		}catch(Exception e) {

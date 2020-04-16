@@ -23,6 +23,8 @@ public class BoardDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
      
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(true); 
+		String myId = (String) session.getAttribute("my_id");
 		String str_no = request.getParameter("board_no");
 		int board_no = 0;
 		if(str_no != null) {
@@ -33,7 +35,7 @@ public class BoardDetailServlet extends HttpServlet {
 		//Dao에서 게시글 정보를 가져옴
 		Connection conn = ConnectionManager.getConnnection();
 		HashMap<String, Object> boardMap = new HashMap<String, Object>();
-		boardMap = BoardDetailDAO.getInstance().getBoardInfo(conn, board_no);
+		boardMap = BoardDetailDAO.getInstance().getBoardInfo(conn, board_no, myId);
 
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		list = BoardDetailDAO.getInstance().getComment(conn, board_no);

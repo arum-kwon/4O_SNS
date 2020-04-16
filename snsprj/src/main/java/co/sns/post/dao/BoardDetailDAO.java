@@ -19,16 +19,17 @@ public class BoardDetailDAO {
 	/**
 	* 게시글의 정보만 가져옴
 	*/
-	public HashMap<String, Object> getBoardInfo(Connection conn, int boardNo) {
-		String sql = "SELECT USER_ID, USER_NAME, USER_PRO_IMG_NAME, b.* " + 
-				"FROM user_list JOIN (SELECT * FROM board_list WHERE board_no = ?) b " + 
-				"ON(user_id = board_user_id)";
+	public HashMap<String, Object> getBoardInfo(Connection conn, int boardNo, String myId) {
+		String sql = "SELECT USER_ID, USER_NAME, USER_PRO_IMG_NAME, b.* , case when board_no in (SELECT board_no FROM board_like_list where user_id=?) then 1 else 0 end as bLike " + 
+				"				FROM user_list JOIN (SELECT * FROM board_list WHERE board_no = ?) b  " + 
+				"				ON(user_id = board_user_id) ";
 
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		try {
 			PreparedStatement psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, boardNo);
+			psmt.setString(1, myId);
+			psmt.setInt(2, boardNo);
 			ResultSet rs = psmt.executeQuery();
 			BoardListDTO dto;
 
@@ -44,6 +45,7 @@ public class BoardDetailDAO {
 				map.put("board", dto);
 				map.put("user_name", rs.getString("user_name"));
 				map.put("user_pro_img_name", rs.getString("user_pro_img_name"));
+				map.put("bLike", rs.getString("bLike"));
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

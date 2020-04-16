@@ -22,10 +22,10 @@
 		    <p onclick="clickBoard(${tl.board.board_no})"> ${tl.board.board_content} </p>
 		  </c:if>
 		  <c:if test="${not empty tl.board.board_img}">
-		    <img src="/snsprj/common/img/upload/${tl.board.board_img}" onclick="clickBoard(${tl.board.board_no})" style="width:100%" alt="Northern Lights" class="w3-margin-bottom">
+		    <p> <img src="/snsprj/common/img/upload/${tl.board.board_img}" onclick="clickBoard(${tl.board.board_no})" style="width:100%" alt="Northern Lights" class="w3-margin-bottom"> </p>
 		  </c:if>
 		  <!-- 좋아요 -->
-		  <button type="button" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i> Like ${tl.board.board_like}</button> 
+	  	  <button onclick="likeBtn(${tl.board.board_no})" id="btn${tl.board.board_no}" name="likeBtn" value="${tl.blike}" type="button"> Like <span id="span${tl.board.board_no}"> ${tl.board.board_like}</span> </button> 
 		</div>
 	</div>
 
@@ -40,20 +40,56 @@
 </form>
 
 <script>
-function clickBoard(number){
-	hid.setAttribute('name', 'board_no');
-	hid.setAttribute('value', number);
+	var onLike = "w3-button w3-red w3-hover-pale-red w3-margin-bottom";
+	var offLike = "w3-button w3-blue-grey w3-margin-bottom";
+	var btn = document.getElementsByName("likeBtn");
+	for(var i=0 ; btn.length ; i++){
+		if (btn[i].value == 0){
+			btn[i].className = offLike;
+		}else{
+			btn[i].className = onLike;
+		}
+	}
 	
-	frm.action = '/snsprj/BoardDetailServlet.do';
-	frm.submit();
-}
-function clickPro(id){
-	hid.setAttribute('name', 'user_id');
-	hid.setAttribute('value', id);
-	
-	frm.action = '/snsprj/UserInfoSelect.do';
-	frm.submit();
-}
+	function clickBoard(number){
+		hid.setAttribute('name', 'board_no');
+		hid.setAttribute('value', number);
+		
+		frm.action = '/snsprj/BoardDetailServlet.do';
+		frm.submit();
+	}
+	function clickPro(id){
+		hid.setAttribute('name', 'user_id');
+		hid.setAttribute('value', id);
+		
+		frm.action = '/snsprj/UserInfoSelect.do';
+		frm.submit();
+	}
+	function likeBtn(number){
+		var btn = document.getElementById("btn" + number);
+		var btnValue = btn.value;
+		var span = document.getElementById("span" + number);
+		var val = span.innerHTML;
+		
+		$.ajax({
+			url: "/snsprj/ClickLikeServlet.do",
+			data: {"board_no": number, "bLike": btnValue},
+			success: function(date){
+				if (btnValue == 0){
+					btn.className = onLike;
+					btn.value = 1;
+					span.innerHTML = parseInt(span.innerHTML) + 1;
+				}else{
+					btn.className = offLike;
+					btn.value = 0;
+					span.innerHTML = parseInt(span.innerHTML) - 1;
+				} 
+			},
+			error: function(){
+				console.log("실패");
+			}
+		})
+	}
 
 </script>
 
