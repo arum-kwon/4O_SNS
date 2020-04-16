@@ -20,36 +20,38 @@ div p {overflow: hidden;
 </style>
 </head>
 <body class="w3-light-grey w3-content" style="max-width:1600px">
-여기로 뿌려준다
-<table border="1">
-<tr>
-	<th>#</th>
-	<th>글내용</th>
-	<th>좋아요</th>
-	<th>작성일</th>
-</tr>
+
 
 <c:choose>
 				<c:when test="${empty searchedPosts }">
-					<tr>
-						<td colspan="4">데이터가 없습니다.</td>
-					</tr>
-					</table>
+					<div class="w3-col s12 m6 l3">
+					
+					</div>
 				</c:when>
 				<c:otherwise>
 					<c:forEach var="post" items="${searchedPosts }">
-						<tr>
-							<td align="center">${post.board_no }</td>
-							<td align="center">${post.board_content }</td>
-							<td align="center">${post.board_like }</td>
-							<td align="center">${post.board_wdate }</td>
-						</tr>
-						
+					<div class="w3-col s12 m6 l3">
+	  				<div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+		  			<!-- 프로필 부분 -->
+		  			<img src="/snsprj/common/img/pro/${post.user_pro_img_name}" onclick="clickPro('#')" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+		  			<span class="w3-right w3-opacity"> ${post.board_wdate} </span>
+				 	<h4>${post.user_name}</h4><br>
+		  			<hr class="w3-clear">
+		  			<!-- 본문 부분 -->		  
+		  				<c:if test="${empty post.board_img}">
+		    			<p onclick="clickBoard(#)"> ${post.board_content } </p>
+		  				</c:if>
+		  			<c:if test="${not empty post.board_img}">
+		    		<img src="/snsprj/common/img/upload/${post.board_img}" onclick="clickBoard(#)" style="width:100%" alt="Northern Lights" class="w3-margin-bottom">
+		  			</c:if>
+		  			<!-- 좋아요 -->
+		  			<button type="button" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i> Like ${post.board_like }</button> 
+					</div>
+					</div>
+							
 					</c:forEach>
-						</table>
-						<div>
-						<a href="#자바스크립트 링크 걸기">더 불러오기</a>
-						</div>
+						
+				
 				</c:otherwise>
 			</c:choose>
 

@@ -1,5 +1,47 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+<!-- 실시간 검색어 관련 스크립트 -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script>
+		$(document).ready(
+			function test() {
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+					console.log("펑션이 실행됨")
+					var obj = JSON.parse(this.responseText);
+
+					var temp = "";
+					var keywordArray = new Array();
+					var index = 0;
+					var slid = document.getElementById("keywordspan");
+
+					for (i = 0; i < obj.keywordList.length; i++) {
+						temp = obj.keywordList[i].keyword;
+						//json에서 값을 가져옴. 그 값을 배열에 넣을꺼임.
+						console.log(temp);
+						keywordArray.push(temp);
+
+					}
+					function looptest() {
+						document.getElementById("keywordspan").innerHTML = keywordArray[index];
+						document.getElementById("hotNo").innerHTML = index+1
+						
+						index++;
+						if (index >= keywordArray.length) {
+							index = 0;
+						}
+					}
+					setInterval(looptest, 3000);
+				}
+				
+				
+				};
+			xhttp.open("GET", "${pageContext.request.contextPath}/hot.do", true);
+			xhttp.send();
+		});
+		</script>
+
 <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
 	<a 	href="javascript:void(0);" onclick="openNav()"
 		class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2">
@@ -28,11 +70,23 @@
 		</div>
 	</div>
 	
+	<!-- 실시간 검색어 뜨는 자리 -->
+		
+		<div id="slid_box" class="w3-bar-item w3-hide-small w3-hide-medium  w3-padding " style="width:120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "> 
+		<span id="hotNo" >1</span> 
+		<span> . </span> 
+		<span id="keywordspan">키워드자리리리리</span>
+		</div>
+
+		
 	
+	<!-- 검색창 -->
+	<div class="w3-bar-item w3-hide-small w3-hide-medium ">
 	<form id="frmSearch" name="frmSearch" action="/snsprj/SerchResult.do" method="post">
 		<input type="text" id="search" name="search">
 		<input type="submit" value="검색">
 	</form>
+	</div>
 </div>
 
 <!-- 작은 화면 창 -->	
