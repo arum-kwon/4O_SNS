@@ -25,7 +25,7 @@ public class BoardInsertDAO {
 	
 	//작성글 insert method
 			public int insertBoard(BoardListDTO dto) {
-				String sql ="insert into board_list VALUES (SEQ_BOARD_NO.nextval, 'aaa', ?, 0, sysdate, null)";
+				String sql ="insert into board_list VALUES (SEQ_BOARD_NO.nextval, 'aaa', ?, 0, sysdate, ?)";
 				int n=0;
 				try {
 					
@@ -33,7 +33,7 @@ public class BoardInsertDAO {
 					pstmt = conn.prepareStatement(sql);
 					//pstmt.setString(1, dto.getBoard_user_id());
 					pstmt.setString(1, dto.getBoard_content());
-					//pstmt.setString(3, dto.getBoard_img());
+					pstmt.setString(2, dto.getBoard_img());
 					
 					n = pstmt.executeUpdate();
 					

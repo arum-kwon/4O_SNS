@@ -31,15 +31,21 @@ function checkedSubmit() {
 </head>
 
 <body>
-	<form name="writeFrom" id="writeFrom" method="get" enctype="multipart/form-data" action="/snsprj/insertBoard.do">
+	<form name="writeFrom" id="writeFrom" method="post" enctype="multipart/form-data" action="/snsprj/insertBoard.do">
 		<div align ="center">
 			<button type ="button" onclick="#.history(-1)">취 소</button>
-			<span>글 쓰 기</span>
 			<button type="button" id="btnSubmit" name="btnSubmit" onClick="checkedSubmit()">등 록</button>
 		</div>
 			<textarea id ="content" name="content" class="content" onkeydown="resize(this)" onkeyup="resize(this)" 
 				style="width:100%" placeholder="내 용" ></textarea>
-		 <input type="file" name="imageFile" id="imageFile" style="width:100%">
+			
+		 <input type="file" name="imageFile" id="imageFile" style="width:100%"">
+		<div id='preview'>
+       	 <!-- 미리보기 공간 -->
+       	하...
+   		</div>
+   		
+  
 	</form>
 </body>
 </html>

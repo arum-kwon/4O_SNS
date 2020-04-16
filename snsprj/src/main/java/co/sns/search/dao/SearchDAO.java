@@ -1,15 +1,19 @@
 package co.sns.search.dao;
 
+import java.awt.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import co.sns.common.BoardListDTO;
 import co.sns.common.ConnectionManager;
 import co.sns.common.SerKeyListDTO;
+import co.sns.common.UserListDTO;
 
 
 public class SearchDAO {
@@ -26,25 +30,45 @@ public class SearchDAO {
 	}
 	
 	// 검색결과 리스트 메서드
-		public ArrayList<BoardListDTO> getResultList(String key) {
-			   ArrayList<BoardListDTO> datas = new ArrayList<BoardListDTO>();
-			
-			String sql = "SELECT * FROM BOARD_LIST WHERE board_content LIKE '%'||?||'%' order by board_wdate desc";
+		public ArrayList<Map<String, Object>> getResultList(String key) {
+			ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+			   	
+			String sql = "SELECT b.board_content, b.board_like, b.board_wdate, b.board_img, u.user_name, u.user_pro_img_name FROM board_list b INNER JOIN  user_list u ON  b.board_user_id = u.user_id AND  b.board_content  Like '%'||?||'%' order by board_wdate desc";
 			try {
 				conn = ConnectionManager.getConnnection();
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, key);
 				ResultSet rs = pstmt.executeQuery();
+			
+				
 				while(rs.next()) {
-					BoardListDTO board = new BoardListDTO();
-					board.setBoard_no(rs.getInt("board_no"));
-					board.setBoard_user_id(rs.getString("board_user_id"));
-					board.setBoard_content(rs.getString("board_content"));
-					board.setBoard_like(rs.getInt("board_like"));
-					board.setBoard_wdate(rs.getDate("board_wdate"));
-					board.setBoard_img(rs.getString("board_img"));
-					datas.add(board);
+						HashMap<String, Object> map = new HashMap<String, Object>();
+
+						map.put("board_content", rs.getString("board_content"));
+						map.put("board_like", rs.getInt("board_like"));
+						map.put("board_wdate", rs.getDate("board_wdate"));
+						map.put("board_img", rs.getString("board_img"));
+						map.put("user_name", rs.getString("user_name"));
+						map.put("user_pro_img_name", rs.getString("user_pro_img_name"));
+							
+
+						list.add(map);
+
 				}
+						
+
+//				return list;		
+//					BoardListDTO board = new BoardListDTO();
+//					UserListDTO user = new UserListDTO();
+//					board.setBoard_no(rs.getInt("board_no"));
+//					board.setBoard_user_id(rs.getString("board_user_id"));
+//					board.setBoard_content(rs.getString("board_content"));
+//					board.setBoard_like(rs.getInt("board_like"));
+//					board.setBoard_wdate(rs.getDate("board_wdate"));
+//					board.setBoard_img(rs.getString("board_img"));
+//					
+//					datas.add(board);
+//				}
 				rs.close();
 				
 				
@@ -54,7 +78,7 @@ public class SearchDAO {
 			finally {
 				ConnectionManager.close(conn);
 			}
-			return datas;
+			return list;
 		}
 		
 	//검색 키워드 인설트,업데이트 메서드
@@ -103,4 +127,16 @@ public class SearchDAO {
 			return hotkeys;
 		}
 		
+		//keyword 카운트 1로 초기화 메소드
+		public int reset() throws SQLException {
+			int n =0;
+			String sql = "update ser_key_list set ser_count =1";
+			
+			conn = co.sns.common.ConnectionManager.getConnnection();
+			pstmt = conn.prepareStatement(sql);
+			n = pstmt.executeUpdate();
+			
+			return n;
+			
+		}
 }

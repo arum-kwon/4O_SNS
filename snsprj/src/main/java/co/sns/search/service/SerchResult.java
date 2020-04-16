@@ -3,6 +3,8 @@ package co.sns.search.service;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -44,18 +46,12 @@ public class SerchResult extends HttpServlet {
 		BoardListDTO dto = new BoardListDTO();
 
 		String searchedKey = request.getParameter("search");
-		ArrayList<BoardListDTO> searchList = dao.getResultList(searchedKey);
+	    ArrayList<Map<String, Object>> searchList;
+		searchList = dao.getResultList(searchedKey);
 		int searchKeyword = dao.serch(searchedKey);
-		System.out.println("--쿼리가 제대로 안되나?--" + searchList);
-		System.out.println("-----");
-		System.out.println("겟 파라미터로 받아온 값 : " + searchedKey);
-		System.out.println("-----");
-		
+	
 		dao.serch(searchedKey);
-
-		System.out.println("dto가 제대로 넘어가나??");
-		System.out.println(dto);
-
+		
 		// request객체에 실어주는 구문
 		request.setAttribute("searchedPosts", searchList);
 		String path = "/views/search/searchResultView.tiles";
