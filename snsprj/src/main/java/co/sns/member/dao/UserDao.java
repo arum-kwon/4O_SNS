@@ -8,18 +8,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.naming.spi.DirStateFactory.Result;
+
 import co.sns.common.BoardListDTO;
 import co.sns.common.UserBListDTO;
 
 public class UserDao {
-	private final String driver = "oracle.jdbc.driver.OracleDriver";
-	private final String url = "jdbc:oracle:thin:@localhost:1521:xe";
-	private String user = "hs";
-	private String password = "hs";
-
-	private Connection conn;
-	private PreparedStatement psmt;
-	private ResultSet rs;
+	
+	static UserDao instance = new UserDao();
+	static public UserDao getInstance() {
+		return instance;
+	}
+	
 
 	private final String USER_LIST = "select distinct bl.board_user_id, ul.user_id, bl.BOARD_NO, bl.BOARD_CONTENT, bl.BOARD_LIKE, bl.BOARD_WDATE,BOARD_IMG,\r\n"
 			+ "UL.USER_ID, UL.USER_NAME, UL.USER_HEADER_IMG, UL.USER_PRO_IMG_NAME, UL.USER_JDATE, UL.USER_INFO, TRUNC(MONTHS_BETWEEN(TRUNC(SYSDATE), USER_BIRTH) / 12 + 1 ) || '살' AS USER_BIRTHAGE, \r\n"
@@ -54,22 +54,14 @@ public class UserDao {
 			"where ul.user_id <> ? ) " + 
 			"where cnt >= 3 \r\n " + 
 			"ORDER BY cnt DESC ";
-
-	public UserDao() {
-		try {
-			Class.forName(driver);
-			conn = DriverManager.getConnection(url, user, password);
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-	}
 	
-	public UserBListDTO selectUserInfo(String id) {
+	
+	public UserBListDTO selectUserInfo(Connection conn, UserBListDTO vo) {
 		UserBListDTO member = null;
 		try {
-			psmt = conn.prepareStatement(USER_SELECT);
-			psmt.setString(1, id);
-			rs = psmt.executeQuery();
+			PreparedStatement psmt = conn.prepareStatement(USER_SELECT);
+			psmt.setString(1, vo.getUser_id());
+			ResultSet rs = psmt.executeQuery();
 			while (rs.next()) {
 				member = new UserBListDTO();
 				member.setUser_id(rs.getString("user_id"));
@@ -99,82 +91,13 @@ public class UserDao {
 		return member;
 	}
 	
-	public ArrayList<UserBListDTO> subrecommend(String id) {
+	public ArrayList<UserBListDTO> select(Connection conn, UserBListDTO vo) {
 		ArrayList<UserBListDTO> list = new ArrayList<UserBListDTO>();
 		UserBListDTO member = null;
 		try {
-			psmt = conn.prepareStatement(SUBRECOMMEND);
-			psmt.setString(1, id);
-			psmt.setString(2, id);
-			rs = psmt.executeQuery();
-			while (rs.next()) {
-				member = new UserBListDTO();
-				member.setUser_id(rs.getString("user_id"));
-				member.setUser_name(rs.getString("user_name"));
-				member.setUser_job(rs.getString("user_job"));
-				member.setUser_pro_img_name(rs.getString("user_pro_img_name"));
-				member.setUser_birthage(rs.getString("user_birthage"));
-				member.setUser_info(rs.getString("user_info"));
-				member.setInterest_enter(rs.getString("interest_enter"));
-				member.setInterest_life(rs.getString("interest_life"));
-				member.setInterest_hobby(rs.getString("interest_hobby"));
-				member.setInterest_trends(rs.getString("interest_trends"));
-				list.add(member);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
-	 
-	
-	public int insert(UserBListDTO vo) {
-		int n = 0;
-		try {
-			psmt = conn.prepareStatement(USER_INSERT);
+			PreparedStatement psmt = conn.prepareStatement(USER_LIST);
 			psmt.setString(1, vo.getUser_id());
-			psmt.setString(2, vo.getUser_name());
-			psmt.setString(3, vo.getUser_pw());
-			psmt.setString(4, vo.getUser_pro_img_name());			
-			n = psmt.executeUpdate();
-			System.out.println(n + "건 가입발생.");
-		}catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return n;
-	}
-
-	public ArrayList<UserBListDTO> board_allselect(String id) {
-		ArrayList<UserBListDTO> list = new ArrayList<UserBListDTO>();
-		UserBListDTO member = null;
-		try {
-			psmt = conn.prepareStatement(BOARD_VIEW);
-			psmt.setString(1, id);
-			rs = psmt.executeQuery();
-			while (rs.next()) {
-				member = new UserBListDTO();
-				member.setBoard_no(rs.getInt("board_no"));
-				member.setBoard_user_id(rs.getString("board_user_id"));
-				member.setBoard_content(rs.getString("board_content"));
-				member.setBoard_like(rs.getInt("board_like"));
-				member.setBoard_wdate(rs.getDate("board_wdate"));
-				member.setBoard_img(rs.getString("board_img"));
-				list.add(member);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return list;
-	}
-
-	public ArrayList<UserBListDTO> select(String id) {
-		ArrayList<UserBListDTO> list = new ArrayList<UserBListDTO>();
-		UserBListDTO member = null;
-		try {
-			psmt = conn.prepareStatement(USER_LIST);
-			psmt.setString(1, id);
-			rs = psmt.executeQuery();
+			ResultSet rs = psmt.executeQuery();
 			while (rs.next()) {
 				member = new UserBListDTO();
 				member.setUser_id(rs.getString("user_id"));
@@ -204,11 +127,80 @@ public class UserDao {
 		}
 		return list;
 	}
+	
+	public ArrayList<UserBListDTO> subrecommend(Connection conn, UserBListDTO vo) {
+		ArrayList<UserBListDTO> list = new ArrayList<UserBListDTO>();
+		UserBListDTO member = null;
+		try {
+			PreparedStatement psmt = conn.prepareStatement(SUBRECOMMEND);
+			psmt.setString(1, vo.getUser_id());
+			psmt.setString(2, vo.getUser_id());
+			ResultSet rs = psmt.executeQuery();
+			while (rs.next()) {
+				member = new UserBListDTO();
+				member.setUser_id(rs.getString("user_id"));
+				member.setUser_name(rs.getString("user_name"));
+				member.setUser_job(rs.getString("user_job"));
+				member.setUser_pro_img_name(rs.getString("user_pro_img_name"));
+				member.setUser_birthage(rs.getString("user_birthage"));
+				member.setUser_info(rs.getString("user_info"));
+				member.setInterest_enter(rs.getString("interest_enter"));
+				member.setInterest_life(rs.getString("interest_life"));
+				member.setInterest_hobby(rs.getString("interest_hobby"));
+				member.setInterest_trends(rs.getString("interest_trends"));
+				list.add(member);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	 
+	
+	public int insert(Connection conn, UserBListDTO vo) {
+		int n = 0;
+		try {
+			PreparedStatement psmt = conn.prepareStatement(USER_INSERT);
+			psmt.setString(1, vo.getUser_id());
+			psmt.setString(2, vo.getUser_name());
+			psmt.setString(3, vo.getUser_pw());
+			psmt.setString(4, vo.getUser_pro_img_name());			
+			n = psmt.executeUpdate();
+			System.out.println(n + "건 가입발생.");
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return n;
+	}
 
-	public int update(UserBListDTO vo) {
+	public UserBListDTO board_select(Connection conn, UserBListDTO vo) {
+		UserBListDTO member = null;
+		try {
+			PreparedStatement psmt = conn.prepareStatement(BOARD_VIEW);
+			psmt.setInt(1, vo.getBoard_no());
+			ResultSet rs = psmt.executeQuery();
+			if (rs.next()) {
+				member = new UserBListDTO();
+				member.setBoard_no(rs.getInt("board_no"));
+				member.setBoard_user_id(rs.getString("board_user_id"));
+				member.setBoard_content(rs.getString("board_content"));
+				member.setBoard_like(rs.getInt("board_like"));
+				member.setBoard_wdate(rs.getDate("board_wdate"));
+				member.setBoard_img(rs.getString("board_img"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return member;
+	}
+
+	
+
+	public int update(Connection conn, UserBListDTO vo) {
 		int n = 0;
 		try {			
-			psmt = conn.prepareStatement(USER_INFO_UPDATE);
+			PreparedStatement psmt = conn.prepareStatement(USER_INFO_UPDATE);
 			psmt.setString(1, vo.getUser_name());
 			psmt.setString(2, vo.getUser_info());
 			psmt.setString(3, vo.getUser_job());

@@ -66,7 +66,7 @@ hr{ color: black; border: solid 1px;}
 <body>
 <body class="w3-blue-grey w3-content" style="max-width:1600px">
 <form id="frm" name="frm" method="post">
-<input type="hidden" id="id" name="bb1">
+<input type="hidden" id="id" name="board_no">
 <!-- Sidebar/menu -->
 <nav class="w3-sidebar w3-collapse w3-grey w3-animate-left" style="z-index:3;width:350px;" id="mySidebar"><br>
   <div class="w3-container">

@@ -9,37 +9,27 @@ import java.util.ArrayList;
 
 import co.sns.common.SubListDTO;
 import co.sns.common.UserBListDTO;
+import co.sns.member.dao.UserDao;
 
 public class SubDao {
-	private final String driver = "oracle.jdbc.driver.OracleDriver";
-	private final String url = "jdbc:oracle:thin:@localhost:1521:xe";
-	private String user = "cm";
-	private String password = "cm";
 	
-	private Connection conn;
-	private PreparedStatement psmt;
-	private ResultSet rs;
+	static SubDao instance = new SubDao();
+	static public SubDao getInstance() {
+		return instance;
+	}
 		
 	private final String SUB_LIST = "SELECT USER_ID, USER_NAME, USER_JOB, USER_PRO_IMG_NAME " 
 			+ "FROM USER_LIST " 
 			+ "WHERE USER_ID IN (SELECT TO_ID FROM SUB_LIST WHERE FROM_ID = ?)";
 	
-	public SubDao() {
-		try {
-			Class.forName(driver);
-			conn = DriverManager.getConnection(url,user,password);
-		}catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-	}
 	
-	public ArrayList<UserBListDTO> select(String id){
+	public ArrayList<UserBListDTO> select(Connection conn, SubListDTO vo){
 		ArrayList<UserBListDTO> list = new ArrayList<UserBListDTO>();
 		UserBListDTO member = null;
 		try {
-			psmt = conn.prepareStatement(SUB_LIST);
-			psmt.setString(1, id);
-			rs = psmt.executeQuery();
+			PreparedStatement psmt = conn.prepareStatement(SUB_LIST);
+			psmt.setString(1, vo.getFrom_id());
+			ResultSet rs = psmt.executeQuery();
 			while(rs.next()) {
 				member = new UserBListDTO();
 				member.setUser_id(rs.getString("user_id"));

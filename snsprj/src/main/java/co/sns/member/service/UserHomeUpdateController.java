@@ -1,6 +1,7 @@
 package co.sns.member.service;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.jasper.tagplugins.jstl.core.Out;
 
+import co.sns.common.ConnectionManager;
 import co.sns.common.UserBListDTO;
 import co.sns.member.dao.UserDao; 
 
@@ -31,14 +33,11 @@ public class UserHomeUpdateController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
+		UserBListDTO vo = new UserBListDTO();
 		
-		int n = 0;
 		
-		UserDao dao = new UserDao();
-		UserBListDTO vo = new UserBListDTO(); 
 		HttpSession session = request.getSession(true);
-		String id = (String) session.getAttribute("loginid");
-		id="bbb";
+		String id = (String) session.getAttribute("my_id");
 		
 		String img_name = request.getParameter("profile_img");
 		String name = request.getParameter("user_name");
@@ -60,9 +59,15 @@ public class UserHomeUpdateController extends HttpServlet {
 		vo.setInterest_life(life);
 		vo.setInterest_hobby(hobby);
 		vo.setInterest_trends(trends);
+		
+		Connection conn = ConnectionManager.getConnnection();		
 		vo.setUser_id(id); 
 		
-		n = dao.update(vo);		
+		int n = 0;
+		n = UserDao.getInstance().update(conn, vo);
+				
+		
+		/* n = dao.update(vo); */		
 		
 		String path = "/snsprj/userHome.do";
 		/*

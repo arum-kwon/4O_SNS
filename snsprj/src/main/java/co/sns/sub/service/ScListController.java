@@ -1,6 +1,7 @@
 package co.sns.sub.service;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import co.sns.common.ConnectionManager;
+import co.sns.common.SubListDTO;
 import co.sns.common.UserBListDTO;
 import co.sns.sub.dao.SubDao;
 
@@ -29,14 +32,14 @@ public class ScListController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		HttpSession session = request.getSession(true);  //세션가저오기 없다면 생성
-		String id = (String) session.getAttribute("loginid");
-		id ="bbb";//임시 테스트용
+		String id = (String) session.getAttribute("my_id");
 		
-		SubDao dao = new SubDao();
-		ArrayList<UserBListDTO> list = new ArrayList<UserBListDTO>();
-		list = dao.select(id);
+		Connection conn = ConnectionManager.getConnnection();
+		SubListDTO vo = new SubListDTO();
+		vo.setFrom_id(id);
+		ArrayList<UserBListDTO> list = SubDao.getInstance().select(conn, vo);
+		ConnectionManager.close(conn);
 		
-				
 		request.setAttribute("members",list); //결과값을 싫어 주는 구문
 		String path = "/views/sub/subList.tiles";  //보여줄 페이지
 		

@@ -1,6 +1,7 @@
 package co.sns.member.service;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import co.sns.common.ConnectionManager;
 import co.sns.common.UserBListDTO;
 import co.sns.member.dao.UserDao; 
 
@@ -34,11 +36,13 @@ public class UserInfoSelect extends HttpServlet {
 		request.setCharacterEncoding("utf-8");		
 		String id = request.getParameter("id");		
 		
-		UserDao dao = new UserDao();
-		ArrayList<UserBListDTO> list = new ArrayList<UserBListDTO>();
-		list = dao.select(id);
-		
-		request.setAttribute("members", list);
+		Connection conn = ConnectionManager.getConnnection();
+		UserBListDTO vo = new UserBListDTO();
+		vo.setUser_id(id);
+		ArrayList<UserBListDTO> list = UserDao.getInstance().select(conn, vo);	
+		request.setAttribute("members", list);			
+		ConnectionManager.close(conn);
+				
 		String path = "/views/home/userInfoSelect.tiles";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(path);
 		dispatcher.forward(request, response);

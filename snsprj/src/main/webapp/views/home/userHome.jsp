@@ -1,75 +1,119 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 <title>userHome.jsp</title>
 <script>
 <!-- 검색버튼 구현 연습 -->
-/* function searchdo(){
+	/* function searchdo(){
 	var search1 = $("#search").val();
 	location.href = "/snsprj/userHome.do?search="+search1;
-} */
-function BoardView(board_no,user_id){	
-	$("#bb1").val(board_no);
-	$("#bb2").val(user_id);
-	
-	$("#frm").attr("action","/snsprj/BoardView.do");
-	$("#frm").submit();
-}
-$(document).ready(function(){
-	var n = "${result}"; 
-	
-	if(n != ""){
-		if(n>0){
-			alert("업데이트가 되었습니다");	
-		}else{
-			alert("업데이트가 실패하였습니다.");
-		}
+	} */
+	function BoardView(board_no, user_id) {
+		$("#board_no").val(board_no);
+
+		$("#frm").attr("action", "/snsprj/BoardView.do");
+		$("#frm").submit();
 	}
-});
-function myHeaderImgUpt(){
-	var HeaderCheck = $('input[name=header_img]:checked').val();
-//	alert(HeaderCheck);
-	$("#headChange").attr("src","/snsprj/common/header/" + HeaderCheck);
-	$("#myModal2").close();
-} 
+	$(document).ready(function() {
+		var n = "${result}";
 
-function myProImgUpt (){
-	var imgCheck = $('input[name=profile_img]:checked').val();
-//	alert(imgCheck);
-	$("#imgChange").attr("src","/snsprj/common/image/" + imgCheck);
-	$("#myModal").close();
-}
+		if (n != "") {
+			if (n > 0) {
+				alert("업데이트가 되었습니다");
+			} else {
+				alert("업데이트가 실패하였습니다.");
+			}
+		}
+	});
+	function myHeaderImgUpt() {
+		var HeaderCheck = $('input[name=header_img]:checked').val();
+		//	alert(HeaderCheck);
+		$("#headChange").attr("src", "/snsprj/common/header/" + HeaderCheck);
+		$("#myModal2").close();
+	}
 
-function back(){
-	histroy.go(-1);
-}
+	function myProImgUpt() {
+		var imgCheck = $('input[name=profile_img]:checked').val();
+		//	alert(imgCheck);
+		$("#imgChange").attr("src", "/snsprj/common/image/" + imgCheck);
+		$("#myModal").close();
+	}
 
+	function back() {
+		histroy.go(-1);
+	}
 </script>
 <style>
-#div1 { width: 100px; height: 100px}
-#table1 { width: 304px;}
-body,h1,h2,h3,h4,h5,h6  {
+#div1 {
+	width: 100px;
+	height: 100px
+}
+
+#table1 {
+	width: 304px;
+}
+
+body, h1, h2, h3, h4, h5, h6 {
 	/* background-color: white; */
 	/* background-image: url('common/image/logo.png'); */
 	font-family: "Raleway", sans-serif;
 }
-p{ text-align: center;}
-hr{ color: black; border: solid 1px;}
-#title { background: black; color: white;}
+
+p {
+	text-align: center;
+}
+
+hr {
+	color: black;
+	border: solid 1px;
+}
+
+#title {
+	background: black;
+	color: white;
+}
+
+/* .thumbnail-wrappper {
+	width: 25%;
+}
+
+.thumbnail {
+	position: relative;
+	padding-top: 100%; /* 1:1 ratio */
+overflow
+
+
+:
+
+ 
+
+hidden
+
+
+;
+}
+img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	max-width: 100%;
+	height: auto;
+}
+*
+/
 </style>
+
 <script>
 	// Get the modal
 	var modal = document.getElementById('id01');
@@ -83,157 +127,120 @@ hr{ color: black; border: solid 1px;}
 </script>
 </head>
 <body>
-<body class="w3-blue-grey w3-content" style="max-width:1600px">
 
-<!-- Sidebar/menu -->
-<form id="frm" name="frm" method="post">
-<input type="hidden" id="bb1" name="bb1">
-<input type="hidden" id="bb2" name="bb2">
-<nav class="w3-sidebar w3-collapse w3-grey w3-animate-left" style="z-index:3;width:350px;" id="mySidebar"><br>
-  <div class="w3-container">
-    <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">
-      <i class="fa fa-remove"></i>
-    </a>
-    <div align="center">
-    <img id="imgChange" src="${pageContext.request.contextPath}/common/img/pro/${ userBListDTO.user_pro_img_name }" style="width:45%;" class="w3-round"><br><br>
-    </div>    
-    <table id="table1">
-    	<tr>
-    		<td><h5><b>닉네임</b></h5></td>
-     		<td><h5>&nbsp;&nbsp;${ userBListDTO.user_name }</h5></td>
-        </tr>
-        <tr>
-    		<td><h5><b>나이</b></h5></td>
-     		<td><h5>&nbsp;&nbsp;${ userBListDTO.user_birthage }</h5></td>
-        </tr>
-        <tr>
-    		<td><h5><b>성별</b></h5></td>
-    		<c:choose>
-    			<c:when test="${ userBListDTO.user_gender == 'M'}">
-     		<td><h5>&nbsp;&nbsp;남</h5></td> 
-     			</c:when>
-     			<c:otherwise>
-     		<td><h5>&nbsp;&nbsp;여</h5></td>	
-     			</c:otherwise>
-     		</c:choose>
-        </tr>
-         <tr>
-    		<td><h5><b>직업</b></h5></td>
-     		<td><h5>&nbsp;&nbsp;${ userBListDTO.user_job }</h5></td>
-        </tr>
-        <tr height="10px">
-        <td colspan="2"><hr></td>
-        </tr>
-        <tr>
-    		<td><h5><b>엔터테이먼트∙예술</b></h5></td>
-     		<td><h5>&nbsp;&nbsp;${ userBListDTO.interest_enter }</h5></td>
-        </tr>
-        <tr>
-    		<td><h5><b>생활∙노하우∙쇼핑<b></b></h5></td>
-     		<td><h5>&nbsp;&nbsp;${ userBListDTO.interest_life }</h5></td>
-        </tr>
-        <tr>
-    		<td><h5><b>취미∙여가∙여행</b></h5></td>
-     		<td><h5>&nbsp;&nbsp;${ userBListDTO.interest_hobby }</h5></td>
-        </tr>
-        <tr>
-    		<td><h5><b>지식∙동향</b></h5></td>
-     		<td><h5>&nbsp;&nbsp;${ userBListDTO.interest_trends }</h5></td>
-        </tr>
-        <tr height="10px">
-        <td colspan="2"><hr></td>
-        </tr>
-        <tr>
-        <td align="center" colspan="2"><h5><b><인사말></b></h5></td>
-        </tr>
-        <tr>
-        	<td colspan="2"><h5>${ userBListDTO.user_info }</h5></td>
-        </tr>        
-    </table>
-     <br><br>   
-	<button style="margin-left: 100px" type="button" onclick="location.href='userHomeUpdatePage.do'" class="btn btn-info btn-lg">수정 페이지</button>
-  </div>
-  	<br><br><br>
-</nav>
+	<!-- Sidebar/menu -->
+	<form id="frm" name="frm" method="post">
+		<input type="hidden" id="board_no" name="board_no">
+		<div align="center">
+			<div id="title">
+				<h1>
+					<b>개인정보 홈</b>
+				</h1>
+			</div>
+		</div>
+		<div align="center">
+			<img id="imgChange"
+				src="${pageContext.request.contextPath}/common/img/pro/${ userinfo[0].user_pro_img_name }"
+				class="rounded-circle" alt="엑박" width="150" height="150"> <img
+				id="imgChange"
+				src="${pageContext.request.contextPath}/common/img/pro/${ userinfo[0].user_pro_img_name }"
+				class="rounded-circle" alt="엑박" width="150" height="150"> <img
+				id="imgChange"
+				src="${pageContext.request.contextPath}/common/img/pro/${ userinfo[0].user_pro_img_name }"
+				class="rounded-circle" alt="엑박" width="150" height="150"> <img
+				id="imgChange"
+				src="${pageContext.request.contextPath}/common/img/pro/${ userinfo[0].user_pro_img_name }"
+				class="rounded-circle" alt="엑박" width="150" height="150"> <img
+				id="imgChange"
+				src="${pageContext.request.contextPath}/common/img/pro/${ userinfo[0].user_pro_img_name }"
+				class="rounded-circle" alt="엑박" width="150" height="150">
+		</div>
+		<div align="center">
+		<button type="button" onclick="location.href='userHomeUpdatePage.do'">수정 페이지</button>
+		</div><br>
+		<table align="center">
+			<tr>
+				<th>닉네임</th> <td>${ userinfo[0].user_name }</td>
+			</tr> 
+			<tr>
+				<th>나이</th> <td>${ userinfo[0].user_birthage }</td>
+			</tr>
+			<tr>
+				<th>성별</th> 
+					<td>
+						<c:choose>
+							<c:when test="${ userinfo[0].user_gender == 'M'}"> 
+							남
+							</c:when>
+							<c:otherwise>
+							여
+							</c:otherwise>
+						</c:choose>
+					</td>
+			</tr>
+			<tr>
+				<th>직업</th> <td>${ userinfo[0].user_job }</td>
+			</tr>
+			<tr>
+				<th>엔터테이먼트</th> <td>${ userinfo[0].interest_enter }</td>
+			</tr>
+			<tr>
+				<th>생활</th> <td>${ userinfo[0].interest_life }</td>
+			</tr>
+			<tr>
+				<th>취미</th> <td> ${ userinfo[0].interest_hobby }</td>
+			</tr>
+			<tr>
+				<th>동향</th> <td>${ userinfo[0].interest_trends }</td>
+			</tr>
+			<tr>
+				<th>자기소개</th> <td>${ userinfo[0].user_info }</td>
+			</tr>				
+		</table>
+		<div align="center">
+			<div id="title">
+				<h1>
+					<b>타임라인</b>
+				</h1>
+			</div>
+		</div>
 
-<!-- Overlay effect when opening sidebar on small screens -->
-<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
-<!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:400px">
-
- <!-- Header --> 
-  <header id="portfolio">
-    <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
-    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>    
-    <div class="w3-container" align="center">
-    <div>    
-    <img src="${pageContext.request.contextPath}/common/img/header/header_img_5.jpg" style="width: 1165px; height: 300px;">    
-    </div>
-    <div id="title">
-    <hr><h1><b>타임라인</b></h1><hr>
-    </div>
-    <!--
-    <div class="w3-section w3-bottombar w3-padding-16">
-      <span class="w3-margin-right">Filter:</span> 
-      <button class="w3-button w3-black">ALL</button>
-      <button class="w3-button w3-white"><i class="fa fa-diamond w3-margin-right"></i>Design</button>
-      <button class="w3-button w3-white w3-hide-small"><i class="fa fa-photo w3-margin-right"></i>Photos</button>
-      <button class="w3-button w3-white w3-hide-small"><i class="fa fa-map-pin w3-margin-right"></i>Art</button>
-    </div>
-    -->
-    </div>
-  </header>
-  
-<!-- First Photo Grid-->
-  <div class="w3-row-padding">  
-	  <c:forEach var="board" items="${ mboards }"> 
-		    <div class="w3-third w3-container w3-margin-bottom"  onclick="BoardView('${board.board_no}', '${sessionScope.my_id }')">
-		 	   <p><b>글 번호: ${ board.board_no } &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   작성시간: ${ board.board_wdate }</b></p>
-		    		<div style="border: 1px solid black; padding: 10px; height: 300px;; min-height: 100px; overflow: hidden;;">
+		<%-- 기존 타임라인  시작
+		<div class="w9-row-padding">
+			<c:forEach var="board" items="${ userinfo }">
+				<div class="w3-third w3-container w3-margin-bottom"
+					onclick="BoardView('${board.board_no}')">
+					<p>
+						<b>글 번호: ${ board.board_no }
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							작성시간: ${ board.board_wdate }</b>
+					</p>
+					<div
+						style="border: 1px solid black; padding: 10px; height: 300px;; min-height: 100px; overflow: hidden;">
 						<p>${ board.board_content }</p>
-		      		</div>
-		      		<div class="w3-container">
-		    			<p align="center">좋아요: ${ board.board_like }&nbsp;★</p>
-		      		</div>
-		    </div>
-	   </c:forEach>
-	          
-  </div>
-  
-  <!-- Second Photo Grid-->
-  
-
-  <!-- Pagination -->
-  <!-- 검색키 구현 -->
-  <%-- <div align="center">
-  <input type="text" id="search" name="search" value="${ search1 }" onkeypress="if(event.keyCode==13){searchdo()}">
-  <button type="button" onclick="searchdo()">검색</button>
-  </div> --%>
-  <div class="w3-center w3-padding-32">
-    <div class="w3-bar">
-      <a href="#" class="w3-bar-item w3-button w3-hover-black">«</a>
-      <a href="#" class="w3-bar-item w3-black w3-button">1</a>
-      <a href="#" class="w3-bar-item w3-button w3-hover-black">2</a>
-      <a href="#" class="w3-bar-item w3-button w3-hover-black">3</a>
-      <a href="#" class="w3-bar-item w3-button w3-hover-black">4</a>
-      <a href="#" class="w3-bar-item w3-button w3-hover-black">»</a>
-    </div>
-  </div>
-
-  <div class="w3-black w3-center w3-padding-24">Team 4o</a></div><br>
-</div>
-<script>
-// Script to open and close sidebar
-function w3_open() {
-    document.getElementById("mySidebar").style.display = "block";
-    document.getElementById("myOverlay").style.display = "block";
-}
- 
-function w3_close() {
-    document.getElementById("mySidebar").style.display = "none";
-    document.getElementById("myOverlay").style.display = "none";
-}
-</script>
-</form>
+					</div>
+					<div class="w3-container">
+						<p align="center">좋아요: ${ board.board_like }&nbsp;★</p>
+					</div>
+				</div>
+			</c:forEach>
+		</div> 
+		기존타임라인 끝
+		--%>
+		<c:forEach var="board" items="${ userinfo }">
+		<div class="w3-col s12 m6 l3" onclick="BoardView('${board.board_no}')">
+			<div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+			<!-- 프로필 부분 -->
+				<img id="imgChange" src="${pageContext.request.contextPath}/common/img/pro/${ board.user_pro_img_name }" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+				<span class="w3-right w3-opacity"> ${ board.board_wdate } </span>
+				<h4>${ board.user_name}</h4><br>	
+				<hr class="w3-clear">
+				<!-- 본문 부분 -->
+				<p>${ board.board_content }</p>				
+				<button type="button" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i> Like ${ board.board_like }</button>				
+			</div>
+		</div>
+		</c:forEach>
+	</form>
 </body>
 </html>

@@ -1,6 +1,7 @@
 package co.sns.member.service;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import co.sns.common.ConnectionManager;
 import co.sns.common.UserBListDTO;
 import co.sns.member.dao.UserDao; 
 
@@ -29,14 +31,16 @@ public class UserHomeUpdatePageController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		HttpSession session = request.getSession(true);
-		String id = (String) session.getAttribute("loginid"); 
-		id="bbb";
+		String id = (String) session.getAttribute("my_id");
+			
 		
-		UserDao dao = new UserDao();
-		UserBListDTO dto = new UserBListDTO();
-		dto = dao.selectUserInfo(id);
-		
-		request.setAttribute("member", dto);
+		Connection conn = ConnectionManager.getConnnection();
+		UserBListDTO vo = new UserBListDTO();
+		vo.setUser_id(id);
+		UserBListDTO UserListDTO = UserDao.getInstance().selectUserInfo(conn, vo);
+		request.setAttribute("userinfo", UserListDTO);				
+		ConnectionManager.close(conn);
+				
 		String path = "/views/home/userHomeUpdatepage.tiles";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(path);
 		dispatcher.forward(request, response); 
