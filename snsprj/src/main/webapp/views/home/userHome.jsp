@@ -81,37 +81,72 @@ hr {
 	background: black;
 	color: white;
 }
-
-/* .thumbnail-wrappper {
-	width: 25%;
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
 }
 
-.thumbnail {
-	position: relative;
-	padding-top: 100%; /* 1:1 ratio */
-overflow
-
-
-:
-
- 
-
-hidden
-
-
-;
+.button1 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #4CAF50;
 }
-img {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	max-width: 100%;
-	height: auto;
+
+.button1:hover {
+  background-color: #4CAF50;
+  color: white;
 }
-*
-/
+
+.button2 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #008CBA;
+}
+
+.button2:hover {
+  background-color: #008CBA;
+  color: white;
+}
+
+.button3 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #f44336;
+}
+
+.button3:hover {
+  background-color: #f44336;
+  color: white;
+}
+
+.button4 {
+  background-color: white;
+  color: black;
+  border: 2px solid #e7e7e7;
+}
+
+.button4:hover {background-color: #e7e7e7;}
+
+.button5 {
+  background-color: white;
+  color: black;
+  border: 2px solid #555555;
+}
+
+.button5:hover {
+  background-color: #555555;
+  color: white;
+}
+
 </style>
 
 <script>
@@ -139,24 +174,11 @@ img {
 			</div>
 		</div>
 		<div align="center">
-			<img id="imgChange"
-				src="${pageContext.request.contextPath}/common/img/pro/${ userinfo[0].user_pro_img_name }"
-				class="rounded-circle" alt="엑박" width="150" height="150"> <img
-				id="imgChange"
-				src="${pageContext.request.contextPath}/common/img/pro/${ userinfo[0].user_pro_img_name }"
-				class="rounded-circle" alt="엑박" width="150" height="150"> <img
-				id="imgChange"
-				src="${pageContext.request.contextPath}/common/img/pro/${ userinfo[0].user_pro_img_name }"
-				class="rounded-circle" alt="엑박" width="150" height="150"> <img
-				id="imgChange"
-				src="${pageContext.request.contextPath}/common/img/pro/${ userinfo[0].user_pro_img_name }"
-				class="rounded-circle" alt="엑박" width="150" height="150"> <img
-				id="imgChange"
-				src="${pageContext.request.contextPath}/common/img/pro/${ userinfo[0].user_pro_img_name }"
-				class="rounded-circle" alt="엑박" width="150" height="150">
-		</div>
+			<img id="imgChange" src="${pageContext.request.contextPath}/common/img/pro/${ userinfo[0].user_pro_img_name }" class="rounded-circle" alt="엑박" width="150" height="150">
+			
+		</div><br>
 		<div align="center">
-		<button type="button" onclick="location.href='userHomeUpdatePage.do'">수정 페이지</button>
+		<button class="button button2" type="button" onclick="location.href='userHomeUpdatePage.do'">수정 페이지</button>		
 		</div><br>
 		<table align="center">
 			<tr>

@@ -36,7 +36,7 @@ public class UserHomeUpdatePageController extends HttpServlet {
 		
 		Connection conn = ConnectionManager.getConnnection();
 		UserBListDTO vo = new UserBListDTO();
-		vo.setUser_id(id);
+		vo.setUser_id(id);		
 		UserBListDTO UserListDTO = UserDao.getInstance().selectUserInfo(conn, vo);
 		request.setAttribute("userinfo", UserListDTO);				
 		ConnectionManager.close(conn);

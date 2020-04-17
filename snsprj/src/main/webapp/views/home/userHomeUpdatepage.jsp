@@ -7,13 +7,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-<title>userHomeUpdate.jsp</title>
 <script>
-$(document).ready(function(){
+/* $(document).ready(function(){
 	var n = "${result}"; 
 	
 	if(n != ""){
@@ -23,7 +26,10 @@ $(document).ready(function(){
 			alert("업데이트가 실패하였습니다.");
 		}
 	}
-});
+}); */
+function show(){
+	$(".modal-dialog").css("display", "block")
+}
 function myHeaderImgUpt(){
 	var HeaderCheck = $('input[name=header_img]:checked').val();
 //	alert(HeaderCheck);
@@ -33,7 +39,7 @@ function myHeaderImgUpt(){
 function myProImgUpt (){
 	var imgCheck = $('input[name=profile_img]:checked').val();
 //	alert(imgCheck);
-	$("#imgChange").attr("src","/snsprj/common/image/" + imgCheck);
+	$("#imgChange").attr("src","/snsprj/common/img/pro/" + imgCheck);
 	$("#myModal").close();
 }
 function userInfoUpdate(){
@@ -43,43 +49,107 @@ function userInfoUpdate(){
 function back(){
 	histroy.go(-1);
 }
-// Get the modal
-var modal = document.getElementById('id01');
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-	if (event.target == modal) {
-		modal.style.display = "none";
-	}
-}
 </script>
 <style>
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.button1 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #4CAF50;
+}
+
+.button1:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.button2 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #008CBA;
+}
+
+.button2:hover {
+  background-color: #008CBA;
+  color: white;
+}
+
+.button3 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #f44336;
+}
+
+.button3:hover {
+  background-color: #f44336;
+  color: white;
+}
+
+.button4 {
+  background-color: white;
+  color: black;
+  border: 2px solid #e7e7e7;
+}
+
+.button4:hover {background-color: #e7e7e7;}
+
+.button5 {
+  background-color: white;
+  color: black;
+  border: 2px solid #555555;
+}
+
+.button5:hover {
+  background-color: #555555;
+  color: white;
+}
+#div2 { display: inline-block;}
+body{
+	background-color: white;
+}
+
+#title { background: black; color: white;}
+table,th,tr,td { border: 1px solid gray; }
+table, th{ width: 10cm}
+hr { background-color: gray; height: 1px;}
 
 </style>
 </head>
-<body>
 <form id="frm" name="frm" method="post">
-	
+	<div id="title" align="center">
 		<h1>개인정보 수정</h1>
-		
-		<table id="table1" border="1">
-		<tr>
-			<th>프로필사진</th>
-			<td>
-			
-			<img id="imgChange" src="${pageContext.request.contextPath}/common/img/pro/${ userinfo.user_pro_img_name }" width="150px" height="100px" />
+	</div>
+		<div id="div1" class="w3-center-align w3-white w3-container" style="height:auto;">
+		<div id="divtable" align="center">
+			<div class="row">
+				<span class="cell_col1">프로필사진: </span>
+				<span class="cell col2"><img id="imgChange" src="${pageContext.request.contextPath}/common/img/pro/${ userinfo.user_pro_img_name }" width="150px" height="100px" />
 									<!-- Trigger the modal with a button -->
-									<button type="button" class="btn btn-info btn-lg"
-										data-toggle="modal" data-target="#myModal">프로필 수정</button>
+									<button id="picchange" type="button" class="button button2"
+										data-toggle="modal" data-target="#myModal" onclick="show()">프로필 수정</button>
 
 									<!-- Modal -->
 									<div class="modal fade" id="myModal" role="dialog">
-										<div class="modal-dialog">
+										<div class="modal-dialog" style="display: none;">
 											<!-- Modal content-->
-											<div class="modal-content">
+											<div id="picchangepage" class="modal-content" style="border: 1px solid black">
 												<div class="modal-header">
 													<!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-													<h4>프로필 사진 수정하기</h4>
+													<h4><b>< 프로필 사진 수정하기 ></b></h4>
 												</div>
 												<div class="modal-body">
 													<c:choose>
@@ -90,7 +160,7 @@ window.onclick = function(event) {
 															<input type="radio" id="picture1" name="profile_img" value="profile_img_1.jpg">
 														</c:otherwise>
 													</c:choose>
-													<img src="common/image/profile_img_1.jpg" class="rounded-circle" alt="Cinque Terre" width="150" height="150">
+													<img src="${pageContext.request.contextPath}/common/img/pro/profile_img_1.jpg" class="rounded-circle" alt="Cinque Terre" width="150" height="150">
 													
 													<c:choose>
 														<c:when test="${ userinfo.user_pro_img_name == 'profile_img_2.jpg' }">
@@ -100,10 +170,8 @@ window.onclick = function(event) {
 															<input type="radio" id="picture2" name="profile_img" value="profile_img_2.jpg">
 														</c:otherwise>
 													</c:choose>
-													<img src="common/image/profile_img_2.jpg" class="rounded-circle" alt="Cinque Terre" width="150" height="150">
-												</div>
-												
-												<div class="modal-body">
+													<img src="${pageContext.request.contextPath}/common/img/pro/profile_img_2.jpg" class="rounded-circle" alt="Cinque Terre" width="150" height="150">
+													
 													<c:if test="${ userinfo.user_pro_img_name == 'profile_img_3.jpg' }">
 														<input type="radio" id="picture3" name="profile_img" value="profile_img_3.jpg" checked>
 													</c:if>
@@ -111,7 +179,10 @@ window.onclick = function(event) {
 														<input type="radio" id="picture3" name="profile_img" value="profile_img_3.jpg">
 													</c:if>
 													
-													<img src="common/image/profile_img_3.jpg" class="rounded-circle" alt="Cinque Terre" width="150" height="150">
+													<img src="${pageContext.request.contextPath}/common/img/pro/profile_img_3.jpg" class="rounded-circle" alt="Cinque Terre" width="150" height="150">
+												</div>
+												<div class="modal-body">
+													
 													<c:choose>
 														<c:when test="${ userinfo.user_pro_img_name == 'profile_img_4.jpg' }">
 															<input type="radio" id="picture4" name="profile_img" value="profile_img_4.jpg" checked>
@@ -120,9 +191,8 @@ window.onclick = function(event) {
 															<input type="radio" id="picture4" name="profile_img" value="profile_img_4.jpg">
 														</c:otherwise>
 													</c:choose>										
-													<img src="common/image/profile_img_4.jpg" class="rounded-circle" alt="Cinque Terre" width="150" height="150">
-												</div>
-												<div class="modal-body">
+													<img src="${pageContext.request.contextPath}/common/img/pro/profile_img_4.jpg" class="rounded-circle" alt="Cinque Terre" width="150" height="150">
+													
 													<c:choose>
 														<c:when test="${ userinfo.user_pro_img_name == 'profile_img_5.jpg' }">
 															<input type="radio" id="picture5" name="profile_img" value="profile_img_5.jpg" checked>
@@ -131,7 +201,7 @@ window.onclick = function(event) {
 															<input type="radio" id="picture5" name="profile_img" value="profile_img_5.jpg">
 														</c:otherwise>
 													</c:choose>
-													<img src="common/image/profile_img_5.jpg" class="rounded-circle" alt="Cinque Terre" width="150" height="150">
+													<img src="${pageContext.request.contextPath}/common/img/pro/profile_img_5.jpg" class="rounded-circle" alt="Cinque Terre" width="150" height="150">
 													<c:choose>
 														<c:when test="${ userinfo.user_pro_img_name == 'profile_img_6.jpg' }">
 															<input type="radio" id="picture6" name="profile_img" value="profile_img_6.jpg" checked>
@@ -140,76 +210,71 @@ window.onclick = function(event) {
 															<input type="radio" id="picture6" name="profile_img" value="profile_img_6.jpg">
 														</c:otherwise>
 													</c:choose>												
-													<img src="common/image/profile_img_6.jpg" class="rounded-circle" alt="Cinque Terre" width="150" height="150">
+													<img src="${pageContext.request.contextPath}/common/img/pro/profile_img_6.jpg" class="rounded-circle" alt="Cinque Terre" width="150" height="150">
 												</div>
+												
 												<div class="modal-footer">
-													<button type="button" class="btn btn-default"
-														data-dismiss="modal" onclick="myProImgUpt();">수정하기</button>
-														<button type="button" class="btn btn-default"
-														data-dismiss="modal">취소</button>
+													<button type="button" class="button button2" data-dismiss="modal" onclick="myProImgUpt();">수정하기</button>
+													<button type="button" class="button button2" data-dismiss="modal">취소</button>
 												</div>
 											</div>
 
 										</div>
-									</div>
-
-								</div>
-			</td>
+									</div></span>
+			</div><hr>
+			<div class="row">
+				<span class="cell col1">아이디:</span>
+				<span class="cell col2">${ userinfo.user_id }</span>
+			</div><hr>
+			<div class="row">
+				<span class="cell col1">닉네임:</span>
+				<span class="cell col2"><input type="text" id="user_name" name="user_name" value="${ userinfo.user_name }"></span>
+			</div><hr>
+			<div class="row">
+				<span class="cell col1">나이:</span> <span class="cell col2">${ userinfo.user_birthage }</span>
+			</div><hr>
+			<div class="row">
+				<span class="cell col1">성별:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <span class="cell col2">
+					<c:choose>
+						<c:when test="${ userinfo.user_gender == 'M' }">
+								<input type="radio" id="user_gender" name="user_gender" value="M" checked> 남자 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</c:when>
+						<c:otherwise>
+								<input type="radio" id="user_gender" name="user_gender" value="M"> 남자 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</c:otherwise>
+					</c:choose> 
+						
+					<c:choose>
+						<c:when test="${ userinfo.user_gender == 'W' }">
+								<input type="radio" id="user_gender" name="user_gender" value="W" checked> 여자 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</c:when>
+						<c:otherwise>
+								<input type="radio" id="user_gender" name="user_gender" value="W"> 여자 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</c:otherwise>
+					</c:choose>
+				</span>
+			</div><hr>
+			<div class="row">
+				<span class="cell col1">가입일:</span>
+				<span class="cell col2">${ userinfo.user_jdate }</span>
+			</div><hr>
+			<div class="row">
+				<span class="cell col1">직업:</span>
+				<span class="cell col2"><input type="text" id="user_job" name="user_job" value="${ userinfo.user_job }"></span>
+			</div><hr>
+			<div class="row">
+			자기소개
+			</div>
+			<div class="row">				
+				<span class="cell col2"><textarea cols="30" rows="10" id="user_info" name="user_info">${ userinfo.user_info }</textarea></span>
+			</div><hr>
+		</div>
+		<table id="table2" align="center" >
 		<tr>
-		<tr>
-			<th>ID</th>
-			<td>${ userinfo.user_id }</td>
-		</tr>
-		<tr>
-			<th>닉네임</th>
-			<td><input type="text" id="user_name" name="user_name" value="${ userinfo.user_name }"></td>
-		</tr>
-		<tr>
-			<th>나이</th>
-			<td>${ userinfo.user_birthage }</td>
-		</tr>
-		<tr>
-			<th>성별</th>
-			<td>
-				<c:choose>
-					<c:when test="${ userinfo.user_gender == 'M' }">
-						<input type="radio" id="user_gender" name="user_gender" value="M" checked> 남자 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					</c:when>
-					<c:otherwise>
-					<input type="radio" id="user_gender" name="user_gender" value="M"> 남자 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				</c:otherwise>
-				</c:choose>
-			
-				<c:choose>
-					<c:when test="${ userinfo.user_gender == 'W' }">
-						<input type="radio" id="user_gender" name="user_gender" value="W"checked > 여자 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					</c:when>
-					<c:otherwise>
-						<input type="radio" id="user_gender" name="user_gender" value="W"> 여자 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					</c:otherwise>	
-				</c:choose>
-			</td>
-		</tr>
-		<tr>
-			<th>가입일</th>
-			<td>${ userinfo.user_jdate }</td>
-		</tr>
-		<tr>
-			<th>직업</th>
-			<td><input type="text" id="user_job" name="user_job" value="${ userinfo.user_job }"></td>
-		</tr>
-		<tr>
-			<th>자기소개</th>
-			<td><textarea cols="50" rows="10" id="user_info" name="user_info">${ userinfo.user_info }</textarea></td>
-		</tr>
-		</table>
-		<div id="div2" align="center">
-		<table id="table2" border="1" >
-		<tr align="center">
 			<th colspan="10">취미 선택</th>
 		</tr>
 		<tr>
-		<th>엔터테이먼트</th><th>생활</th><th>취미</th><th>동향</th>	
+		<th>엔터</th><th>생활</th><th>취미</th><th>동향</th>	
 		</tr>
 		<tr>
 		<td>
@@ -547,21 +612,20 @@ window.onclick = function(event) {
 		</c:choose>
 		</td>
 		</tr>
-		<tr>
-		<td colspan="4" style="color: black; text-align: center;">타인과 취미가 3개 이상 겹치면<br> 추천구독리스트가 뜹니다.</td>
+		<tr class="onlytr">
+		<td colspan="4" align="center" style="color: red;"><b>타인과 취미가 3개 이상 겹치면</b><br> <b>추천구독리스트가 뜹니다.</b></td>
 		</tr>
 	</table>
 		<br>
 	</div>
-	<div>
-		<button type="button" onclick="userInfoUpdate()">수정하기</button>
-		<button type="reset">취소</button>
-		<button id="back" type="button" onclick="location.href='/snsprj/userHome.do'">개인정보 홈</button>
+	
+	<div align="center">
+		<button class="button button2" type="button" onclick="userInfoUpdate()">수정하기</button>
+		<button class="button button2" type="reset">취소</button>
+		<button class="button button2" id="back" type="button" onclick="location.href='/snsprj/userHome.do'">개인정보 홈</button>
 		</div><br> 
-		</div>
-		</div>
-		<div class="w3-black w3-center w3-padding-24">Team 4o</a></div>
-	</div>
+		</div>		
+		<div class="w3-black w3-center w3-padding-24">Team 4o</a></div>	
 	</form>
 </body>
 </html>

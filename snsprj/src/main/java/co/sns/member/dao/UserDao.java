@@ -55,6 +55,40 @@ public class UserDao {
 			"where cnt >= 3 \r\n " + 
 			"ORDER BY cnt DESC ";
 	
+	public UserBListDTO selectUserInfo2(Connection conn, UserBListDTO dto) {
+		UserBListDTO member = null;
+		try {
+			PreparedStatement psmt = conn.prepareStatement(USER_SELECT);
+			psmt.setString(1, dto.getUser_id());
+			ResultSet rs = psmt.executeQuery();
+			while (rs.next()) {
+				member = new UserBListDTO();
+				member.setUser_id(rs.getString("user_id"));
+				member.setUser_name(rs.getString("user_name"));
+//				member.setUser_pw(rs.getString("user_pw"));
+				member.setUser_header_img(rs.getString("user_header_img"));
+				member.setUser_pro_img_name(rs.getString("user_pro_img_name"));
+				member.setUser_job(rs.getString("user_job"));
+				member.setUser_jdate(rs.getDate("user_jdate"));
+				member.setUser_gender(rs.getString("user_gender"));
+				member.setUser_birthage(rs.getString("user_birthage"));
+				member.setUser_info(rs.getString("user_info"));
+				member.setInterest_enter(rs.getString("interest_enter"));
+				member.setInterest_life(rs.getString("interest_life"));
+				member.setInterest_hobby(rs.getString("interest_hobby"));
+				member.setInterest_trends(rs.getString("interest_trends"));
+				member.setBoard_no(rs.getInt("board_no"));
+				member.setBoard_user_id(rs.getString("board_user_id"));
+				member.setBoard_content(rs.getString("board_content"));
+				member.setBoard_like(rs.getInt("board_like"));
+				member.setBoard_wdate(rs.getDate("board_wdate"));
+				member.setBoard_img(rs.getString("board_img"));				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return member;
+	}
 	
 	public UserBListDTO selectUserInfo(Connection conn, UserBListDTO vo) {
 		UserBListDTO member = null;

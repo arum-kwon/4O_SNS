@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import co.sns.common.ConnectionManager;
 import co.sns.common.SubListDTO;
 import co.sns.common.UserBListDTO;
+import co.sns.member.dao.UserDao;
 import co.sns.sub.dao.SubDao;
 
 @WebServlet("/subList.do")
@@ -35,10 +36,10 @@ public class ScListController extends HttpServlet {
 		String id = (String) session.getAttribute("my_id");
 		
 		Connection conn = ConnectionManager.getConnnection();
-		SubListDTO vo = new SubListDTO();
+		SubListDTO vo = new SubListDTO();						
 		vo.setFrom_id(id);
-		ArrayList<UserBListDTO> list = SubDao.getInstance().select(conn, vo);
-		ConnectionManager.close(conn);
+		ArrayList<UserBListDTO> list = SubDao.getInstance().select(conn, vo);		
+		ConnectionManager.close(conn);		
 		
 		request.setAttribute("members",list); //결과값을 싫어 주는 구문
 		String path = "/views/sub/subList.tiles";  //보여줄 페이지
