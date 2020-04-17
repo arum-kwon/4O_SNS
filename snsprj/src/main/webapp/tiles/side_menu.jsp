@@ -87,7 +87,7 @@
 			location.href="/snsprj/LikeBoard.do";
 		}
 		if(to == 'subRecomemd'){
-			location.href="#";
+			location.href="/snsprj/subrecommend.do";
 		}
 	}
 
