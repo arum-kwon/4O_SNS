@@ -37,14 +37,20 @@ function goBack(){
 
 <body>
 	<form name="writeFrom" id="writeFrom" method="post" enctype="multipart/form-data" action="/snsprj/insertBoard.do">
-		<div align ="center">
-			<button type ="button" onclick="goBack()">취 소</button>
-			<button type="button" id="btnSubmit" name="btnSubmit" onClick="checkedSubmit()">등 록</button>
-		</div>
+			
+			<input type="file" name="imageFile" id="imageFile" style="width:100%" class="w3-button w3-blue-grey w3-round w3-padding-small w3-margin-bottom w3-margin-top">
 			<textarea id ="content" name="content" class="content" onkeydown="resize(this)" onkeyup="resize(this)" 
 				style="width:100%" placeholder="내 용" ></textarea>
 			
-		 <input type="file" name="imageFile" id="imageFile" style="width:100%"">
+			<div align="center" style="display:inline;">
+			<button type="button" id="btnSubmit" name="btnSubmit" onClick="checkedSubmit()" class="w3-button w3-blue-grey w3-round w3-padding-small w3-margin-bottom  w3-margin-top ">등 록</button>
+			</div>
+			
+			<div align="center" style="display:inline;">
+			<button type ="button" onclick="goBack()" class="w3-button w3-blue-grey w3-round w3-padding-small w3-margin-bottom w3-margin-top">취 소</button>
+			</div>
+			
+		 	
 	</form>
 </body>
 </html>

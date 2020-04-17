@@ -110,23 +110,24 @@ public class SearchDAO {
 		public  ArrayList<SerKeyListDTO> hot() {
 			ArrayList<SerKeyListDTO> hotkeys = new ArrayList<SerKeyListDTO>();
 			String sql ="select keyword FROM (select keyword from ser_key_list order by ser_count desc) WHERE rownum <=5";
+			ResultSet rs = null;
 			try {
 				conn = co.sns.common.ConnectionManager.getConnnection();
 				pstmt = conn.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery();
+				rs = pstmt.executeQuery();
 				while(rs.next()) {
 					SerKeyListDTO hotkey = new SerKeyListDTO();
 					hotkey.setKeyword(rs.getString("keyword"));
 					hotkeys.add(hotkey);
 				}
 				rs.close();
-				System.out.println(hotkeys);
+				
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 			finally {
-				co.sns.common.ConnectionManager.close(conn);
+				co.sns.common.ConnectionManager.close(rs, pstmt, conn);
 			}
 			return hotkeys;
 		}

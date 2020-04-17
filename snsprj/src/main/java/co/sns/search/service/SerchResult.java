@@ -39,8 +39,7 @@ public class SerchResult extends HttpServlet {
 		request.setCharacterEncoding("UTF-8"); // 한글처리
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=utf-8"); // 브라우저로 보내는 내용에 대한 한글철리
-		PrintWriter out = response.getWriter();
-		out.print("이것이 실행됩니다.");
+		
 		//세션 작업
 		HttpSession session = request.getSession(true); 
 

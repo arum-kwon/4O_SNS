@@ -51,7 +51,7 @@
 						text = obj.keywordList[i].keyword
 						document.getElementById("hotKeyowrd" + i).innerHTML = text;
 					}
-					console.log("여기로 넘어옸나?" + obj.keywordList);
+					
 					document.getElementById("hotKeyowrd"+ i).innerHTML = text;
 					if (text == "") {
 						document.getElementById("hotKeyowrd").innerHTML = "서버오류";

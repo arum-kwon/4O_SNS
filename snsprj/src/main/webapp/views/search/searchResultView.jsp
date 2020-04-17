@@ -25,15 +25,11 @@ div p {overflow: hidden;
 <c:choose>
 				<c:when test="${empty searchedPosts }">
 					  <!-- Header -->
- 					<header id="portfolio">
+ 					<header>
     					<div class="w3-container">
-   						 <h2  class="w3-margin-top  w3-margin-left" ><b>검색 결과</b></h2>
-   						 <div class="w3-section w3-bottombar w3-padding-16">
-   						 <span class="w3-margin-right">검색결과가 없습니다.</span> 
-   						 <div class="w3-section w3-bottombar w3-padding-16">
-    					 
-   						 </div>
-    					</div>
+   						 <h2  class="w3-margin-top w3-margin-left" ><b>검색 결과</b></h2>
+   						 <div class="w3-margin-bottom w3-bottombar w3-padding-small"></div>
+   						 <span class="w3-margin-left">검색결과가 없습니다.</span>     					
   					</header>
 					
 					<div class="w3-col s12 m6 l3">
@@ -42,12 +38,10 @@ div p {overflow: hidden;
 			
 				
 				<c:otherwise>
-				<header id="portfolio">
+					<header>
     					<div class="w3-container">
-   						 <h2 class="w3-margin-top  w3-margin-left" ><b>검색 결과</b></h2>
-   						 <div class="w3-section w3-bottombar w3-padding-16">
-    					 
-   						 </div>
+   						 <h2  class="w3-margin-top w3-margin-left" ><b>검색 결과</b></h2>
+   						 <div class="w3-margin-bottom w3-bottombar w3-padding-small"></div>
     					</div>
   					</header>
 					
