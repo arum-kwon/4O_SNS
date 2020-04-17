@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,37 +12,40 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import co.sns.common.BoardListDTO;
+import co.sns.common.CommentListDTO;
 import co.sns.common.ConnectionManager;
-import co.sns.post.dao.LikeBoardDAO;
+import co.sns.post.dao.CommentInsertDAO;
 
-/**
- * Servlet implementation class BoardLikeServlet
- */
-@WebServlet("/LikeBoard.do")
-public class LikeBoardServlet extends HttpServlet {
+@WebServlet("/CommentInsertServlet.do")
+public class CommentInsertServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		//request객체의 parameter값 가져옴, 접속자의 id만 필요하기 때문에 나중에 세션에서 받아오기
 		HttpSession session = request.getSession(true); 
 		String myId = (String) session.getAttribute("my_id");
+		String str_no = request.getParameter("board_no");
+		String content = request.getParameter("content");
+		int board_no = 0;
+		if(str_no != null) {
+			board_no = Integer.parseInt(str_no);
+		}
 		
-
-		//Dao에서 게시글 정보를 가져옴
+		CommentListDTO dto = new CommentListDTO();
+		dto.setBoard_no(board_no);
+		dto.setComment_content(content);
+		dto.setUser_id(myId);
+		
+		//Dao에서 처리
 		Connection conn = ConnectionManager.getConnnection();
-		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
-		list = LikeBoardDAO.getInstance().getLikeBoardList(conn, myId);
+		int n = CommentInsertDAO.getInstance().insertComment(conn, dto);
 		ConnectionManager.close(conn);
-
-		//request객체에 담아 forward로 보냄
-		request.setAttribute("list", list);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/views/post/likeBoardList.tiles");
-		dispatcher.forward(request, response);
+		
+		// sendRedirect로 보냄
+		String contextPath = request.getContextPath();
+		String path = contextPath+"/BoardDetailServlet.do?board_no="+board_no;
+		response.sendRedirect(path);
+		
 	}
-
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);

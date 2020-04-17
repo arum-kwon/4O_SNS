@@ -45,7 +45,7 @@ public class BoardDetailDAO {
 				map.put("board", dto);
 				map.put("user_name", rs.getString("user_name"));
 				map.put("user_pro_img_name", rs.getString("user_pro_img_name"));
-				map.put("bLike", rs.getString("bLike"));
+				map.put("blike", rs.getString("bLike"));
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -63,7 +63,7 @@ public class BoardDetailDAO {
 				"FROM user_list u JOIN (SELECT * " + 
 				"                    FROM comment_list " + 
 				"                    WHERE board_no IN (SELECT board_no FROM board_list WHERE board_no = ?)) c " + 
-				"ON(u.user_id = c.user_id)";
+				"ON(u.user_id = c.user_id) ORDER BY WDATE DESC, comment_no DESC";
 		
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		

@@ -32,7 +32,6 @@ public class ClickLikeDAO {
 			psmt.setInt(1, boardNo);
 			psmt.setString(2, myId);
 			n = psmt.executeUpdate();
-			System.out.println("삽입 성공 " + n);
 			
 			if(n != 0) {
 				psmt = conn.prepareStatement(update);
@@ -41,7 +40,6 @@ public class ClickLikeDAO {
 			}
 			if(m != 0) {
 				conn.commit();
-				System.out.println("수정 성공 " + m);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -67,7 +65,6 @@ public class ClickLikeDAO {
 			psmt.setInt(1, boardNo);
 			psmt.setString(2, myId);
 			n = psmt.executeUpdate();
-			System.out.println("삭제 성공 " + n);
 			
 			if(n != 0) {
 				psmt = conn.prepareStatement(update);
@@ -76,7 +73,6 @@ public class ClickLikeDAO {
 			}
 			if(m != 0) {
 				conn.commit();
-				System.out.println("수정 성공 " + m);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

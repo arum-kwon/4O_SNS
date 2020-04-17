@@ -43,7 +43,6 @@ public class BoardDetailServlet extends HttpServlet {
 		ConnectionManager.close(conn);
 		
 		//request객체에 담아 forward로 보냄
-		
 		//보드 정보 출력
 //		BoardListDTO bdto = (BoardListDTO) boardMap.get("board");
 //		if(bdto != null) {
