@@ -16,12 +16,20 @@
     <p onclick="clickBoard(${board.board.board_no})"> ${board.board.board_content} </p>
   </c:if>
   <c:if test="${not empty board.board.board_img}">
-    <p><img src="/snsprj/common/img/upload/${board.board.board_img}" onclick="clickBoard(${board.board.board_no})" style="width:100%" alt="Northern Lights" class="w3-margin-bottom"></p>
+    <p><img src="/snsprj/common/img/upload/${board.board.board_img}" style="width:100%" alt="Northern Lights" class="w3-margin-bottom"></p>
   </c:if>
   <!-- 좋아요 -->
-  <button onclick="likeBtn(${board.board.board_no})" id="btn${board.board.board_no}" name="likeBtn" value="${board.blike}" type="button"> Like <span id="span${board.board.board_no}"> ${board.board.board_like} </span></button> 
+  <button onclick="likeBtn(${board.board.board_no})" id="btn${board.board.board_no}" name="likeBtn" value="${board.blike}" type="button"> Like <span id="span${board.board.board_no}"> ${board.board.board_like} </span></button> 
 
   <h6><b> 댓글 </b></h6>
+  <form name="writeFrom" id="writeFrom">
+	<textarea id ="content" name="content" placeholder="내 용" style="width:100%"></textarea>
+	<div align ="center">
+		<button type="button" onClick="checkedSubmit(${board.board.board_no})" class="w3-button w3-blue-grey w3-round w3-padding-small w3-margin-bottom">등 록</button>
+		<button type="reset" class="w3-button w3-blue-grey w3-round w3-padding-small w3-margin-bottom">취 소</button>
+	<input type="hidden" id="commentHid">
+	</div>
+  </form>
   <c:forEach items="${commentList}" var="map" varStatus="status">
 	<hr>
     <!--댓글 프로필 부분 -->
@@ -38,57 +46,57 @@
 </form>
 
 <script>
-	var onLike = "w3-button w3-red w3-hover-pale-red w3-margin-bottom";
-	var offLike = "w3-button w3-blue-grey w3-margin-bottom";
-	var btn = document.getElementsByName("likeBtn");
-	for(var i=0 ; btn.length ; i++){
-		if (btn[i].value == 0){
-			btn[i].className = offLike;
-		}else{
-			btn[i].className = onLike;
+var onLike = "w3-button w3-red w3-hover-pale-red w3-margin-bottom";
+var offLike = "w3-button w3-blue-grey w3-margin-bottom";
+var btn = document.getElementsByName("likeBtn");
+for(var i=0 ; btn.length ; i++){
+	if (btn[i].value == 0){
+		btn[i].className = offLike;
+	}else{
+		btn[i].className = onLike;
+	}
+}
+
+function clickPro(id){
+	hid.setAttribute('name', 'user_id');
+	hid.setAttribute('value', id);
+	
+	frm.action = '${pageContext.request.contextPath}/UserInfoSelect.do';
+	frm.submit();
+}
+function likeBtn(number){
+	var btn = document.getElementById("btn" + number);
+	var btnValue = btn.value;
+	var span = document.getElementById("span" + number);
+	var val = span.innerHTML;
+	
+	$.ajax({
+		url: "${pageContext.request.contextPath}/ClickLikeServlet.do",
+		data: {"board_no": number, "bLike": btnValue},
+		success: function(date){
+			if (btnValue == 0){
+				btn.className = onLike;
+				btn.value = 1;
+				span.innerHTML = parseInt(span.innerHTML) + 1;
+			}else{
+				btn.className = offLike;
+				btn.value = 0;
+				span.innerHTML = parseInt(span.innerHTML) - 1;
+			} 
+		},
+		error: function(){
+			alert("에러 발생. 관리자에게 문의주세요.");
 		}
-	}
+	})
+}
+
+function checkedSubmit(number) {
+	commentHid.setAttribute('name', 'board_no');
+	commentHid.setAttribute('value', number);
 	
-	function clickBoard(number){
-		hid.setAttribute('name', 'board_no');
-		hid.setAttribute('value', number);
-		
-		frm.action = '/snsprj/BoardDetailServlet.do';
-		frm.submit();
-	}
-	function clickPro(id){
-		hid.setAttribute('name', 'user_id');
-		hid.setAttribute('value', id);
-		
-		frm.action = '/snsprj/UserInfoSelect.do';
-		frm.submit();
-	}
-	
-	function likeBtn(number){
-		var btn = document.getElementById("btn" + number);
-		var btnValue = btn.value;
-		var span = document.getElementById("span" + number);
-		var val = span.innerHTML;
-		
-		$.ajax({
-			url: "/snsprj/ClickLikeServlet.do",
-			data: {"board_no": number, "bLike": btnValue},
-			success: function(date){
-				if (btnValue == 0){
-					btn.className = onLike;
-					btn.value = 1;
-					span.innerHTML = parseInt(span.innerHTML) + 1;
-				}else{
-					btn.className = offLike;
-					btn.value = 0;
-					span.innerHTML = parseInt(span.innerHTML) - 1;
-				} 
-			},
-			error: function(){
-				console.log("실패");
-			}
-		})
-	}
+	writeFrom.action = '${pageContext.request.contextPath}/CommentInsertServlet.do';
+	writeFrom.submit();
+}
 
 </script>
 
