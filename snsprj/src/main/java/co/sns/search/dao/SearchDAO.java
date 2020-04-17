@@ -1,6 +1,5 @@
 package co.sns.search.dao;
 
-import java.awt.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,11 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
-import co.sns.common.BoardListDTO;
 import co.sns.common.ConnectionManager;
 import co.sns.common.SerKeyListDTO;
-import co.sns.common.UserListDTO;
 
 
 public class SearchDAO {
@@ -27,6 +26,31 @@ public class SearchDAO {
 		if (instance == null)
 			instance = new SearchDAO();
 		return instance;
+	}
+	
+	//반복작업
+	static Timer m_timer = null;
+	static TimerTask m_task = new TimerTask() {
+		
+		@Override
+		public void run() {
+			
+			try {
+				instance.reset();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+	};
+	
+	public static void runTimer() {
+		if(m_timer == null) {
+			m_timer = new Timer();
+			m_timer.schedule(m_task, 3600000, 3600000);
+		}
+		
 	}
 	
 	// 검색결과 리스트 메서드
@@ -127,7 +151,7 @@ public class SearchDAO {
 				e.printStackTrace();
 			}
 			finally {
-				co.sns.common.ConnectionManager.close(rs, pstmt, conn);
+				ConnectionManager.close(conn);
 			}
 			return hotkeys;
 		}

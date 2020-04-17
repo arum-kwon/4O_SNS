@@ -18,7 +18,7 @@ function checkedSubmit() {
 </script>
 </head>
 <body>
-<form id="frm" name="frm" action="../../SerchResult.do" method="post">
+<form id="frm" name="frm" action="${pageContext.request.contextPath}/SerchResult.do" method="post">
 <input type="text" id="search" name="search">
 <input type="submit" value="검색">
 <button type ="submit" onclick="checkedSubmit()">검색</button>

@@ -34,13 +34,6 @@ public class GetSubToMeServlet extends HttpServlet {
 		ArrayList<UserListDTO> list = SubToMeDao.getInstance().getToMeList(conn, myId);
 		ConnectionManager.close(conn);
 		
-		
-		
-		if(list != null) {
-			for(UserListDTO dto : list) {
-				System.out.println(dto.getUser_id());
-			}
-		}
 		//request객체에 담아 forward로 보냄
 		request.setAttribute("list", list);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/views/sub/subToMeList.tiles");

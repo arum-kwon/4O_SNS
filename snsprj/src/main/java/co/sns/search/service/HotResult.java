@@ -51,28 +51,6 @@ public class HotResult extends HttpServlet {
 		ArrayList<SerKeyListDTO> hotKeywordsList = dao.getInstance().hot();
 		request.setAttribute("hotKeywordsList", hotKeywordsList);
 		
-		
-		//반복작업
-		
-		
-		Timer m_timer = new Timer();
-		TimerTask m_task = new TimerTask() {
-			
-			@Override
-			public void run() {
-				
-				try {
-					dao.reset();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			}
-		};
-		m_timer.schedule(m_task, 3600000, 3600000);
-		//
-		
 		JSONArray jsonArray = JSONArray.fromObject(hotKeywordsList);
 		
 

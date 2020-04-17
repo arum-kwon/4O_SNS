@@ -4,7 +4,7 @@
 
 <!DOCTYPE html>
 <html>
-<title>4O Template</title>
+<title>4O</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -50,14 +50,14 @@ div#CLeft {
 		<!-- The Grid 전체 영역-->
 		<div class="w3-row">  
 			<!-- Left Column 왼쪽 메뉴바 영역-->
-			<div class="w3-col m3  position-fixed" id="Cleft">
+			<div class="w3-col m3 position-fixed" id="Cleft">
       			<tiles:insertAttribute name="menu" />
 			<!-- End Left Column -->
 			</div>
 
 			<!-- Middle Column 메인 영역 -->
    			<div class="w3-col m9 ">
-   			<div class="w3-container w3-card w3-white w3-round w3-margin">
+   			<div class="w3-container w3-card w3-white w3-round" style="margin:0px 20px">
      			<tiles:insertAttribute name="body" />
    			</div>
 			<!-- End Middle Column 메인 영역 -->

@@ -9,7 +9,6 @@
 textarea.textarea { min-height: 50px; }
 </style>
 <!-- https://forest71.tistory.com/22 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 <script>
 <!-- 텍스트 입력에 따른 textarea 높이 자동조절 스크립트 -->
@@ -25,7 +24,7 @@ function checkedSubmit() {
         alert(" 내용을 입력해주세요.")
     }else{
     	document.writeFrom.submit();
-}
+	}
 }
 
 function goBack(){
@@ -36,7 +35,7 @@ function goBack(){
 </head>
 
 <body>
-	<form name="writeFrom" id="writeFrom" method="post" enctype="multipart/form-data" action="/snsprj/insertBoard.do">
+	<form name="writeFrom" id="writeFrom" method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/insertBoard.do">
 			
 			<input type="file" name="imageFile" id="imageFile" style="width:100%" class="w3-button w3-blue-grey w3-round w3-padding-small w3-margin-bottom w3-margin-top">
 			<textarea id ="content" name="content" class="content" onkeydown="resize(this)" onkeyup="resize(this)" 

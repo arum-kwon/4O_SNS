@@ -12,12 +12,10 @@
   <h4>${board.user_name}</h4><br>
   <hr class="w3-clear">
   <!-- 본문 부분 -->		  
-  <c:if test="${empty board.board.board_img}">
-    <p onclick="clickBoard(${board.board.board_no})"> ${board.board.board_content} </p>
-  </c:if>
   <c:if test="${not empty board.board.board_img}">
-    <p><img src="/snsprj/common/img/upload/${board.board.board_img}" style="width:100%" alt="Northern Lights" class="w3-margin-bottom"></p>
+  	<p><img src="/snsprj/common/img/upload/${board.board.board_img}" style="width:100%" alt="Northern Lights" class="w3-margin-bottom"></p>
   </c:if>
+  <p onclick="clickBoard(${board.board.board_no})"> ${board.board.board_content} </p>
   <!-- 좋아요 -->
   <button onclick="likeBtn(${board.board.board_no})" id="btn${board.board.board_no}" name="likeBtn" value="${board.blike}" type="button"> Like <span id="span${board.board.board_no}"> ${board.board.board_like} </span></button> 
 
@@ -33,7 +31,7 @@
   <c:forEach items="${commentList}" var="map" varStatus="status">
 	<hr>
     <!--댓글 프로필 부분 -->
-    <img src="/snsprj/common/img/pro/${map.user_pro_img_name}" onclick="clickPro('${map.comment.user_id}')" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+    <img src="${pageContext.request.contextPath}/common/img/pro/${map.user_pro_img_name}" onclick="clickPro('${map.comment.user_id}')" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
     <span class="w3-right w3-opacity"> ${map.comment.wdate} </span>
     <h4>${map.user_name}</h4>
     <!--댓글  본문 부분 -->		  
@@ -58,7 +56,7 @@ for(var i=0 ; btn.length ; i++){
 }
 
 function clickPro(id){
-	hid.setAttribute('name', 'user_id');
+	hid.setAttribute('name', 'id');
 	hid.setAttribute('value', id);
 	
 	frm.action = '${pageContext.request.contextPath}/UserInfoSelect.do';

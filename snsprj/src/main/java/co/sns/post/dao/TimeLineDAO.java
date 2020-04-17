@@ -28,7 +28,7 @@ public class TimeLineDAO {
 		String sql = "SELECT b.*, u.*, case when board_no in (SELECT board_no FROM board_like_list where user_id=?) then 1 else 0 end as bLike " + 
 				"				FROM board_list b join  " + 
 				"				        ( SELECT  user_id, user_name, user_pro_img_name  " + 
-				"                        FROM  user_list WHERE user_id in (SELECT to_id FROM sub_list where from_id=?) ) u   " + 
+				"                        FROM  user_list WHERE user_id in (SELECT to_id FROM sub_list where from_id=? OR user_id=?) ) u   " + 
 				"				on board_user_id in u.user_id ";
 		String latest = "order by board_wdate desc, board_no desc";
 		String liked = "order by board_like desc, board_wdate desc, board_no desc";
@@ -42,6 +42,7 @@ public class TimeLineDAO {
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setString(1, myId);
 			psmt.setString(2, myId);
+			psmt.setString(3, myId);
 			ResultSet rs = psmt.executeQuery();
 			BoardListDTO dto;
 

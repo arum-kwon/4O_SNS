@@ -36,7 +36,6 @@ public class insertBoard extends HttpServlet {
 
 		String contents = request.getParameter("content");
 		String appPath = request.getServletContext().getRealPath("");
-		System.out.println(appPath);
 		String savePath = appPath + SAVE_DIR;
 		String uploadFile = "";
 
@@ -57,7 +56,6 @@ public class insertBoard extends HttpServlet {
 				
 				part.write(f.getParent() + "\\" + f.getName());
 				
-				System.out.println(f.getParent() + "\\" + f.getName());
 				uploadFile = f.getName();
 				// 리네임된 파일명
 
@@ -82,11 +80,12 @@ public class insertBoard extends HttpServlet {
 			String path = null;
 
 			int n = dao.insertBoard(dto);
-			System.out.println("n값은"+ n);
+			
+			String contextPath = request.getContextPath();
 			if (n != 0) {
-				path = "/snsprj/views/post/writeForm.tiles";
+				path = contextPath + "/views/post/writeForm.tiles";
 			} else {
-				path = "/snsprj/views/post/writeForm.tiles";
+				path = contextPath + "/views/post/writeForm.tiles";
 			}
 
 			response.getWriter().append("<head>\r\n" + 

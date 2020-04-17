@@ -3,20 +3,40 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
+<style>
+div p {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 160px;
+}
+h4 {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	height: 40px;
+}
+</style>
 
 <body>
+<!-- 페이지 상단  -->
+<header>
+  <div class="w3-container">
+     <h2  class="w3-margin-top w3-margin-left" ><b>좋아하는 글</b></h2>
+     <div class="w3-margin-bottom w3-bottombar w3-padding-small"></div>
+  </div>
+</header>
+
+<!-- 리스트  -->
 <c:forEach items="${list}" var="tl" varStatus="status">
 <c:if test="${status.index%4 == 0}">
 <div class="w3-row">
 </c:if>
-
 	<div class="w3-col s12 m6 l3">
 	  	<div class="w3-container w3-card w3-white w3-round w3-margin"><br>
 		  <!-- 프로필 부분 -->
 		  <img src="${pageContext.request.contextPath}/common/img/pro/${tl.user_pro_img_name}" onclick="clickPro('${tl.board.board_user_id}')" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-		  <span class="w3-right w3-opacity"> ${tl.board.board_wdate} </span>
-		  <h4>${tl.user_name}</h4><br>
-		  <hr class="w3-clear">
+		  <h4>${tl.user_name}</h4>
+		  <hr>
 		  <!-- 본문 부분 -->		  
 		  <c:if test="${empty tl.board.board_img}">
 		    <p onclick="clickBoard(${tl.board.board_no})"> ${tl.board.board_content} </p>
@@ -26,10 +46,11 @@
 		  </c:if>
 		  <!-- 좋아요 -->
 	  	  <button onclick="likeBtn(${tl.board.board_no})" id="btn${tl.board.board_no}" name="likeBtn" value="1" type="button"> Like <span id="span${tl.board.board_no}">${tl.board.board_like}</span> </button> 
+		  <span class="w3-right w3-opacity"> ${tl.board.board_wdate} </span>
 		</div>
 	</div>
 
-<c:if test="${status.index%4 == 3}">
+<c:if test="${status.index%4 == 3 || status.last}">
 </div>
 </c:if>
 </c:forEach>
@@ -39,7 +60,9 @@
 <input type="hidden" id="hid">
 </form>
 
+
 <script>
+//좋아요 버튼 색 입히기
 var onLike = "w3-button w3-red w3-hover-pale-red w3-margin-bottom";
 var offLike = "w3-button w3-blue-grey w3-margin-bottom";
 var btn = document.getElementsByName("likeBtn");
@@ -51,6 +74,7 @@ for(var i=0 ; btn.length ; i++){
 	}
 }
 
+//게시글을 클릭
 function clickBoard(number){
 	hid.setAttribute('name', 'board_no');
 	hid.setAttribute('value', number);
@@ -58,13 +82,17 @@ function clickBoard(number){
 	frm.action = '${pageContext.request.contextPath}/BoardDetailServlet.do';
 	frm.submit();
 }
+
+//프로필 클릭
 function clickPro(id){
-	hid.setAttribute('name', 'user_id');
+	hid.setAttribute('name', 'id');
 	hid.setAttribute('value', id);
 	
 	frm.action = '${pageContext.request.contextPath}/UserInfoSelect.do';
 	frm.submit();
 }
+
+//좋아요 버튼 클릭
 function likeBtn(number){
 	var btn = document.getElementById("btn" + number);
 	var btnValue = btn.value;

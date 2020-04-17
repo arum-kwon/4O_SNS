@@ -22,13 +22,12 @@
 		<p style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; height: 20px;">
 			<i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i>
 		    <c:if test="${empty my_job}">
-		    	직업을 입력해보세요.나는 똑똑이다 탱탱탱아 
+		    	직업을 입력해보세요. 
 		    </c:if>
 			${my_job}
 		</p>
 		<p style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; height: 20px;">
-			<i
-				class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i>
+			<i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i>
 		    <c:if test="${empty my_birth}">
 		    	생일을 입력해보세요.
 		    </c:if>
@@ -65,31 +64,32 @@
 
 <script type="text/javascript">
 	function getContextPath(){
-	return window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
+		return window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
 	}
 	con = getContextPath();
 	wf = con + "views/post/writeForm.tiles"
 		var wf = con + "/views/post/writeForm.tiles"
+		
 	function move(to){
 		
 		if(to == 'timeLine'){
-			location.href="/snsprj/timeline.do";
+			location.href="${pageContext.request.contextPath}/timeline.do";
 		}
 		if(to == 'subToMe'){
-			location.href="/snsprj/SubToMe.do";
+			location.href="${pageContext.request.contextPath}/SubToMe.do";
 		}
 		if(to == 'subFromMe'){
-			location.href="/snsprj/subList.do";
+			location.href="${pageContext.request.contextPath}/subList.do";
 		}
 		
 		if(to == 'write'){
 			location.href= wf;
 		}
 		if(to == 'likeBoard'){
-			location.href="/snsprj/LikeBoard.do";
+			location.href="${pageContext.request.contextPath}/LikeBoard.do";
 		}
 		if(to == 'subRecomemd'){
-			location.href="/snsprj/subrecommend.do";
+			location.href="${pageContext.request.contextPath}/subrecommend.do";
 		}
 	}
 
