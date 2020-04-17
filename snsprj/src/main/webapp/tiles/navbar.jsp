@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<!-- 실시간 검색어 관련 스크립트 -->
+		<!-- 실시간 검색어 관련 스크립트 -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script>
 		$(document).ready(
@@ -8,7 +8,7 @@
 				var xhttp = new XMLHttpRequest();
 				xhttp.onreadystatechange = function() {
 					if (this.readyState == 4 && this.status == 200) {
-					console.log("펑션이 실행됨")
+					
 					var obj = JSON.parse(this.responseText);
 
 					var temp = "";
@@ -47,17 +47,16 @@
 		class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2">
 		<i class="fa fa-bars"></i> </a> 
 		
-	<a 	href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d5" style="backgorund-color: red"> 
-		<img src="../common/image/LOGO.png" class="w3-circle" style="height: 25px; width: 25px" alt="profileImg"> </a>
+	<a 	href="${pageContext.request.contextPath}/timeline.do" class="w3-bar-item w3-button w3-padding-large w3-theme-d5" style="backgorund-color: red"> 
+		<img src="${pageContext.request.contextPath}/common/img/logo/40logo.png" class="w3-circle" style="height: 25px; width: 75px" alt="SNSLOGOIMAGE"> </a>
 		
-	<a 	href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News">
+	<a 	href="${pageContext.request.contextPath}/timeline.do" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="TIMELINE">
 		<i class="fa fa-globe"></i> </a>
 		
-	<a 	href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"
-		title="Account Settings"><i class="fa fa-user"></i> </a>
+	<a 	href="${pageContext.request.contextPath}/userHome.do" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"
+		title="MYPAGE"><i class="fa fa-user"></i> </a>
 		
-	<a 	href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"
-		title="Messages"><i class="fa fa-envelope"></i> </a>
+	
 	
 	<!-- 알림창 -->
 	<div class="w3-dropdown-hover w3-hide-small">
@@ -72,7 +71,7 @@
 	
 	<!-- 실시간 검색어 뜨는 자리 -->
 		
-		<div id="slid_box" class="w3-bar-item w3-hide-small w3-hide-medium  w3-padding " style="width:120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "> 
+		<div id="slid_box" class="w3-bar-item w3-hide-small w3-hide-medium  w3-padding " style="width:150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "> 
 		<span id="hotNo" >1</span> 
 		<span> . </span> 
 		<span id="keywordspan">키워드자리리리리</span>
@@ -92,9 +91,7 @@
 <!-- 작은 화면 창 -->	
 <div id="navDemo"
 	class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium w3-large">
-	<a href="#" class="w3-bar-item w3-button w3-padding-large">Link 1</a>
-	<a href="#" class="w3-bar-item w3-button w3-padding-large">Link 2</a>
-	<a href="#" class="w3-bar-item w3-button w3-padding-large">Link 3</a>
-	<a href="#" class="w3-bar-item w3-button w3-padding-large">My
-		Profile</a>
+	<a href="${pageContext.request.contextPath}/timeline.do" class="w3-bar-item w3-button w3-padding-large">타임라인</a>
+	<a href="${pageContext.request.contextPath}/userHome.do" class="w3-bar-item w3-button w3-padding-large">마이페이지</a>
+
 </div>

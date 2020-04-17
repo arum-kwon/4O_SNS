@@ -6,7 +6,7 @@
 	<div class="w3-container">
 	
 		<p class="w3-center">
-			<img src="../common/image/pro/${my_pro_img_name}" class="w3-circle" style="height: 106px; width: 106px" alt="Avatar">
+			<img src="${pageContext.request.contextPath}/common/img/pro/${my_pro_img_name}" class="w3-circle" style="height: 106px; width: 106px" alt="Avatar">
 		</p>
 		<a href="/snsprj/userHome.do">
 			<h4 class="w3-center">${my_id}</h4>
@@ -50,9 +50,6 @@
 		<button onclick="move('subToMe')" class="w3-button w3-block w3-theme-l1 w3-left-align">
 			<i class="fa fa-users fa-fw w3-margin-right"></i> 나를 구독하는 사람
 		</button>
-		<button onclick="move('mss')" class="w3-button w3-block w3-theme-l1 w3-left-align">
-			<i class="fa fa-users fa-fw w3-margin-right"></i> 메세지
-		</button>
 		<button onclick="move('write')" class="w3-button w3-block w3-theme-l1 w3-left-align">
 			<i class="fa fa-users fa-fw w3-margin-right"></i> 타임라인 글쓰기
 		</button>
@@ -67,7 +64,14 @@
 <br>
 
 <script type="text/javascript">
+	function getContextPath(){
+	return window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
+	}
+	con = getContextPath();
+	wf = con + "views/post/writeForm.tiles"
+		var wf = con + "/views/post/writeForm.tiles"
 	function move(to){
+		
 		if(to == 'timeLine'){
 			location.href="/snsprj/timeline.do";
 		}
@@ -77,11 +81,9 @@
 		if(to == 'subFromMe'){
 			location.href="/snsprj/subList.do";
 		}
-		if(to == 'mss'){
-			location.href="#";
-		}
+		
 		if(to == 'write'){
-			location.href="/snsprj/insertBoard.do";
+			location.href= wf;
 		}
 		if(to == 'likeBoard'){
 			location.href="/snsprj/LikeBoard.do";

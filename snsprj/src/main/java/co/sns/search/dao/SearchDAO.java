@@ -30,27 +30,31 @@ public class SearchDAO {
 	}
 	
 	// 검색결과 리스트 메서드
-		public ArrayList<Map<String, Object>> getResultList(String key) {
+		public ArrayList<Map<String, Object>> getResultList(String key, String userid) {
 			ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 			   	
-			String sql = "SELECT b.board_content, b.board_like, b.board_wdate, b.board_img, u.user_name, u.user_pro_img_name FROM board_list b INNER JOIN  user_list u ON  b.board_user_id = u.user_id AND  b.board_content  Like '%'||?||'%' order by board_wdate desc";
+			String sql = "SELECT b.board_no, b.board_content, b.board_wdate, b.board_like, b.board_img, u.user_id, u.user_name, u.user_pro_img_name, case when b.board_no in (SELECT board_no FROM board_like_list where user_id=?) then 1 else 0 end as bLike FROM board_list b INNER JOIN  user_list u ON  b.board_user_id = u.user_id AND  b.board_content  Like '%'||?||'%' order by board_wdate desc";
 			try {
 				conn = ConnectionManager.getConnnection();
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, key);
+				pstmt.setString(1, userid );
+				pstmt.setString(2, key);
+				
 				ResultSet rs = pstmt.executeQuery();
 			
 				
 				while(rs.next()) {
 						HashMap<String, Object> map = new HashMap<String, Object>();
-
+						
+						map.put("board_no", rs.getString("board_no"));
 						map.put("board_content", rs.getString("board_content"));
-						map.put("board_like", rs.getInt("board_like"));
 						map.put("board_wdate", rs.getDate("board_wdate"));
+						map.put("board_like", rs.getInt("board_like"));
 						map.put("board_img", rs.getString("board_img"));
+						map.put("user_id", rs.getString("user_id"));
 						map.put("user_name", rs.getString("user_name"));
 						map.put("user_pro_img_name", rs.getString("user_pro_img_name"));
-							
+						map.put("bLike", rs.getString("blike"));	
 
 						list.add(map);
 

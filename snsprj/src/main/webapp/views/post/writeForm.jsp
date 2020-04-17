@@ -27,25 +27,24 @@ function checkedSubmit() {
     	document.writeFrom.submit();
 }
 }
+
+function goBack(){
+	window.history.back();
+	}
+	
 </script>
 </head>
 
 <body>
 	<form name="writeFrom" id="writeFrom" method="post" enctype="multipart/form-data" action="/snsprj/insertBoard.do">
 		<div align ="center">
-			<button type ="button" onclick="#.history(-1)">취 소</button>
+			<button type ="button" onclick="goBack()">취 소</button>
 			<button type="button" id="btnSubmit" name="btnSubmit" onClick="checkedSubmit()">등 록</button>
 		</div>
 			<textarea id ="content" name="content" class="content" onkeydown="resize(this)" onkeyup="resize(this)" 
 				style="width:100%" placeholder="내 용" ></textarea>
 			
 		 <input type="file" name="imageFile" id="imageFile" style="width:100%"">
-		<div id='preview'>
-       	 <!-- 미리보기 공간 -->
-       	하...
-   		</div>
-   		
-  
 	</form>
 </body>
 </html>

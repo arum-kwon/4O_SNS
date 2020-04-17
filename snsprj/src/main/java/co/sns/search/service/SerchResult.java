@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import co.sns.common.BoardListDTO;
 
@@ -40,6 +41,12 @@ public class SerchResult extends HttpServlet {
 		response.setContentType("text/html;charset=utf-8"); // 브라우저로 보내는 내용에 대한 한글철리
 		PrintWriter out = response.getWriter();
 		out.print("이것이 실행됩니다.");
+		//세션 작업
+		HttpSession session = request.getSession(true); 
+
+		//세션 값 가져오기      
+		String userid =(String) session.getAttribute("my_id");
+
 
 		// DB작업
 		SearchDAO dao = new SearchDAO();
@@ -47,7 +54,7 @@ public class SerchResult extends HttpServlet {
 
 		String searchedKey = request.getParameter("search");
 	    ArrayList<Map<String, Object>> searchList;
-		searchList = dao.getResultList(searchedKey);
+		searchList = dao.getResultList(searchedKey, userid);
 		int searchKeyword = dao.serch(searchedKey);
 	
 		dao.serch(searchedKey);

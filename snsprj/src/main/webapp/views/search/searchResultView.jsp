@@ -24,28 +24,50 @@ div p {overflow: hidden;
 
 <c:choose>
 				<c:when test="${empty searchedPosts }">
-					<div class="w3-col s12 m6 l3">
+					  <!-- Header -->
+ 					<header id="portfolio">
+    					<div class="w3-container">
+   						 <h2  class="w3-margin-top  w3-margin-left" ><b>검색 결과</b></h2>
+   						 <div class="w3-section w3-bottombar w3-padding-16">
+   						 <span class="w3-margin-right">검색결과가 없습니다.</span> 
+   						 <div class="w3-section w3-bottombar w3-padding-16">
+    					 
+   						 </div>
+    					</div>
+  					</header>
 					
+					<div class="w3-col s12 m6 l3">
 					</div>
 				</c:when>
+			
+				
 				<c:otherwise>
+				<header id="portfolio">
+    					<div class="w3-container">
+   						 <h2 class="w3-margin-top  w3-margin-left" ><b>검색 결과</b></h2>
+   						 <div class="w3-section w3-bottombar w3-padding-16">
+    					 
+   						 </div>
+    					</div>
+  					</header>
+					
 					<c:forEach var="post" items="${searchedPosts }">
 					<div class="w3-col s12 m6 l3">
 	  				<div class="w3-container w3-card w3-white w3-round w3-margin"><br>
 		  			<!-- 프로필 부분 -->
-		  			<img src="/snsprj/common/img/pro/${post.user_pro_img_name}" onclick="clickPro('#')" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+		  			<img src="/snsprj/common/img/pro/${post.user_pro_img_name}" onclick="clickPro('${post.user_id}')" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
 		  			<span class="w3-right w3-opacity"> ${post.board_wdate} </span>
 				 	<h4>${post.user_name}</h4><br>
 		  			<hr class="w3-clear">
 		  			<!-- 본문 부분 -->		  
 		  				<c:if test="${empty post.board_img}">
-		    			<p onclick="clickBoard(#)"> ${post.board_content } </p>
+		    			<p onclick="clickBoard(${post.board_no})"> ${post.board_content } </p>
 		  				</c:if>
 		  			<c:if test="${not empty post.board_img}">
-		    		<img src="/snsprj/common/img/upload/${post.board_img}" onclick="clickBoard(#)" style="width:100%" alt="Northern Lights" class="w3-margin-bottom">
+		    		<img src="/snsprj/common/img/upload/${post.board_img}" onclick="clickBoard(${post.board_no})" style="width:100%" alt="Northern Lights" class="w3-margin-bottom">
 		  			</c:if>
 		  			<!-- 좋아요 -->
-		  			<button type="button" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i> Like ${post.board_like }</button> 
+		  			<button onclick="likeBtn(${post.board_no})" id="btn${post.board_no}" name="likeBtn" value="${post.bLike}" type="button"> Like <span id="span${post.board_no}"> ${post.board_like}</span> </button>
 					</div>
 					</div>
 							
@@ -56,117 +78,65 @@ div p {overflow: hidden;
 			</c:choose>
 
 
-<!-- 그리드에 마우스 올렸을때 이팩트 -->
-<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+<form id="frm" name="frm">
+<input type="hidden" id="hid">
+</form>
+<script>
+	var onLike = "w3-button w3-red w3-hover-pale-red w3-margin-bottom";
+	var offLike = "w3-button w3-blue-grey w3-margin-bottom";
+	var btn = document.getElementsByName("likeBtn");
+	for(var i=0 ; btn.length ; i++){
+		if (btn[i].value == 0){
+			btn[i].className = offLike;
+		}else{
+			btn[i].className = onLike;
+		}
+	}
+	
+	function clickBoard(number){
+		hid.setAttribute('name', 'board_no');
+		hid.setAttribute('value', number);
+		
+		frm.action = '/snsprj/BoardDetailServlet.do';
+		frm.submit();
+	}
+	function clickPro(id){
+		hid.setAttribute('name', 'user_id');
+		hid.setAttribute('value', id);
+		
+		frm.action = '/snsprj/UserInfoSelect.do';
+		frm.submit();
+	}
+	function likeBtn(number){
+		var btn = document.getElementById("btn" + number);
+		var btnValue = btn.value;
+		var span = document.getElementById("span" + number);
+		var val = span.innerHTML;
+		
+		$.ajax({
+			url: "/snsprj/ClickLikeServlet.do",
+			data: {"board_no": number, "bLike": btnValue},
+			success: function(date){
+				if (btnValue == 0){
+					btn.className = onLike;
+					btn.value = 1;
+					span.innerHTML = parseInt(span.innerHTML) + 1;
+				}else{
+					btn.className = offLike;
+					btn.value = 0;
+					span.innerHTML = parseInt(span.innerHTML) - 1;
+				} 
+			},
+			error: function(){
+				console.log("실패");
+			}
+		})
+	}
 
-<!-- !PAGE CONTENT! -->
-<div class="w3-main" >
 
-  <!-- Header -->
-  <header id="portfolio">
-    <div class="w3-container">
-    <h2><b>검색 결과</b></h2>
-    <div class="w3-section w3-bottombar w3-padding-16">
-      <span class="w3-margin-right">검색결과가 없습니다.</span> 
-<!--     <button class="w3-button w3-black">ALL</button>
-      <button class="w3-button w3-white"><i class="fa fa-diamond w3-margin-right"></i>Design</button>
-      <button class="w3-button w3-white w3-hide-small"><i class="fa fa-photo w3-margin-right"></i>Photos</button>
-      <button class="w3-button w3-white w3-hide-small"><i class="fa fa-map-pin w3-margin-right"></i>Art</button>   --> 
-    </div>
-    </div>
-  </header>
-  
-  <!-- First Photo Grid-->
-  <div class="w3-row-padding">
-    <div class="w3-col s12 m4 l2 w3-container w3-margin-bottom" >
-      <img src="../../common/image/logo.png" alt="게시글첨부이미지" style="width:100%" class="w3-hover-opacity">
-      <div class="w3-container w3-white">
-        <p><b>작성일, 작성자 올 자리</b></p>
-        <p>내용이 올자리</p>
-      </div>
-    </div>
-    <div class="w3-col s12 m4 l2 w3-container w3-margin-bottom">
-      <img src="../../common/image/logo.png" alt="게시글첨부이미지" style="width:100%" class="w3-hover-opacity">
-      <div class="w3-container w3-white">
-        <p><b>작성일, 작성자 올 자리</b></p>
-        <p>내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까??????</p>
-      </div>
-    </div>
-    <div class="w3-col s12 m4 l2 w3-container w3-margin-bottom">
-      <img src="../../common/image/logo.png" alt="게시글첨부이미지" style="width:100%" class="w3-hover-opacity">
-      <div class="w3-container w3-white">
-        <p><b>작성일, 작성자 올 자리</b></p>
-        <p>내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올</p>
-      </div>
-    </div>
-     <div class="w3-col s12 m4 l2 l1 w3-container w3-margin-bottom">
-      <img src="../../common/image/logo.png" alt="게시글첨부이미지" style="width:100%" class="w3-hover-opacity">
-      <div class="w3-container w3-white">
-        <p><b>작성일, 작성자 올 자리</b></p>
-        <p>내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올</p>
-      </div>
-    </div>
-    <div class="w3-col s12 m4 l2 l1 w3-container w3-margin-bottom">
-      <img src="../../common/image/logo.png" alt="게시글첨부이미지" style="width:100%" class="w3-hover-opacity">
-      <div class="w3-container w3-white">
-        <p><b>작성일, 작성자 올 자리</b></p>
-        <p>내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올</p>
-      </div>
-    </div>
-    <div class="w3-col s12 m4 l2 l1 w3-container w3-margin-bottom">
-      <img src="../../common/image/logo.png" alt="게시글첨부이미지" style="width:100%" class="w3-hover-opacity">
-      <div class="w3-container w3-white">
-        <p><b>작성일, 작성자 올 자리</b></p>
-        <p>내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올</p>
-      </div>
-    </div>
-    
-  </div>
-  
-  <!-- Second Photo Grid-->
-  <div class="w3-row-padding">
-    <div class="w3-col s12 m4 l2 w3-container w3-margin-bottom" >
-      <img src="../../common/image/logo.png" alt="게시글첨부이미지" style="width:100%" class="w3-hover-opacity">
-      <div class="w3-container w3-white">
-        <p><b>작성일, 작성자 올 자리</b></p>
-        <p>내용이 올자리</p>
-      </div>
-    </div>
-    <div class="w3-col s12 m4 l2 w3-container w3-margin-bottom">
-      <img src="../../common/image/logo.png" alt="게시글첨부이미지" style="width:100%" class="w3-hover-opacity">
-      <div class="w3-container w3-white">
-        <p><b>작성일, 작성자 올 자리</b></p>
-        <p>내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까??????</p>
-      </div>
-    </div>
-    <div class="w3-col s12 m4 l2 w3-container w3-margin-bottom">
-      <img src="../../common/image/logo.png" alt="게시글첨부이미지" style="width:100%" class="w3-hover-opacity">
-      <div class="w3-container w3-white">
-        <p><b>작성일, 작성자 올 자리</b></p>
-        <p>내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올</p>
-      </div>
-    </div>
-     <div class="w3-col s12 m4 l2 l1 w3-container w3-margin-bottom">
-      <img src="../../common/image/logo.png" alt="게시글첨부이미지" style="width:100%" class="w3-hover-opacity">
-      <div class="w3-container w3-white">
-        <p><b>작성일, 작성자 올 자리</b></p>
-        <p>내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올</p>
-      </div>
-    </div>
-    <div class="w3-col s12 m4 l2 l1 w3-container w3-margin-bottom">
-      <img src="../../common/image/logo.png" alt="게시글첨부이미지" style="width:100%" class="w3-hover-opacity">
-      <div class="w3-container w3-white">
-        <p><b>작성일, 작성자 올 자리</b></p>
-        <p>내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올</p>
-      </div>
-    </div>
-    <div class="w3-col s12 m4 l2 l1 w3-container w3-margin-bottom">
-      <img src="../../common/image/logo.png" alt="게시글첨부이미지" style="width:100%" class="w3-hover-opacity">
-      <div class="w3-container w3-white">
-        <p><b>작성일, 작성자 올 자리</b></p>
-        <p>내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올까?????내용이 겁나 길면 도대체 어떻게 나올</p>
-      </div>
-    </div>
+</script>
+
+
     
   </div>
 </body>

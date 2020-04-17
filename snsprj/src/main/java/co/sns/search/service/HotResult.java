@@ -50,7 +50,7 @@ public class HotResult extends HttpServlet {
 		SerKeyListDTO dto = new SerKeyListDTO();
 		ArrayList<SerKeyListDTO> hotKeywordsList = dao.getInstance().hot();
 		request.setAttribute("hotKeywordsList", hotKeywordsList);
-		System.out.println("여기까진 오나...?");
+		
 		
 		//반복작업
 		
@@ -60,7 +60,7 @@ public class HotResult extends HttpServlet {
 			
 			@Override
 			public void run() {
-				System.out.println("3초뒤 반복실행");
+				
 				try {
 					dao.reset();
 				} catch (SQLException e) {
@@ -74,12 +74,12 @@ public class HotResult extends HttpServlet {
 		//
 		
 		JSONArray jsonArray = JSONArray.fromObject(hotKeywordsList);
-		System.out.println("hotKeywordsList는!!? _ " + jsonArray); 
+		
 
 		Map<String, Object> map = new HashMap<String,Object>();
 		map.put ("keywordList", jsonArray);
 		JSONObject jsonObj = JSONObject.fromObject(map);
-		System.out.println("오브젝트는??_" + jsonObj);
+		
 		response.getWriter().append(jsonObj.toString());
 		
 //		request.getRequestDispatcher("views/search/hotSerchKeywordFormAndView.jsp").forward(request, response);

@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import co.sns.common.BoardListDTO;
@@ -64,25 +65,36 @@ public class insertBoard extends HttpServlet {
 			}
 
 		}
+				//세션
+				HttpSession session = request.getSession(true); 
 
+				//세션 값 가져오기      
+				String userid =(String) session.getAttribute("my_id");
+				
 			// DB작업
 			BoardInsertDAO dao = new BoardInsertDAO();
 			BoardListDTO dto = new BoardListDTO();
-			// String id = (String)session.getAttribute("id");
-
+			
 			dto.setBoard_content(contents);
 			dto.setBoard_img(uploadFile);
+			dto.setBoard_user_id(userid);
 
 			String path = null;
 
 			int n = dao.insertBoard(dto);
+			System.out.println("n값은"+ n);
 			if (n != 0) {
 				path = "/snsprj/views/post/writeForm.tiles";
 			} else {
 				path = "/snsprj/views/post/writeForm.tiles";
 			}
 
-			response.getWriter().append(uploadFile + "<br>content:" + contents);
+			response.getWriter().append("<head>\r\n" + 
+					"    <title>META Tag  Refresh</title>\r\n" + 
+					"    <meta http-equiv=\"content-type\" content=\"text/html; charset=euc-kr\">\r\n" + 
+					"    <meta http-equiv=\"refresh\" content=\"1; url=http://localhost/snsprj/views/post/writeForm.tiles\">\r\n" + 
+					"</head>" + uploadFile + "<br>content:" + contents);
+			
 		
 	}
 
