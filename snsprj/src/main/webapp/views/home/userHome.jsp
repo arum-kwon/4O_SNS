@@ -53,32 +53,8 @@
 	}
 </script>
 <style>
-#div1 {
-	width: 100px;
-	height: 100px
-}
-
-#table1 {
-	width: 304px;
-}
-
-body, h1, h2, h3, h4, h5, h6 {
-	/* background-color: white; */
-	/* background-image: url('common/image/logo.png'); */
-	font-family: "Raleway", sans-serif;
-}
-
-p {
-	text-align: center;
-}
-
-hr {
-	color: black;
-	border: solid 1px;
-}
-
 #title {
-	background: black;
+	background: #536872;
 	color: white;
 }
 .button {
@@ -147,6 +123,13 @@ hr {
   color: white;
 }
 
+#table {display: table; width: 100%;}
+.row {display: table-row;}
+.cell {display: table-cell; padding: 3px; border-bottom: 1px solid #DDD;}
+.col1 { width: 25%;}
+.col2 {width: 25%;}
+.col3 {width: 25%;}
+.col4 {width: 25%;}
 </style>
 
 <script>
@@ -162,93 +145,65 @@ hr {
 </script>
 </head>
 <body>
-
-	<!-- Sidebar/menu -->
 	<form id="frm" name="frm" method="post">
 		<input type="hidden" id="board_no" name="board_no">
 		<div align="center">
 			<div id="title">
 				<h1>
-					<b>개인정보 홈</b>
+					MY HOMEPAGE
 				</h1>
 			</div>
 		</div>
 		<div align="center">
-			<img id="imgChange" src="${pageContext.request.contextPath}/common/img/pro/${ userinfo[0].user_pro_img_name }" class="rounded-circle" alt="엑박" width="150" height="150">
-			
-		</div><br>
+			<div align="center"><img id="imgChange" src="${pageContext.request.contextPath}/common/img/pro/${ userinfo[0].user_pro_img_name }" class="rounded-circle" alt="엑박" width="150" height="150"></span>
+		</div>
 		<div align="center">
-		<button class="button button2" type="button" onclick="location.href='userHomeUpdatePage.do'">수정 페이지</button>		
-		</div><br>
-		<table align="center">
-			<tr>
-				<th>닉네임</th> <td>${ userinfo[0].user_name }</td>
-			</tr> 
-			<tr>
-				<th>나이</th> <td>${ userinfo[0].user_birthage }</td>
-			</tr>
-			<tr>
-				<th>성별</th> 
-					<td>
-						<c:choose>
-							<c:when test="${ userinfo[0].user_gender == 'M'}"> 
-							남
-							</c:when>
-							<c:otherwise>
-							여
-							</c:otherwise>
-						</c:choose>
-					</td>
-			</tr>
-			<tr>
-				<th>직업</th> <td>${ userinfo[0].user_job }</td>
-			</tr>
-			<tr>
-				<th>엔터테이먼트</th> <td>${ userinfo[0].interest_enter }</td>
-			</tr>
-			<tr>
-				<th>생활</th> <td>${ userinfo[0].interest_life }</td>
-			</tr>
-			<tr>
-				<th>취미</th> <td> ${ userinfo[0].interest_hobby }</td>
-			</tr>
-			<tr>
-				<th>동향</th> <td>${ userinfo[0].interest_trends }</td>
-			</tr>
-			<tr>
-				<th>자기소개</th> <td>${ userinfo[0].user_info }</td>
-			</tr>				
-		</table>
-		<div align="center">
-			<div id="title">
-				<h1>
-					<b>타임라인</b>
-				</h1>
+			<div><button type="button" class="w3-button w3-theme-d1 w3-margin-bottom" onclick="location.href='userHomeUpdatePage.do'">수정페이지</button></div>
+		</div>
+			<div id="table">
+			<div class="row">
+				<span class="cell col1" style="background-color: lightgray"><b>아이디</b></span>
+				<span class="cell col2" style="background-color: lightgray"><b>닉네임</b></span>
+				<span class="cell col3" style="background-color: lightgray"><b>나이</b></span>
+				<span class="cell col4" style="background-color: lightgray"><b>성별</b></span>
+			</div>
+			<div class="row">
+				<span class="cell col1">${ userinfo[0].user_id }</span>
+				<span class="cell col2">${ userinfo[0].user_name }</span>
+				<span class="cell col3">${ userinfo[0].user_birthage }</span>
+				<span class="cell col4">
+					<c:choose>
+						<c:when test="${ userinfo[0].user_gender == 'M' }">
+								<input type="radio" id="user_gender" name="user_gender" value="M" > 남자 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</c:when>
+						<c:otherwise>
+								여
+						</c:otherwise>
+					</c:choose></span>
+			</div>
+			<div class="row">
+				<span class="cell col1" style="background-color: lightgray"><b>가입일</b></span>
+				<span class="cell col2" style="background-color: lightgray"><b>직업</b></span>
+				<span class="cell col3" style="background-color: lightgray"><b>관심분야1</b></span>
+				<span class="cell col4" style="background-color: lightgray"><b>관심분야2</b></span>
+			</div>
+			<div class="row">
+				<span class="cell col1">${ userinfo[0].user_jdate }</span>
+				<span class="cell col2">${ userinfo[0].user_job }</span>
+				<span class="cell col3">${ userinfo[0].interest_enter },
+										${ userinfo[0].interest_life }</span>
+				<span class="cell col4">${ userinfo[0].interest_hobby },
+										${ userinfo[0].interest_trends }</span>
 			</div>
 		</div>
-
-		<%-- 기존 타임라인  시작
-		<div class="w9-row-padding">
-			<c:forEach var="board" items="${ userinfo }">
-				<div class="w3-third w3-container w3-margin-bottom"
-					onclick="BoardView('${board.board_no}')">
-					<p>
-						<b>글 번호: ${ board.board_no }
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							작성시간: ${ board.board_wdate }</b>
-					</p>
-					<div
-						style="border: 1px solid black; padding: 10px; height: 300px;; min-height: 100px; overflow: hidden;">
-						<p>${ board.board_content }</p>
-					</div>
-					<div class="w3-container">
-						<p align="center">좋아요: ${ board.board_like }&nbsp;★</p>
-					</div>
-				</div>
-			</c:forEach>
-		</div> 
-		기존타임라인 끝
-		--%>
+			<div align="center">
+				<div style="background-color: lightgray"><b>자기소개</b></div>
+				<div>${ userinfo[0].user_info }</div>
+			</div>
+		
+		
+		
+		
 		<c:forEach var="board" items="${ userinfo }">
 		<div class="w3-col s12 m6 l3" onclick="BoardView('${board.board_no}')">
 			<div class="w3-container w3-card w3-white w3-round w3-margin"><br>
@@ -259,10 +214,11 @@ hr {
 				<hr class="w3-clear">
 				<!-- 본문 부분 -->
 				<p>${ board.board_content }</p>				
-				<button type="button" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i> Like ${ board.board_like }</button>				
+				<button onclick="likeBtn(${board.board_no})" type="button" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i> Like ${ board.board_like }</button>							
 			</div>
 		</div>
 		</c:forEach>
 	</form>
+	
 </body>
 </html>

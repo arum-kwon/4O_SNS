@@ -25,9 +25,14 @@ public class UserBListDTO {
 	int board_like;
 	Date board_wdate;
 	String board_img;
+	String blike;
 	
-	
-	
+	public String getBlike() {
+		return blike;
+	}
+	public void setBlike(String blike) {
+		this.blike = blike;
+	}
 	public String getUser_birthage() {
 		return user_birthage;
 	}

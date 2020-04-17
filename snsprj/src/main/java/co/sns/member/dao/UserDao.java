@@ -23,7 +23,7 @@ public class UserDao {
 
 	private final String USER_LIST = "select distinct bl.board_user_id, ul.user_id, bl.BOARD_NO, bl.BOARD_CONTENT, bl.BOARD_LIKE, bl.BOARD_WDATE,BOARD_IMG,\r\n"
 			+ "UL.USER_ID, UL.USER_NAME, UL.USER_HEADER_IMG, UL.USER_PRO_IMG_NAME, UL.USER_JDATE, UL.USER_INFO, TRUNC(MONTHS_BETWEEN(TRUNC(SYSDATE), USER_BIRTH) / 12 + 1 ) || '살' AS USER_BIRTHAGE, \r\n"
-			+ "UL.USER_GENDER, UL.USER_JOB, UL.INTEREST_ENTER, UL.INTEREST_LIFE, UL.INTEREST_HOBBY, UL.INTEREST_TRENDS\r\n"
+			+ "UL.USER_GENDER, UL.USER_JOB, UL.INTEREST_ENTER, UL.INTEREST_LIFE, UL.INTEREST_HOBBY, UL.INTEREST_TRENDS, case when board_no in (SELECT board_no FROM board_like_list where user_id=?) then 1 else 0 end as bLike "
 			+ "from board_list bl, user_list ul\r\n"
 			+ "where ul.user_id = (select distinct bl.board_user_id from board_list where bl.board_user_id = ?) ";
 	
@@ -131,6 +131,7 @@ public class UserDao {
 		try {
 			PreparedStatement psmt = conn.prepareStatement(USER_LIST);
 			psmt.setString(1, vo.getUser_id());
+			psmt.setString(2, vo.getUser_id());
 			ResultSet rs = psmt.executeQuery();
 			while (rs.next()) {
 				member = new UserBListDTO();
@@ -154,6 +155,7 @@ public class UserDao {
 				member.setBoard_like(rs.getInt("board_like"));
 				member.setBoard_wdate(rs.getDate("board_wdate"));
 				member.setBoard_img(rs.getString("board_img"));
+				member.setBlike(rs.getString("blike"));
 				list.add(member);
 			}
 		} catch (SQLException e) {

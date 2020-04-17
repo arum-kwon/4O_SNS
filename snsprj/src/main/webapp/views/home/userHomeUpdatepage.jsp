@@ -117,32 +117,41 @@ function back(){
   background-color: #555555;
   color: white;
 }
-#div2 { display: inline-block;}
-body{
-	background-color: white;
-}
 
-#title { background: black; color: white;}
-table,th,tr,td { border: 1px solid gray; }
+table,th,tr,td { border: 1px solid gray; border-collapse: collapse;}
 table, th{ width: 10cm}
-hr { background-color: gray; height: 1px;}
-
+hr {
+	color: gray;
+	border: ridge; 1px;
+}
+#title {
+	background: #536872;
+	color: white;
+}
+#table {display: table; width: 100%;}
+.row {display: table-row;}
+.cell {display: table-cell; padding: 3px; border-bottom: 1px solid #DDD;}
+.col1 { width: 25%;}
+.col2 {width: 25%;}
+.col3 {width: 25%;}
+.col4 {width: 25%;}
 </style>
 </head>
 <form id="frm" name="frm" method="post">
-	<div id="title" align="center">
-		<h1>개인정보 수정</h1>
-	</div>
-		<div id="div1" class="w3-center-align w3-white w3-container" style="height:auto;">
-		<div id="divtable" align="center">
-			<div class="row">
-				<span class="cell_col1">프로필사진: </span>
-				<span class="cell col2"><img id="imgChange" src="${pageContext.request.contextPath}/common/img/pro/${ userinfo.user_pro_img_name }" width="150px" height="100px" />
-									<!-- Trigger the modal with a button -->
-									<button id="picchange" type="button" class="button button2"
-										data-toggle="modal" data-target="#myModal" onclick="show()">프로필 수정</button>
-
-									<!-- Modal -->
+	<div align="center">
+			<div id="title">
+				<h1>
+					개인정보 홈
+				</h1>
+			</div>
+		</div>
+		<div align="center">
+			<div align="center"><img id="imgChange" src="${pageContext.request.contextPath}/common/img/pro/${ userinfo.user_pro_img_name }" class="rounded-circle" alt="엑박" width="150" height="150"></span>
+		</div>
+		<div align="center">
+			<!-- Trigger the modal with a button -->
+			<div><button id="picchange" type="button" class="w3-button w3-theme-d1 w3-margin-bottom" data-toggle="modal" data-target="#myModal" onclick="show()">프로필 수정</button></div>
+			<!-- Modal -->
 									<div class="modal fade" id="myModal" role="dialog">
 										<div class="modal-dialog" style="display: none;">
 											<!-- Modal content-->
@@ -213,28 +222,31 @@ hr { background-color: gray; height: 1px;}
 													<img src="${pageContext.request.contextPath}/common/img/pro/profile_img_6.jpg" class="rounded-circle" alt="Cinque Terre" width="150" height="150">
 												</div>
 												
-												<div class="modal-footer">
-													<button type="button" class="button button2" data-dismiss="modal" onclick="myProImgUpt();">수정하기</button>
-													<button type="button" class="button button2" data-dismiss="modal">취소</button>
+												<div class="modal-footer"><br>
+													<button type="button" class="w3-button w3-theme-d1 w3-margin-bottom" data-dismiss="modal" onclick="myProImgUpt();">수정하기</button>
+													<button type="button" class="w3-button w3-theme-d1 w3-margin-bottom" data-dismiss="modal">취소</button>
 												</div>
 											</div>
 
 										</div>
-									</div></span>
-			</div><hr>
+									</div>			
+		</div>
+		
+		
+		
+			</div>
+			<div id="table">
 			<div class="row">
-				<span class="cell col1">아이디:</span>
-				<span class="cell col2">${ userinfo.user_id }</span>
-			</div><hr>
+				<span class="cell col1" style="background-color: lightgray"><b>아이디</b></span>
+				<span class="cell col2" style="background-color: lightgray"><b>닉네임</b></span>
+				<span class="cell col3" style="background-color: lightgray"><b>나이</b></span>
+				<span class="cell col4" style="background-color: lightgray"><b>성별</b></span>
+			</div>
 			<div class="row">
-				<span class="cell col1">닉네임:</span>
+				<span class="cell col1">${ userinfo.user_id }</span>
 				<span class="cell col2"><input type="text" id="user_name" name="user_name" value="${ userinfo.user_name }"></span>
-			</div><hr>
-			<div class="row">
-				<span class="cell col1">나이:</span> <span class="cell col2">${ userinfo.user_birthage }</span>
-			</div><hr>
-			<div class="row">
-				<span class="cell col1">성별:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <span class="cell col2">
+				<span class="cell col3">${ userinfo.user_birthage }</span>
+				<span class="cell col4">
 					<c:choose>
 						<c:when test="${ userinfo.user_gender == 'M' }">
 								<input type="radio" id="user_gender" name="user_gender" value="M" checked> 남자 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -252,28 +264,36 @@ hr { background-color: gray; height: 1px;}
 								<input type="radio" id="user_gender" name="user_gender" value="W"> 여자 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						</c:otherwise>
 					</c:choose>
-				</span>
-			</div><hr>
-			<div class="row">
-				<span class="cell col1">가입일:</span>
-				<span class="cell col2">${ userinfo.user_jdate }</span>
-			</div><hr>
-			<div class="row">
-				<span class="cell col1">직업:</span>
-				<span class="cell col2"><input type="text" id="user_job" name="user_job" value="${ userinfo.user_job }"></span>
-			</div><hr>
-			<div class="row">
-			자기소개
 			</div>
-			<div class="row">				
-				<span class="cell col2"><textarea cols="30" rows="10" id="user_info" name="user_info">${ userinfo.user_info }</textarea></span>
-			</div><hr>
+			<div class="row">
+				<span class="cell col1" style="background-color: lightgray"><b>가입일</b></span>
+				<span class="cell col2" style="background-color: lightgray"><b>직업</b></span>
+				<span class="cell col2" style="background-color: lightgray"></span>
+				<span class="cell col2" style="background-color: lightgray"></span>
+			
+			</div>
+			<div class="row">
+				<span class="cell col1">${ userinfo.user_jdate }</span>
+				<span class="cell col2"><input type="text" id="user_job" name="user_job" value="${ userinfo.user_job }"></span>
+				<span class="cell col3"></span>
+				<span class="cell col4"></span>
+			</div>
 		</div>
+		<div align="center">
+				<div style="background-color: lightgray"><b>자기소개</b></div>
+				<div><textarea cols="30" rows="10" id="user_info" name="user_info">${ userinfo.user_info }</textarea></div>
+			</div>
+			<div id="title" align="center">
+				<h1>
+					관심분야
+				</h1>
+			</div>
+		
 		<table id="table2" align="center" >
 		<tr>
-			<th colspan="10">취미 선택</th>
+			<th colspan="10" style="background-color: lightgray">취미 선택</th>
 		</tr>
-		<tr>
+		<tr style="background-color: lightyellow">
 		<th>엔터</th><th>생활</th><th>취미</th><th>동향</th>	
 		</tr>
 		<tr>
@@ -322,10 +342,10 @@ hr { background-color: gray; height: 1px;}
 		<td>
 		<c:choose>
 			<c:when test="${ userinfo.interest_enter == '영화' }">
-				<input type="radio" id="interest_enter" name="interest_enter" value="영화" checked>영화
+				<input type="radio" id="interest_enter" name="interest_enter" value="영화" checked><label for="interest_enter">영화</label>
 			</c:when>
 			<c:otherwise>
-				<input type="radio" id="interest_enter" name="interest_enter" value="영화">영화
+				<input type="radio" id="interest_enter" name="interest_enter" value="영화"><label for="interest_enter">영화</label>
 			</c:otherwise>
 		</c:choose>
 		</td>		
@@ -617,15 +637,11 @@ hr { background-color: gray; height: 1px;}
 		</tr>
 	</table>
 		<br>
-	</div>
-	
 	<div align="center">
-		<button class="button button2" type="button" onclick="userInfoUpdate()">수정하기</button>
-		<button class="button button2" type="reset">취소</button>
-		<button class="button button2" id="back" type="button" onclick="location.href='/snsprj/userHome.do'">개인정보 홈</button>
-		</div><br> 
-		</div>		
-		<div class="w3-black w3-center w3-padding-24">Team 4o</a></div>	
+		<button class="w3-button w3-theme-d1 w3-margin-bottom" type="button" onclick="userInfoUpdate()">수정하기</button>
+		<button class="w3-button w3-theme-d1 w3-margin-bottom" type="reset">취소</button>
+		<button class="w3-button w3-theme-d1 w3-margin-bottom" id="back" type="button" onclick="location.href='/snsprj/userHome.do'">개인정보 홈</button>
+	</div>
 	</form>
 </body>
 </html>
