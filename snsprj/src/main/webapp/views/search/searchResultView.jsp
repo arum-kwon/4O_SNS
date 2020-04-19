@@ -10,7 +10,7 @@ div p {
 	text-overflow: ellipsis;
 	height: 160px;
 }
-h4 {
+h4.user-name {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -26,7 +26,8 @@ h4 {
 		<div class="w3-container">
 			<h2  class="w3-margin-top w3-margin-left" ><b>검색 결과</b></h2>
 			<div class="w3-margin-bottom w3-bottombar w3-padding-small"></div>
-			<span class="w3-margin-left">검색결과가 없습니다.</span>
+			<span class="w3-margin-left">검색결과가 없습니다</span>
+			<br><br>
 		</div>    					
 	</header>
 	
@@ -46,18 +47,18 @@ h4 {
 	<div class="w3-col s12 m6 l3">
 		<div class="w3-container w3-card w3-white w3-round w3-margin"><br>
 			<!-- 프로필 부분 -->
-			<img src="${pageContext.request.contextPath}/common/img/pro/${post.user_pro_img_name}" onclick="clickPro('${post.user_id}')" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-			<h4>${post.user_name}</h4>
+			<img src="${pageContext.request.contextPath}/common/img/pro/${post.user_pro_img_name}" onclick="clickPro('${post.user_id}')" alt="Avatar" class="w3-left w3-circle w3-margin-right cursor_over" style="width:60px">
+			<h4 onclick="clickPro('${post.user_id}')" class="user-name cursor_over">${post.user_name}</h4>
 			<hr>
 			<!-- 본문 부분 -->		  
 			<c:if test="${empty post.board_img}">
-				<p onclick="clickBoard(${post.board_no})"> ${post.board_content } </p>
+				<p onclick="clickBoard(${post.board_no})" class="cursor_over"> ${post.board_content } </p>
 			</c:if>
 			<c:if test="${not empty post.board_img}">
-				<p><img src="${pageContext.request.contextPath}/common/img/upload/${post.board_img}" onclick="clickBoard(${post.board_no})" style="width:100%" alt="Northern Lights" class="w3-margin-bottom"></p>
+				<p><img src="${pageContext.request.contextPath}/common/img/upload/${post.board_img}" onclick="clickBoard(${post.board_no})" style="width:100%" alt="Northern Lights" class="w3-margin-bottom cursor_over"></p>
 			</c:if>
 			<!-- 좋아요 -->
-			<button onclick="likeBtn(${post.board_no})" id="btn${post.board_no}" name="likeBtn" value="${post.bLike}" type="button"> Like <span id="span${post.board_no}"> ${post.board_like}</span> </button>
+			<button onclick="clickLike(${post.board_no})" id="btn${post.board_no}" name="likeBtn" value="${post.bLike}" type="button"> Like <span id="span${post.board_no}"> ${post.board_like}</span> </button>
 			<span class="w3-right w3-opacity"> ${post.board_wdate} </span>
 		</div>
 	</div>
@@ -70,6 +71,7 @@ h4 {
 </form>
 
 <script>
+	//좋아요 버튼 색 입히기
 	var onLike = "w3-button w3-red w3-hover-pale-red w3-margin-bottom";
 	var offLike = "w3-button w3-blue-grey w3-margin-bottom";
 	var btn = document.getElementsByName("likeBtn");
@@ -82,6 +84,7 @@ h4 {
 		}
 	}
 	
+	//게시글을 클릭
 	function clickBoard(number){
 		hid.setAttribute('name', 'board_no');
 		hid.setAttribute('value', number);
@@ -90,15 +93,17 @@ h4 {
 		frm.submit();
 	}
 	
+	//프로필 클릭
 	function clickPro(id){
-		hid.setAttribute('name', 'id');
+		hid.setAttribute('name', 'user_id');
 		hid.setAttribute('value', id);
 		
 		frm.action = '${pageContext.request.contextPath}/UserInfoSelect.do';
 		frm.submit();
 	}
 	
-	function likeBtn(number){
+	//좋아요 버튼 클릭
+	function clickLike(number){
 		var btn = document.getElementById("btn" + number);
 		var btnValue = btn.value;
 		var span = document.getElementById("span" + number);

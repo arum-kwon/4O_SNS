@@ -1,15 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- Profile -->
 <div class="w3-card w3-round w3-white">
 	<div class="w3-container">
 	
-		<p class="w3-center">
-			<img src="${pageContext.request.contextPath}/common/img/pro/${my_pro_img_name}" class="w3-circle" style="height: 106px; width: 106px" alt="Avatar">
-		</p>
-		<a href="/snsprj/userHome.do">
-			<h4 class="w3-center">${my_id}</h4>
-		</a>
+		<div class="w3-center">
+			<br>
+			<img onclick="clickMyPro()" src="${pageContext.request.contextPath}/common/img/pro/${my_pro_img_name}" class="w3-circle cursor_over" style="height: 106px; width: 106px" alt="Avatar">
+			<h4 onclick="clickMyPro()" class="cursor_over">${my_name}</h4>
+		</div>
 		<hr>
 		<p style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; height: 20px;">
 			<i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i>
@@ -69,7 +69,10 @@
 	con = getContextPath();
 	wf = con + "views/post/writeForm.tiles"
 		var wf = con + "/views/post/writeForm.tiles"
-		
+
+	function clickMyPro(){
+		location.href="${pageContext.request.contextPath}/userHome.do";
+	}	
 	function move(to){
 		
 		if(to == 'timeLine'){

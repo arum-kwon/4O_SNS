@@ -17,6 +17,8 @@ public class SubDao {
 	static public SubDao getInstance() {
 		return instance;
 	}
+	
+	
 		
 	private final String SUB_LIST = "SELECT USER_ID, USER_NAME, USER_JOB, USER_PRO_IMG_NAME " 
 			+ "FROM USER_LIST " 

@@ -6,44 +6,46 @@ $(function(){
 	var keywordArray = new Array();
 	var index = 0;
 	
-	test(); //최초 한번 실행
-	setInterval(looptest, 2000); //2초마다 검색 결과를 바꿔줌
-	setInterval(test, 360000); //1시간마다 데이터를 받아옴
+	test(); //최초 실행
+	looptest();
 	
 	function test() {
+		
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
 			
 				var obj = JSON.parse(this.responseText);
-	
+				console.log(obj);
 				var temp = "";
 				var slid = document.getElementById("keywordspan");
-	
+				
+				keywordArray = new Array()
 				for (i = 0; i < obj.keywordList.length; i++) {
 					temp = obj.keywordList[i].keyword;
 					//json에서 값을 가져옴. 그 값을 배열에 넣을꺼임.
 					
 					keywordArray.push(temp);
-	
 				}
-				console.log("???");
 			}
-		
-		
 		};
 		xhttp.open("GET", "${pageContext.request.contextPath}/hot.do", true);
 		xhttp.send();
-	}
+		setTimeout(test, 360000); //1시간 뒤에 test 호출
+	} 
 
 	function looptest() {
-		document.getElementById("keywordspan").innerHTML = keywordArray[index];
-		document.getElementById("hotNo").innerHTML = index+1;
+		if(keywordArray[index] != null){
+			document.getElementById("keywordspan").innerHTML = keywordArray[index];
+			document.getElementById("hotNo").innerHTML = index+1;
+		}
+		
 		
 		index++;
 		if (index >= keywordArray.length) {
 			index = 0;
 		}
+		setTimeout(looptest, 2000); //2초 뒤에 looptest 호출 
 	}
 });
 

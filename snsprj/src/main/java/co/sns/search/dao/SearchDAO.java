@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -28,30 +30,33 @@ public class SearchDAO {
 		return instance;
 	}
 	
-	//반복작업
-	static Timer m_timer = null;
-	static TimerTask m_task = new TimerTask() {
-		
-		@Override
-		public void run() {
-			
-			try {
-				instance.reset();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
-	};
-	
-	public static void runTimer() {
-		if(m_timer == null) {
-			m_timer = new Timer();
-			m_timer.schedule(m_task, 3600000, 3600000);
-		}
-		
-	}
+
+//	//반복작업
+//	static Timer m_timer = null;
+//	static TimerTask m_task = new TimerTask() {
+//	
+//		@Override
+//		public void run() {
+//			System.out.println("timer task");
+//			try {
+//				instance.reset();
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+//		}
+//	};
+//	
+//	public static void runTimer() {
+//		System.out.println("runTimer");
+//		if(m_timer == null) {
+//			m_timer = new Timer();
+//			System.out.println("new timer");
+//			m_timer.schedule(m_task, 600000, 600000);
+//		}
+//		
+//	}
 	
 	// 검색결과 리스트 메서드
 		public ArrayList<Map<String, Object>> getResultList(String key, String userid) {
@@ -136,7 +141,7 @@ public class SearchDAO {
 			String sql ="select keyword FROM (select keyword from ser_key_list order by ser_count desc) WHERE rownum <=5";
 			ResultSet rs = null;
 			try {
-				conn = co.sns.common.ConnectionManager.getConnnection();
+				conn = ConnectionManager.getConnnection();
 				pstmt = conn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
 				while(rs.next()) {
@@ -157,15 +162,17 @@ public class SearchDAO {
 		}
 		
 		//keyword 카운트 1로 초기화 메소드
-		public int reset() throws SQLException {
+		public void reset() {
 			int n =0;
 			String sql = "update ser_key_list set ser_count =1";
 			
-			conn = co.sns.common.ConnectionManager.getConnnection();
-			pstmt = conn.prepareStatement(sql);
-			n = pstmt.executeUpdate();
-			
-			return n;
-			
+			conn = ConnectionManager.getConnnection();
+			try {
+				pstmt = conn.prepareStatement(sql);
+				n = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			ConnectionManager.close(conn);
 		}
 }

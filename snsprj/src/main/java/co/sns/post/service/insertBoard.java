@@ -80,19 +80,20 @@ public class insertBoard extends HttpServlet {
 			String path = null;
 
 			int n = dao.insertBoard(dto);
-			
+			System.out.println(n);
 			String contextPath = request.getContextPath();
-			if (n != 0) {
-				path = contextPath + "/views/post/writeForm.tiles";
+			if (n == 0) {
+				path = contextPath + "/views/post/writeFail.tiles";
 			} else {
-				path = contextPath + "/views/post/writeForm.tiles";
+				path = contextPath + "/views/post/writeSuccess.tiles";
 			}
+			response.sendRedirect(path);
 
-			response.getWriter().append("<head>\r\n" + 
-					"    <title>META Tag  Refresh</title>\r\n" + 
-					"    <meta http-equiv=\"content-type\" content=\"text/html; charset=euc-kr\">\r\n" + 
-					"    <meta http-equiv=\"refresh\" content=\"1; url=http://localhost/snsprj/views/post/writeForm.tiles\">\r\n" + 
-					"</head>" + uploadFile + "<br>content:" + contents);
+//			response.getWriter().append("<head>\r\n" + 
+//					"    <title>META Tag  Refresh</title>\r\n" + 
+//					"    <meta http-equiv=\"content-type\" content=\"text/html; charset=euc-kr\">\r\n" + 
+//					"    <meta http-equiv=\"refresh\" content=\"1; url=http://localhost" + contextPath + "/views/post/writeForm.tiles\">\r\n" + 
+//					"</head>" + uploadFile + "<br>content:" + contents);
 			
 		
 	}

@@ -26,10 +26,10 @@ public class TimeLineDAO {
 	// list[0].board.getboard_no     /  list[0].user_id
 	public ArrayList<HashMap<String, Object>> getTimeLineList(Connection conn, String myId, String order) {
 		String sql = "SELECT b.*, u.*, case when board_no in (SELECT board_no FROM board_like_list where user_id=?) then 1 else 0 end as bLike " + 
-				"				FROM board_list b join  " + 
-				"				        ( SELECT  user_id, user_name, user_pro_img_name  " + 
-				"                        FROM  user_list WHERE user_id in (SELECT to_id FROM sub_list where from_id=? OR user_id=?) ) u   " + 
-				"				on board_user_id in u.user_id ";
+				"								FROM board_list b join " + 
+				"								        ( SELECT  user_id, user_name, user_pro_img_name " + 
+				"				                        FROM  user_list WHERE user_id in (SELECT to_id FROM sub_list where from_id=?) OR user_id=? ) u " + 
+				"								on board_user_id in u.user_id ";
 		String latest = "order by board_wdate desc, board_no desc";
 		String liked = "order by board_like desc, board_wdate desc, board_no desc";
 		HashMap<String, String> orderStr = new HashMap<String, String>();

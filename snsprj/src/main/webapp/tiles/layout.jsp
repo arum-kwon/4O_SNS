@@ -26,6 +26,11 @@ div#CLeft {
 
 
 }
+.cursor_over {cursor: pointer;}
+
+
+
+
 </style>
 
 
@@ -70,6 +75,7 @@ div#CLeft {
 	
 	
 	<!-- Footer =================================================================================  -->
+	<br>
 	<div>
 		<tiles:insertAttribute name="footer" />
 	</div>

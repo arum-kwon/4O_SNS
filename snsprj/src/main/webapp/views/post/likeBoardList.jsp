@@ -9,7 +9,7 @@ div p {
 	text-overflow: ellipsis;
 	height: 160px;
 }
-h4 {
+h4.user-name {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -21,38 +21,36 @@ h4 {
 <!-- 페이지 상단  -->
 <header>
   <div class="w3-container">
-     <h2  class="w3-margin-top w3-margin-left" ><b>좋아하는 글</b></h2>
-     <div class="w3-margin-bottom w3-bottombar w3-padding-small"></div>
+    <h2  class="w3-margin-top w3-margin-left" ><b>좋아하는 글</b></h2>
+    <div class="w3-margin-bottom w3-bottombar w3-padding-small"></div>
+	<c:if test="${empty list}">
+		<span class="w3-margin-left">좋아요를 누른 글을 여기서 모아볼 수 있습니다</span>
+		<br><br>
+	</c:if>
   </div>
 </header>
 
 <!-- 리스트  -->
 <c:forEach items="${list}" var="tl" varStatus="status">
-<c:if test="${status.index%4 == 0}">
-<div class="w3-row">
-</c:if>
 	<div class="w3-col s12 m6 l3">
 	  	<div class="w3-container w3-card w3-white w3-round w3-margin"><br>
 		  <!-- 프로필 부분 -->
-		  <img src="${pageContext.request.contextPath}/common/img/pro/${tl.user_pro_img_name}" onclick="clickPro('${tl.board.board_user_id}')" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-		  <h4>${tl.user_name}</h4>
+		  <img src="${pageContext.request.contextPath}/common/img/pro/${tl.user_pro_img_name}" onclick="clickPro('${tl.board.board_user_id}')" alt="Avatar" class="w3-left w3-circle w3-margin-right cursor_over" style="width:60px">
+		  <h4 onclick="clickPro('${tl.board.board_user_id}')" class="user-name cursor_over">${tl.user_name}</h4>
 		  <hr>
 		  <!-- 본문 부분 -->		  
 		  <c:if test="${empty tl.board.board_img}">
-		    <p onclick="clickBoard(${tl.board.board_no})"> ${tl.board.board_content} </p>
+		    <p onclick="clickBoard(${tl.board.board_no})" class="cursor_over"> ${tl.board.board_content} </p>
 		  </c:if>
 		  <c:if test="${not empty tl.board.board_img}">
-		    <p><img src="${pageContext.request.contextPath}/common/img/upload/${tl.board.board_img}" onclick="clickBoard(${tl.board.board_no})" style="width:100%" alt="Northern Lights" class="w3-margin-bottom"> </p>
+		    <p><img src="${pageContext.request.contextPath}/common/img/upload/${tl.board.board_img}" onclick="clickBoard(${tl.board.board_no})" style="width:100%" alt="Northern Lights" class="w3-margin-bottom cursor_over"> </p>
 		  </c:if>
 		  <!-- 좋아요 -->
-	  	  <button onclick="likeBtn(${tl.board.board_no})" id="btn${tl.board.board_no}" name="likeBtn" value="1" type="button"> Like <span id="span${tl.board.board_no}">${tl.board.board_like}</span> </button> 
+	  	  <button onclick="clickLike(${tl.board.board_no})" id="btn${tl.board.board_no}" name="likeBtn" value="1" type="button"> Like <span id="span${tl.board.board_no}">${tl.board.board_like}</span> </button> 
 		  <span class="w3-right w3-opacity"> ${tl.board.board_wdate} </span>
 		</div>
 	</div>
 
-<c:if test="${status.index%4 == 3 || status.last}">
-</div>
-</c:if>
 </c:forEach>
 
 
@@ -85,7 +83,7 @@ function clickBoard(number){
 
 //프로필 클릭
 function clickPro(id){
-	hid.setAttribute('name', 'id');
+	hid.setAttribute('name', 'user_id');
 	hid.setAttribute('value', id);
 	
 	frm.action = '${pageContext.request.contextPath}/UserInfoSelect.do';
@@ -93,7 +91,7 @@ function clickPro(id){
 }
 
 //좋아요 버튼 클릭
-function likeBtn(number){
+function clickLike(number){
 	var btn = document.getElementById("btn" + number);
 	var btnValue = btn.value;
 	var span = document.getElementById("span" + number);

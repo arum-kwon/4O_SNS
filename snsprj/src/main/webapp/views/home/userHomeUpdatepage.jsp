@@ -155,9 +155,10 @@ hr {
 									<div class="modal fade" id="myModal" role="dialog">
 										<div class="modal-dialog" style="display: none;">
 											<!-- Modal content-->
-											<div id="picchangepage" class="modal-content" style="border: 1px solid black">
+											<div id="picchangepage" class="modal-content">
 												<div class="modal-header">
 													<!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+													<hr>
 													<h4><b>< 프로필 사진 수정하기 ></b></h4>
 												</div>
 												<div class="modal-body">
@@ -225,6 +226,7 @@ hr {
 												<div class="modal-footer"><br>
 													<button type="button" class="w3-button w3-theme-d1 w3-margin-bottom" data-dismiss="modal" onclick="myProImgUpt();">수정하기</button>
 													<button type="button" class="w3-button w3-theme-d1 w3-margin-bottom" data-dismiss="modal">취소</button>
+													<hr>
 												</div>
 											</div>
 
@@ -245,7 +247,7 @@ hr {
 			<div class="row">
 				<span class="cell col1">${ userinfo.user_id }</span>
 				<span class="cell col2"><input type="text" id="user_name" name="user_name" value="${ userinfo.user_name }"></span>
-				<span class="cell col3">${ userinfo.user_birthage }</span>
+				<span class="cell col3"><input type=date id="user_birth" name="user_birth" value="${ userinfo.user_birth }" max=""></span>
 				<span class="cell col4">
 					<c:choose>
 						<c:when test="${ userinfo.user_gender == 'M' }">
@@ -640,7 +642,7 @@ hr {
 	<div align="center">
 		<button class="w3-button w3-theme-d1 w3-margin-bottom" type="button" onclick="userInfoUpdate()">수정하기</button>
 		<button class="w3-button w3-theme-d1 w3-margin-bottom" type="reset">취소</button>
-		<button class="w3-button w3-theme-d1 w3-margin-bottom" id="back" type="button" onclick="location.href='/snsprj/userHome.do'">개인정보 홈</button>
+		<button class="w3-button w3-theme-d1 w3-margin-bottom" id="back" type="button" onclick="location.href='${pageContext.request.contextPath}/userHome.do'">개인정보 홈</button>
 	</div>
 	</form>
 </body>

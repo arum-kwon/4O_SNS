@@ -35,12 +35,21 @@ public class UserInfoSelect extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");		
 		String id = request.getParameter("user_id");		
+		HttpSession session = request.getSession(true); 
+		String my_id = (String) session.getAttribute("my_id");
 		
 		Connection conn = ConnectionManager.getConnnection();
 		UserBListDTO vo = new UserBListDTO();
 		vo.setUser_id(id);
-		ArrayList<UserBListDTO> list = UserDao.getInstance().select(conn, vo);	
-		request.setAttribute("members", list);			
+		
+		String sub = UserDao.getInstance().subInfo(conn, my_id, id); 
+		request.setAttribute("sub", sub);	
+		
+		ArrayList<UserBListDTO> list = UserDao.getInstance().select(conn, vo);
+		request.setAttribute("boardlist", list);	
+		
+		UserBListDTO dto = UserDao.getInstance().selectUserInfo2(conn, vo);
+		request.setAttribute("member", dto);
 		ConnectionManager.close(conn);
 				
 		String path = "/views/home/userInfoSelect.tiles";

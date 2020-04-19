@@ -40,6 +40,8 @@ public class SubRecommendController extends HttpServlet {
 		vo.setUser_id(id);
 		ArrayList<UserBListDTO> list = UserDao.getInstance().subrecommend(conn, vo);
 		dto = UserDao.getInstance().selectUserInfo2(conn, vo);
+		ConnectionManager.close(conn);
+		
 		
 		request.setAttribute("sessionuser", dto);
 		request.setAttribute("members", list);

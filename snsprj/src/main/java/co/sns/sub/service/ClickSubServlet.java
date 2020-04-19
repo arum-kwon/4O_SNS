@@ -24,7 +24,7 @@ public class ClickSubServlet extends HttpServlet {
 		  String yourId = request.getParameter("from_id"); // 상대위치      
 		  String subCheck = request.getParameter("subCheck"); // 상대위치    
 		  
-		  
+		  System.out.println(yourId + " " + subCheck);
 		  Connection conn = ConnectionManager.getConnnection();
 		  if(subCheck.equals("1")) { 
 		  //구독중인 상태일때 

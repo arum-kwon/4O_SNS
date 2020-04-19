@@ -1,70 +1,83 @@
 package co.sns.member.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
 
 import co.sns.common.UserListDTO;
-import co.sns.post.dao.TimeLineDAO;
-
 
 public class LoginDAO {
-
-	//싱글톤
 	static LoginDAO instance = new LoginDAO();
 	static public LoginDAO getInstance() {
 		return instance;
 	}
-
 	
+	private final String USER_INSERT = "insert into user_list(user_id, user_pw, user_pro_img_name, user_name, user_jdate) values(?,?,?,?,sysdate)"; 
+	private final String USER_CHECK = "select * from user_list where user_id = ? and user_pw=?";
+	private final String USER_ID_CHECK = "select user_id from user_list where user_id = ?";
 	
-	private final String USER_LIST_INSERT = "insert into user_list(USER_ID\r\n" + 
-			",USER_NAME\r\n" + 
-			",USER_PW\r\n" + 
-			",USER_HEADER_IMG\r\n" + 
-			",USER_PRO_IMG_NAME\r\n" + 
-			",USER_JDATE\r\n" + 
-			",USER_INFO\r\n" + 
-			",USER_BIRTH\r\n" + 
-			",USER_GENDER\r\n" + 
-			",USER_JOB\r\n" + 
-			",INTEREST_ENTER\r\n" + 
-			",INTEREST_LIFE\r\n" + 
-			",INTEREST_HOBBY\r\n" + 
-			",INTEREST_TRENDS) values(?,?,?,?,?,sysdate,?,?,?,?,?,?,?,?)";
-
-	
-	public int userListInsert(Connection conn, UserListDTO spj) {
+	public UserListDTO selectMember(Connection conn, UserListDTO dto) {
+		UserListDTO vo = null;
+		try {
+			PreparedStatement psmt = conn.prepareStatement(USER_CHECK);
+			psmt.setString(1, dto.getUser_id());
+			psmt.setString(2, dto.getUser_pw());
+			ResultSet rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				vo = new UserListDTO();
+				
+				vo.setUser_id(rs.getString("user_id"));
+				vo.setUser_name(rs.getString("user_name"));
+				vo.setUser_pro_img_name(rs.getString("user_pro_img_name"));
+				vo.setUser_jdate(rs.getDate("user_jdate"));
+				vo.setUser_info(rs.getString("user_info"));
+				vo.setUser_birth(rs.getDate("user_birth"));
+				vo.setUser_gender(rs.getString("user_gender"));
+				vo.setUser_job(rs.getString("user_job"));
+				vo.setInterest_enter(rs.getString("Interest_enter"));
+				vo.setInterest_life(rs.getString("Interest_life"));
+				vo.setInterest_hobby(rs.getString("Interest_hobby"));
+				vo.setInterest_trends(rs.getString("Interest_trends"));
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
+		return vo;
+	}
+	
+	public int JoinInsert(Connection conn, UserListDTO dto ) {
 		int n = 0;
 		try {
-			PreparedStatement psmt = conn.prepareStatement(USER_LIST_INSERT);
-			psmt.setString(1, spj.getUser_id());
-			psmt.setString(2, spj.getUser_name());
-			psmt.setString(3, spj.getUser_pw());
-			psmt.setString(4, spj.getUser_header_img());
-			psmt.setString(5, spj.getUser_pro_img_name());
-			//	psmt.setDate(6,new java.sql.Date(spj.getUser_jdate().getTime()));
-			psmt.setString(6, spj.getUser_info());
-			psmt.setDate(7, new java.sql.Date(System.currentTimeMillis()));
-			psmt.setString(8, spj.getUser_gender());
-			psmt.setString(9, spj.getUser_job());
-			psmt.setString(10, spj.getInterest_enter());
-			psmt.setString(11, spj.getInterest_life());
-			psmt.setString(12, spj.getInterest_hobby());
-			psmt.setNString(13, spj.getInterest_trends());
-			n=psmt.executeUpdate();			
+		PreparedStatement psmt = conn.prepareStatement(USER_INSERT);
+		psmt.setString(1, dto.getUser_id());
+		psmt.setString(2, dto.getUser_pw());
+		psmt.setString(3, dto.getUser_pro_img_name());
+		psmt.setString(4, dto.getUser_name());
+		n = psmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
 		return n;
-		
+	}
+	
+	public int userIdCheck(Connection conn, String user_id) {
+		int n = 0;
+		try {
+			PreparedStatement psmt = conn.prepareStatement(USER_ID_CHECK);
+			psmt.setString(1, user_id);
+			ResultSet rs = psmt.executeQuery();
+			if(rs.next()) {
+				n=1;  
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return n;
 	}
 	
 }
- 
-
