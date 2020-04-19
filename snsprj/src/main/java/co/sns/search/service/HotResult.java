@@ -44,12 +44,10 @@ public class HotResult extends HttpServlet {
 		long time = System.currentTimeMillis();
 		long now = time / (1000 * 60); //1분마다
 		if((now-last_put) > 1) {
-			System.out.println("1분마다ㅠ" + last_put);
 			jsonPut();
 			last_put = now;
 		}
-		if((now-last_reset) > 5) { //5분 마다 
-			System.out.println("5분마다ㅠ" + last_reset);
+		if((now-last_reset) > 60) { //60분 마다 
 			dbReset();
 			last_reset = now;
 		}

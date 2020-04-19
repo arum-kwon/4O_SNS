@@ -21,7 +21,7 @@ public class SearchDAO {
 	Connection conn = null;
 	PreparedStatement pstmt = null;
 	Statement stmt = null;
-
+	ResultSet rs = null;
 	//싱글톤 구현
 	static SearchDAO instance;	
 	public static SearchDAO getInstance() {
@@ -69,7 +69,7 @@ public class SearchDAO {
 				pstmt.setString(1, userid );
 				pstmt.setString(2, key);
 				
-				ResultSet rs = pstmt.executeQuery();
+				rs = pstmt.executeQuery();
 			
 				
 				while(rs.next()) {
@@ -109,7 +109,7 @@ public class SearchDAO {
 				e.printStackTrace();
 			}
 			finally {
-				ConnectionManager.close(conn);
+				ConnectionManager.close(rs, pstmt, conn);
 			}
 			return list;
 		}
@@ -129,6 +129,9 @@ public class SearchDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 				
+			}
+			finally {
+				ConnectionManager.close(conn);
 			}
 			return n ;
 		

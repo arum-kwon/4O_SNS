@@ -56,8 +56,6 @@ public class SerchResult extends HttpServlet {
 		searchList = dao.getResultList(searchedKey, userid);
 		int searchKeyword = dao.serch(searchedKey);
 	
-		dao.serch(searchedKey);
-		
 		// request객체에 실어주는 구문
 		request.setAttribute("searchedPosts", searchList);
 		String path = "/views/search/searchResultView.tiles";
