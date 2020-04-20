@@ -25,7 +25,7 @@
 	</div>
 </header>
 
-	<form id="frm" name="frm" method="post">
+	<form id="frm" name="frm">
 	<input type="hidden" id="id" name="user_id" >
 	<c:if test="${not empty members}">
 		<div class="w3-container w3-card w3-white w3-round w3-margin">

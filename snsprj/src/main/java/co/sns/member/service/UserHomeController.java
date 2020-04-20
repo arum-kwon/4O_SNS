@@ -39,7 +39,7 @@ public class UserHomeController extends HttpServlet {
 		UserBListDTO dto = UserDao.getInstance().selectUserInfo2(conn, vo);
 		request.setAttribute("userinfo", dto);				
 
-		ArrayList<UserBListDTO> bdto = UserDao.getInstance().select(conn, vo);
+		ArrayList<UserBListDTO> bdto = UserDao.getInstance().select(conn, vo, id);
 		request.setAttribute("bdtolist", bdto);
 		ConnectionManager.close(conn);		
 		/*

@@ -161,7 +161,7 @@ h4.user-name {
 		</div>
 		<div align="center">
 			<div>
-				<button id="btnSub" value="${sub}" onclick="clickSub('${member.user_id}')" class=""> </button>
+				<button id="btnSub" value="${sub}" onclick="clickSub('${member.user_id}')" class=""><span id="subSpan"></span> </button>
 			</div>
 		</div>
 			<div id="table">
@@ -264,6 +264,7 @@ h4.user-name {
 	var on = "w3-button w3-theme-d5 w3-margin-bottom";
 	var off = "w3-button w3-theme-d1 w3-margin-bottom";
 	var subBtn = document.getElementById("btnSub");
+	var span = document.getElementById("subSpan");
 	console.log(subBtn.value);
 	
 	if (subBtn.value == 0){
@@ -277,19 +278,19 @@ h4.user-name {
 	//구독 버튼 클릭
 	function clickSub(id){
 		btnValue = subBtn.value;
-		console.log(btnValue);
+
 		$.ajax({
 			url: "${pageContext.request.contextPath}/ClickSubServlet.do",
 			data: {"from_id": id, "subCheck": btnValue},
 			success: function(date){
 				if (btnValue == 0){
+					subBtn.value = 1;
+					subBtn.className = on;
 					subBtn.innerHTML = "구독중 <i class=\"fa fa-check\"></i>";
-						subBtn.value = 1;
-						subBtn.className = on;
 				}else{
-					subBtn.innerHTML = "구독하기"
-						subBtn.value = 0;
-						subBtn.className = off;
+					subBtn.value = 0;
+					subBtn.className = off;
+					subBtn.innerHTML = "구독하기";
 				} 
 			},
 			error: function(){

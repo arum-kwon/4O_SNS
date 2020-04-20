@@ -20,10 +20,11 @@
 <!-- 리스트 부분 -->
 <c:if test="${not empty list}">
 <div class="w3-container w3-card w3-white w3-round w3-margin">
+<br>
 <c:forEach items="${list}" var="user" >
   <!-- 프로필 부분 -->
   <img src="${pageContext.request.contextPath}/common/img/pro/${user.user_pro_img_name}" onclick="clickPro('${user.user_id}')" alt="Avatar" class="w3-left w3-circle w3-margin-right cursor_over" style="width:60px">
-  <h4 class="cursor_over">${user.user_name}</h4><br>
+  <h4 class="cursor_over" onclick="clickPro('${user.user_id}')" >${user.user_name}</h4><br>
   <hr class="w3-clear">
 </c:forEach>
 </div>
@@ -38,7 +39,7 @@
 <script>
 //프로필 클릭
 function clickPro(id){
-	hid.setAttribute('name', 'id');
+	hid.setAttribute('name', 'user_id');
 	hid.setAttribute('value', id);
 	
 	frm.action = '${pageContext.request.contextPath}/UserInfoSelect.do';

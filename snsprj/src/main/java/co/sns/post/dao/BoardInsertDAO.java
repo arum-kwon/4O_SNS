@@ -2,6 +2,7 @@ package co.sns.post.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -14,6 +15,7 @@ public class BoardInsertDAO {
 	Connection conn = null;
 	PreparedStatement pstmt = null;
 	Statement stmt = null;
+	ResultSet rs =null;
 
 	//싱글톤 구현
 	static SearchDAO instance;	
@@ -40,6 +42,8 @@ public class BoardInsertDAO {
 				} catch (SQLException e) {
 					e.printStackTrace();
 					
+				}finally {
+					ConnectionManager.close(rs, pstmt, conn);
 				}
 				return n ;
 			

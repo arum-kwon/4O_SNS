@@ -66,7 +66,8 @@ $(function(){
 		
 	<a 	href="${pageContext.request.contextPath}/userHome.do" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"
 		title="MYPAGE"><i class="fa fa-user"></i> </a>
-		
+	<a    href="${pageContext.request.contextPath}/LogoutGo.do" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"
+      title="LOGOUT"><i class="fa fa-toggle-off"></i> </a>	
 		
 	
 	<!-- 검색창 -->
@@ -92,5 +93,6 @@ $(function(){
 	class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium w3-large">
 	<a href="${pageContext.request.contextPath}/timeline.do" class="w3-bar-item w3-button w3-padding-large">타임라인</a>
 	<a href="${pageContext.request.contextPath}/userHome.do" class="w3-bar-item w3-button w3-padding-large">마이페이지</a>
+	<a href="${pageContext.request.contextPath}/LogoutGo.do" class="w3-bar-item w3-button w3-padding-large">로그아웃</a>
 
 </div>

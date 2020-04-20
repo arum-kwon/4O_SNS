@@ -87,13 +87,9 @@ public class insertBoard extends HttpServlet {
 			} else {
 				path = contextPath + "/views/post/writeSuccess.tiles";
 			}
+			response.getWriter().append("");
 			response.sendRedirect(path);
 
-//			response.getWriter().append("<head>\r\n" + 
-//					"    <title>META Tag  Refresh</title>\r\n" + 
-//					"    <meta http-equiv=\"content-type\" content=\"text/html; charset=euc-kr\">\r\n" + 
-//					"    <meta http-equiv=\"refresh\" content=\"1; url=http://localhost" + contextPath + "/views/post/writeForm.tiles\">\r\n" + 
-//					"</head>" + uploadFile + "<br>content:" + contents);
 			
 		
 	}

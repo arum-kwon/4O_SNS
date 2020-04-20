@@ -584,10 +584,10 @@ hr {
 		<td> 
 		<c:choose>
 			<c:when test="${ userinfo.interest_trends == '스포츠' }">
-				<input type="radio" id="interest_trends" name="interest_trends" value="IT" checked>IT
+				<input type="radio" id="interest_trends" name="interest_trends" value="스포츠" checked>스포츠
 			</c:when>
 			<c:otherwise>
-				<input type="radio" id="interest_trends" name="interest_trends" value="IT">IT
+				<input type="radio" id="interest_trends" name="interest_trends" value="스포츠">스포츠
 			</c:otherwise>
 		</c:choose>
 		</td>		

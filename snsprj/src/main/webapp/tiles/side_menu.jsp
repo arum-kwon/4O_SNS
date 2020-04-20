@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!-- Profile -->
 <div class="w3-card w3-round w3-white">
 	<div class="w3-container">
@@ -14,7 +15,7 @@
 		<p style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; height: 20px;">
 			<i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i>
 		    <c:if test="${empty my_info}">
-		    	자신을 소개해보세요.
+		    	자신을 소개해보세요
 		    </c:if>
 			${my_info}
 		</p>
@@ -22,16 +23,16 @@
 		<p style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; height: 20px;">
 			<i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i>
 		    <c:if test="${empty my_job}">
-		    	직업을 입력해보세요. 
+		    	직업을 입력해보세요
 		    </c:if>
 			${my_job}
 		</p>
 		<p style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; height: 20px;">
 			<i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i>
 		    <c:if test="${empty my_birth}">
-		    	생일을 입력해보세요.
+		    	생일을 입력해보세요
 		    </c:if>
-			${my_birth}
+			<fmt:formatDate value="${my_birth}" pattern="yyyy.MM.dd"/>
 		</p>
 	</div>
 </div>
@@ -44,10 +45,10 @@
 			<i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i> 타임라인
 		</button>
 		<button onclick="move('subFromMe')" class="w3-button w3-block w3-theme-l1 w3-left-align">
-			<i class="fa fa-list fa-fw w3-margin-right"></i> 구독 목록
+			<i class="fa fa-list fa-fw w3-margin-right"></i> 구독
 		</button>				
 		<button onclick="move('subToMe')" class="w3-button w3-block w3-theme-l1 w3-left-align">
-			<i class="fa fa-list fa-fw w3-margin-right"></i> 구독자 목록
+			<i class="fa fa-list fa-fw w3-margin-right"></i> 구독자
 		</button>
 		<button onclick="move('write')" class="w3-button w3-block w3-theme-l1 w3-left-align">
 			<i class="fa fa-pencil fa-fw w3-margin-right"></i> 타임라인 글쓰기

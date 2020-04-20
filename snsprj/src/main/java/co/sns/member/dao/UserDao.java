@@ -125,11 +125,11 @@ public class UserDao {
 				member.setInterest_life(rs.getString("interest_life"));
 				member.setInterest_hobby(rs.getString("interest_hobby"));
 				member.setInterest_trends(rs.getString("interest_trends"));
-				member.setBoard_user_id(rs.getString("board_user_id"));
-				member.setBoard_content(rs.getString("board_content"));
-				member.setBoard_like(rs.getInt("board_like"));
-				member.setBoard_wdate(rs.getDate("board_wdate"));
-				member.setBoard_img(rs.getString("board_img"));				
+//				member.setBoard_user_id(rs.getString("board_user_id"));
+//				member.setBoard_content(rs.getString("board_content"));
+//				member.setBoard_like(rs.getInt("board_like"));
+//				member.setBoard_wdate(rs.getDate("board_wdate"));
+//				member.setBoard_img(rs.getString("board_img"));				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -153,13 +153,13 @@ public class UserDao {
 		}
 		return result;
 	}
-	public ArrayList<UserBListDTO> select(Connection conn, UserBListDTO vo) {
+	public ArrayList<UserBListDTO> select(Connection conn, UserBListDTO vo, String my_id) {
 		ArrayList<UserBListDTO> list = new ArrayList<UserBListDTO>();
 		UserBListDTO member = null;
 		
 		try {
 			PreparedStatement psmt = conn.prepareStatement(USER_LIST);
-			psmt.setString(1, vo.getUser_id());
+			psmt.setString(1, my_id);
 			psmt.setString(2, vo.getUser_id());
 			ResultSet rs = psmt.executeQuery();
 			while (rs.next()) {
@@ -184,7 +184,7 @@ public class UserDao {
 				member.setBoard_like(rs.getInt("board_like"));
 				member.setBoard_wdate(rs.getDate("board_wdate"));
 				member.setBoard_img(rs.getString("board_img"));
-				member.setBlike(rs.getString("blike"));
+				member.setBlike(rs.getString("bLike"));
 				list.add(member);
 			}
 		} catch (SQLException e) {

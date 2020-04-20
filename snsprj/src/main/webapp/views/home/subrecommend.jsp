@@ -58,7 +58,7 @@
 }
 </style>
 <body>
-<form id="frm" name="frm" method="post">
+<form id="frm" name="frm">
 	<header>
 		<div class="w3-container">
 			<h2 class="w3-margin-top w3-margin-left">

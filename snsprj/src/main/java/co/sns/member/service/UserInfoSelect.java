@@ -40,12 +40,13 @@ public class UserInfoSelect extends HttpServlet {
 		
 		Connection conn = ConnectionManager.getConnnection();
 		UserBListDTO vo = new UserBListDTO();
+		
 		vo.setUser_id(id);
 		
 		String sub = UserDao.getInstance().subInfo(conn, my_id, id); 
 		request.setAttribute("sub", sub);	
 		
-		ArrayList<UserBListDTO> list = UserDao.getInstance().select(conn, vo);
+		ArrayList<UserBListDTO> list = UserDao.getInstance().select(conn, vo, my_id);
 		request.setAttribute("boardlist", list);	
 		
 		UserBListDTO dto = UserDao.getInstance().selectUserInfo2(conn, vo);
